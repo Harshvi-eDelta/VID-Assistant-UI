@@ -1,0 +1,344 @@
+body {
+    font-family: 'Segoe UI', Cambria;
+    margin: 0;
+    background: #f8f8f8;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    width: 400px;
+    height: inherit;
+    background-color: #fefefe;
+    padding: 20px;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-round {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Main Content Area */
+.main-content {
+    background: #7b43de;
+    /* background: linear-gradient(180deg, rgba(123, 67, 222, 1) 0%, rgba(152, 123, 212, 1) 53%, rgba(193, 93, 227, 1) 100%);    */
+    background: linear-gradient(to bottom left,rgb(224, 148, 213,100) 5%,rgb(56, 56, 207,100) 90%);
+    /* background: linear-gradient(to bottom left, #D1A6FF, #A7C7FF); */
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+    color: white; /* White text for better contrast */
+}
+
+
+/* Create Avatar Button */
+.create-avatar-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 18px;
+    margin-bottom: 10px;
+}
+
+.create-avatar-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Avatar Gallery Styles */
+.avatar-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.avatar-card {
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f5f5f5;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+
+}
+
+.avatar-card img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.avatar-card p {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+    border-radius: 8px;
+}
+
+/* Close Button */
+.close-btn {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Cancel Button */
+/*.cancel-btn {
+    background-color: #b2afaf;
+    color: rgb(10, 0, 0);
+    padding: 10px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}*/
+
+.cancel-btn:hover {
+    background-color: #888;
+}
+
+/* Modal (Popup) for Avatar Creation */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 10px 0;
+    font-size: 12px;
+    border-radius: 18px;
+    border: none;
+    width: 100%;  /* ensures equal width */
+    box-sizing: border-box;
+}
+
+.cancel-btn {
+    background-color: #b2afaf;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background-color: #888;
+}
+
+.create-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.create-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Avatar Gallery Styles */
+.avatar-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px; /* space between the images */
+}
+
+.avatar-card {
+    width: 120px;  /* or whatever you prefer */
+    height: 120px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.avatar-card img {
+    width: 100%;
+    height: 100%;
+    margin-top: 15px;
+    object-fit: cover;  /* important! */
+    border-radius: 12px;
+}
+
+/* .avatar-card p {
+    font-size: 14px;
+    color: #555;
+    margin-top: 10px;
+    font-weight: bold;
+} */
+
+/* Dashed Upload Box */
+.upload-box {
+    /* border: 2px dashed #fffbfb; */
+    padding: 20px;
+    height: 100px;
+    text-align: center;
+    border-radius: 8px;
+    background-color: #ffffff;
+    cursor: pointer;
+    margin-bottom: 20px;
+    position: relative;
+}
+/* 
+.upload-label {
+    color: #555;
+    font-size: 16px;
+    cursor: pointer;
+    display: block;
+}
+
+.upload-box input[type="file"] {
+    display: none; 
+} */
+
+.custom-upload-icon {
+    display: inline-block;
+    cursor: pointer;
+    margin: 2px 0;
+}
+
+.upload-icon-img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.upload-icon-img:hover {
+    transform: scale(1.1);
+}
+
+.avatar-round {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+/* Equal Sized Buttons */
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 18px;
+    border: none;
+}
+
+.cancel-btn {
+    background-color: #e4e1e1;
+    color: white;
+}
+
+.create-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background-color: #888;
+}
+
+.create-btn:hover {
+    background-color: #0056b3;
+}
+
+.input-text {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 18px;
+}
+
+.upload-label {
+    display: inline-block;
+    background-color: #a8abae;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.upload-label:hover {
+    background-color: #a8abae;
+}
+
+
+

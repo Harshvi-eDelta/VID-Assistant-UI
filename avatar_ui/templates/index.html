@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Avatar UI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- for image icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- for gradient background -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Background</title>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <!-- <h2>Upload Your Image</h2> -->
+            <h3>Avatars</h3>
+            <button id="openModalBtn" class="create-avatar-btn">Create Your Avatar</button>
+
+            <!-- Avatar Gallery -->
+
+            
+            <div class="avatar-gallery">
+                {% for avatar in avatars %}
+                    <div class="avatar-card">
+                        <img src="{{ avatar.url }}" alt="{{ avatar.name }}">
+                        <p>{{ avatar.name }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <h2>Welcome to Your Avatar Gallery</h2>
+            <div class="avatar-box">
+                <!-- <img id="uploadedAvatar" src="static/uploads/ABC.png" alt="Avatar" class="avatar-round"> -->
+                <!-- This image should be shown only AFTER user clicks "Create" -->
+                <!-- <img id="uploadedAvatar" src="{{ url_for('static', filename='images/placeholder.png') }}" alt="Avatar" class="avatar-round"> -->
+                <img id="uploadedAvatar" src="{{ avatars[-1].url if avatars else 'static/uploads/default.png' }}" alt="Avatar" class="avatar-round">
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal (Popup) for Avatar Creation -->
+    <div id="avatarModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModalBtn">&times;</span>
+            <h2>Upload your Image</h2>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <div class="upload-box">
+                    <!-- <label for="imageUpload" class="upload-label">
+                        Click to upload an image
+                    </label> -->
+                    <!-- <input type="file" id="upload" name="image" required style="display: none;"> -->
+                    <!-- Hidden file input -->
+                    <input type="file" id="upload" name="image" accept="image/*" style="display: none;" required>
+                    <!-- Image icon that triggers the file input -->
+                    <img id="uploadIcon" 
+                        src="{{ url_for('static', filename='images/upload_icon1.png') }}"
+                        alt="Upload"
+                        class="upload-icon-img"
+                        onclick="document.getElementById('upload').click();">
+
+                    <!-- <label for="upload" class="upload-label">
+                        <img src="{{ url_for('static', filename='images/upload_icon1.png') }}" alt="Upload" class="upload-icon-img">
+                    </label> -->
+                </div>
+                <input type="text" name="avatar_name" class="input-text" placeholder="Enter Avatar Name" required>
+                <div class="modal-buttons">
+                  <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
+                  <button type="submit" class="create-btn">Create</button>
+                </div>                           
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Get Modal and Button Elements
+        var modal = document.getElementById("avatarModal");
+        var openModalBtn = document.getElementById("openModalBtn");
+        var closeModalBtn = document.getElementById("closeModalBtn");
+        var cancelBtn = document.getElementById("cancelBtn");
+
+        // When the user clicks on the button, open the modal
+        openModalBtn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        closeModalBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks on Cancel button, close the modal
+        cancelBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+    <script>
+
+        const uploadInput = document.getElementById('upload');
+        const uploadIcon = document.getElementById('uploadIcon');
+        const uploadedAvatar = document.getElementById('uploadedAvatar');
+        const createBtn = document.querySelector('.create-btn');
+        let selectedImageURL = null;
+
+        // When user selects an image
+        uploadInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    selectedImageURL = e.target.result;
+                    // Update image icon inside modal
+                    uploadIcon.src = selectedImageURL;
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // When user clicks the Create button
+        createBtn.addEventListener('click', function (event) {
+            event.preventDefault(); // stop form from submitting
+
+            if (selectedImageURL) {
+                uploadedAvatar.src = selectedImageURL;
+            }
+
+            // After setting the image, submit the form manually
+            createBtn.closest('form').submit();
+        });
+
+    </script>
+</body>
+</html>
