@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Avatar UI</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -48,6 +48,19 @@
         </div>
     </div>
 
+       <!-- Chatbot Section -->
+       <div class="chat-container">
+        <div id="chatMessages" class="chat-messages">
+            <!-- Messages will be added here -->
+        </div>
+    <div class="message">
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Type a message...">
+            <button class="send-btn" onclick="sendMessage()">➤</button>
+        </div>
+        <!-- <button class="mic-btn"><i class="fas fa-microphone"></i></button> Mic outside -->
+</div>
+
     <!-- Modal (Popup) for Avatar Creation -->
     <div id="avatarModal" class="modal">
         <div class="modal-content">
@@ -60,7 +73,7 @@
                     </label> -->
                     <!-- <input type="file" id="upload" name="image" required style="display: none;"> -->
                     <!-- Hidden file input -->
-                    <input type="file" id="upload" name="image" accept="image/*" style="display: none;" required>
+                    </div type="file" id="upload" name="image" accept="image/*" style="display: none;" required>
                     <!-- Image icon that triggers the file input -->
                     <img id="uploadIcon" 
                         src="{{ url_for('static', filename='images/upload_icon1.png') }}"
