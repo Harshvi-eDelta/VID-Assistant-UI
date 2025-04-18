@@ -23,8 +23,6 @@
             <button id="openModalBtn" class="create-avatar-btn">Create Your Avatar</button>
 
             <!-- Avatar Gallery -->
-
-            
             <div class="avatar-gallery">
                 {% for avatar in avatars %}
                     <div class="avatar-card">
@@ -49,7 +47,7 @@
     </div>
 
        <!-- Chatbot Section -->
-       <div class="chat-container">
+       <body class="chat-container">
         <div id="chatMessages" class="chat-messages">
             <!-- Messages will be added here -->
         </div>
@@ -161,5 +159,56 @@
         });
 
     </script>
-</body>
+
+    <!-- chatbot script -->
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (message) {
+    const chatMessages = document.getElementById('chatMessages');
+
+    const userMessage = document.createElement('div');
+    userMessage.className = 'message ';
+
+    const userText = document.createElement('p'); // 👈 Create <p> element
+    userText.innerText = message; // 👈 Set the message inside <p>
+    userText.className = 'user-message ';
+    userMessage.appendChild(userText); // 👈 Append <p> into the div
+    chatMessages.appendChild(userMessage); // 👈 Append div to chat container
+
+    input.value = '';
+    smoothScrollToBottom(chatMessages);
+
+
+                // Bot reply
+                setTimeout(() => {
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'message';
+
+                    const botText = document.createElement('p'); // 👈 Create <p> for bot
+                    botText.innerText = " " + message;
+                    botText.className = 'bot-message';   
+                    botMessage.appendChild(botText); // 👈 Append <p> to bot div
+                    chatMessages.appendChild(botMessage);
+
+                    smoothScrollToBottom(chatMessages);
+                }, 500);
+            }
+        }
+        
+        function smoothScrollToBottom(element) {
+            element.scrollTo({
+                top: element.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
+        
+        // (Optional) Placeholder for microphone functionality
+        function startListening() {
+            alert("🎤 Microphone feature coming soon!");
+        }
+        </script>
+
+    </body>
 </html>
