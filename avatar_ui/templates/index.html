@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Avatar UI</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
@@ -14,6 +15,7 @@
     <link rel="stylesheet" href="css/style.css">
 
 </head>
+
 <body>
     <div class="container">
         <!-- Sidebar -->
@@ -25,14 +27,14 @@
             <!-- Avatar Gallery -->
             <div class="avatar-gallery">
                 {% for avatar in avatars %}
-                    <div class="avatar-card">
-                        <img src="{{ avatar.url }}" alt="{{ avatar.name }}">
-                        <p>{{ avatar.name }}</p>
-                    </div>
+                <div class="avatar-card">
+                    <img src="{{ avatar.url }}" alt="{{ avatar.name }}">
+                    <p>{{ avatar.name }}</p>
+                </div>
                 {% endfor %}
             </div>
         </div>
-
+        
         <!-- Main Content -->
         <div class="main-content">
             <h2>Welcome to Your Avatar Gallery</h2>
@@ -40,57 +42,60 @@
                 <!-- <img id="uploadedAvatar" src="static/uploads/ABC.png" alt="Avatar" class="avatar-round"> -->
                 <!-- This image should be shown only AFTER user clicks "Create" -->
                 <!-- <img id="uploadedAvatar" src="{{ url_for('static', filename='images/placeholder.png') }}" alt="Avatar" class="avatar-round"> -->
-                <img id="uploadedAvatar" src="{{ avatars[-1].url if avatars else 'static/uploads/4.jpg' }}" alt="Avatar" class="avatar-round">
+                <img id="uploadedAvatar" src="{{ avatars[-1].url if avatars else 'static/uploads/4.jpg' }}" alt="Avatar"
+                    class="avatar-round">
             </div>
+            <!-- chatbot code -->
+            <div id="chatMessages" class="chat-messages">
+                <!-- Messages will be added here -->
             </div>
+            <div class="message">
+                <div class="chat-input">
+                    <input type="text" id="userInput" placeholder="Type a message...">
+                    <button class="send-btn" onclick="sendMessage()">➤</button>
+                    <button class="mic-btn" onclick="startListening()" title="Start Voice Input">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                </div>
+                <!-- <button class="mic-btn" onclick="startListening()" title="Start Voice Input">
+                <i class="fas fa-microphone"></i> 
+            </button> -->
+                <!-- <button class="mic-btn"><i class="fas fa-microphone" title="Start Voice Input" ></i></button>  -->
+            </div>
+
         </div>
     </div>
+    </div>
 
-       <!-- Chatbot Section -->
-       <body class="chat-container">
-        <div id="chatMessages" class="chat-messages">
-            <!-- Messages will be added here -->
-        </div>
-    <div class="message">
-        <div class="chat-input">
-            <input type="text" id="userInput" placeholder="Type a message...">
-            <button class="send-btn" onclick="sendMessage()">➤</button>
-        </div>
-        <!-- <button class="mic-btn"><i class="fas fa-microphone"></i></button> Mic outside -->
-</div>
-
- <!-- Modal (Popup) for Avatar Creation -->
- <div id="avatarModal" class="modal">
-    <div class="modal-content">
-        <span class="close" id="closeModalBtn">&times;</span>
-        <h2>Upload your Image</h2>
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <div class="upload-box">
-                <!-- <label for="imageUpload" class="upload-label">
+    <!-- Modal (Popup) for Avatar Creation -->
+    <div id="avatarModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModalBtn">&times;</span>
+            <h2>Upload your Image</h2>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <div class="upload-box">
+                    <!-- <label for="imageUpload" class="upload-label">
                     Click to upload an image
                 </label> -->
-                <!-- <input type="file" id="upload" name="image" required style="display: none;"> -->
-                <!-- Hidden file input -->
-                <input type="file" id="upload" name="image" accept="image/*" style="display: none;" required>
-                <!-- Image icon that triggers the file input -->
-                <img id="uploadIcon"
-                    src="{{ url_for('static', filename='images/upload_icon1.png') }}"
-                    alt="Upload"
-                    class="upload-icon-img"
-                    onclick="document.getElementById('upload').click();">
+                    <!-- <input type="file" id="upload" name="image" required style="display: none;"> -->
+                    <!-- Hidden file input -->
+                    <input type="file" id="upload" name="image" accept="image/*" style="display: none;" required>
+                    <!-- Image icon that triggers the file input -->
+                    <img id="uploadIcon" src="{{ url_for('static', filename='images/upload_icon1.png') }}" alt="Upload"
+                        class="upload-icon-img" onclick="document.getElementById('upload').click();">
 
-                <!-- <label for="upload" class="upload-label">
+                    <!-- <label for="upload" class="upload-label">
                     <img src="{{ url_for('static', filename='images/upload_icon1.png') }}" alt="Upload" class="upload-icon-img">
                 </label> -->
-            </div>
-            <input type="text" name="avatar_name" class="input-text" placeholder="Enter Avatar Name" required>
-            <div class="modal-buttons">
-              <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
-              <button type="submit" class="create-btn">Create</button>
-            </div>                           
-        </form>
+                </div>
+                <input type="text" name="avatar_name" class="input-text" placeholder="Enter Avatar Name" required>
+                <div class="modal-buttons">
+                    <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="create-btn">Create</button>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
     <script>
         // Get Modal and Button Elements
@@ -100,22 +105,22 @@
         var cancelBtn = document.getElementById("cancelBtn");
 
         // When the user clicks on the button, open the modal
-        openModalBtn.onclick = function() {
+        openModalBtn.onclick = function () {
             modal.style.display = "block";
         }
 
         // When the user clicks on <span> (x), close the modal
-        closeModalBtn.onclick = function() {
+        closeModalBtn.onclick = function () {
             modal.style.display = "none";
         }
 
         // When the user clicks on Cancel button, close the modal
-        cancelBtn.onclick = function() {
+        cancelBtn.onclick = function () {
             modal.style.display = "none";
         }
 
         // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
+        window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
@@ -165,20 +170,20 @@
         function sendMessage() {
             const input = document.getElementById('userInput');
             const message = input.value.trim();
-            if (message) {
-    const chatMessages = document.getElementById('chatMessages');
+            if (message != "") {
+                const chatMessages = document.getElementById('chatMessages');
 
-    const userMessage = document.createElement('div');
-    userMessage.className = 'message ';
+                const userMessage = document.createElement('div');
+                userMessage.className = 'message ';
 
-    const userText = document.createElement('p'); // 👈 Create <p> element
-    userText.innerText = message; // 👈 Set the message inside <p>
-    userText.className = 'user-message ';
-    userMessage.appendChild(userText); // 👈 Append <p> into the div
-    chatMessages.appendChild(userMessage); // 👈 Append div to chat container
+                const userText = document.createElement('p'); // 👈 Create <p> element
+                userText.innerText = message; // 👈 Set the message inside <p>
+                userText.className = 'user-message ';
+                userMessage.appendChild(userText); // 👈 Append <p> into the div
+                chatMessages.appendChild(userMessage); // 👈 Append div to chat container
 
-    input.value = '';
-    smoothScrollToBottom(chatMessages);
+                input.value = '';
+                smoothScrollToBottom(chatMessages);
 
 
                 // Bot reply
@@ -188,7 +193,7 @@
 
                     const botText = document.createElement('p'); // 👈 Create <p> for bot
                     botText.innerText = " " + message;
-                    botText.className = 'bot-message';   
+                    botText.className = 'bot-message';
                     botMessage.appendChild(botText); // 👈 Append <p> to bot div
                     chatMessages.appendChild(botMessage);
 
@@ -196,19 +201,19 @@
                 }, 500);
             }
         }
-        
+        function startListening() {
+            alert('Microphone clicked! (You can implement voice recording here)');
+        }
+
         function smoothScrollToBottom(element) {
             element.scrollTo({
                 top: element.scrollHeight,
                 behavior: 'smooth'
             });
         }
-        
-        // (Optional) Placeholder for microphone functionality
-        function startListening() {
-            alert("🎤 Microphone feature coming soon!");
-        }
-        </script>
 
-    </body>
+    </script>
+
+</body>
+
 </html>

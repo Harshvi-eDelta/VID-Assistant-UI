@@ -3,17 +3,16 @@ body {
     margin: 0;
     background: #f8f8f8;
 }
-/* header body and paragraph */
 h1,h2,h3,h4,h5,h6,p{
-    margin: 0px;
+    margin: 0;
 }
-
+ 
 .container {
     display: flex;
     height: 100vh;
     overflow: hidden;
 }
-
+ 
 /* Sidebar Styles */
 .sidebar {
     width: 400px;
@@ -22,7 +21,7 @@ h1,h2,h3,h4,h5,h6,p{
     padding: 20px;
     box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
 }
-
+ 
 .avatar-round {
     width: 200px;
     height: 200px;
@@ -31,22 +30,21 @@ h1,h2,h3,h4,h5,h6,p{
     border: 3px solid #fff;
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
-
+ 
 /* Main Content Area */
 .main-content {
     display: flex;
     flex-direction: column;
-    /* background: #7b43de; */
+    /* background: #432a6fc4; */
     /* background: linear-gradient(180deg, rgba(123, 67, 222, 1) 0%, rgba(152, 123, 212, 1) 53%, rgba(193, 93, 227, 1) 100%);    */
     background: linear-gradient(to bottom left,rgb(224, 148, 213,100) 5%,rgb(56, 56, 207,100) 90%);
     /* background: linear-gradient(to bottom left, #D1A6FF, #A7C7FF); */
-    padding: 20px;
-    /* height: 100%; */
+    padding: 20px;  
     width: 100%;
     color: white; /* White text for better contrast */
 }
-
-
+ 
+ 
 /* Create Avatar Button */
 .create-avatar-btn {
     background-color: #007bff;
@@ -59,11 +57,11 @@ h1,h2,h3,h4,h5,h6,p{
     border-radius: 18px;
     margin-bottom: 10px;
 }
-
+ 
 .create-avatar-btn:hover {
     background-color: #0056b3;
 }
-
+ 
 /* Avatar Gallery Styles */
 .avatar-gallery {
     display: flex;
@@ -71,7 +69,7 @@ h1,h2,h3,h4,h5,h6,p{
     gap: 10px;
     margin-top: 10px;
 }
-
+ 
 .avatar-card {
     width: 220px;
     display: flex;
@@ -81,23 +79,23 @@ h1,h2,h3,h4,h5,h6,p{
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-
+ 
 }
-
+ 
 .avatar-card img {
     width: 200px;
     height: 200px;
     object-fit: cover;
     border-radius: 6px;
 }
-
+ 
 .avatar-card p {
     margin-top: 5px;
     font-weight: bold;
     font-size: 14px;
     color: #333;
 }
-
+ 
 /* Modal Styles */
 .modal {
     display: none;
@@ -109,7 +107,7 @@ h1,h2,h3,h4,h5,h6,p{
     height: 100%;
     background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
 }
-
+ 
 /* Modal Content */
 .modal-content {
     background-color: white;
@@ -119,7 +117,7 @@ h1,h2,h3,h4,h5,h6,p{
     width: 30%;
     border-radius: 8px;
 }
-
+ 
 /* Close Button */
 .close-btn {
     color: #aaa;
@@ -129,14 +127,14 @@ h1,h2,h3,h4,h5,h6,p{
     right: 10px;
     top: 10px;
 }
-
+ 
 .close-btn:hover,
 .close-btn:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
 }
-
+ 
 /* Cancel Button */
 /*.cancel-btn {
     background-color: #b2afaf;
@@ -148,11 +146,11 @@ h1,h2,h3,h4,h5,h6,p{
     border-radius: 5px;
     margin-top: 10px;
 }*/
-
+ 
 .cancel-btn:hover {
     background-color: #888;
 }
-
+ 
 /* Modal (Popup) for Avatar Creation */
 .modal {
     display: none; /* Hidden by default */
@@ -167,14 +165,14 @@ h1,h2,h3,h4,h5,h6,p{
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
     padding-top: 60px;
 }
-
+ 
 .modal-buttons {
     display: flex;
     justify-content: space-between;
     gap: 10px;
     margin-top: 20px;
 }
-
+ 
 .modal-buttons button {
     flex: 1;
     padding: 10px 0;
@@ -184,32 +182,32 @@ h1,h2,h3,h4,h5,h6,p{
     width: 100%;  /* ensures equal width */
     box-sizing: border-box;
 }
-
+ 
 .cancel-btn {
     background-color: #b2afaf;
     color: white;
 }
-
+ 
 .cancel-btn:hover {
     background-color: #888;
 }
-
+ 
 .create-btn {
     background-color: #007bff;
     color: white;
 }
-
+ 
 .create-btn:hover {
     background-color: #0056b3;
 }
-
+ 
 /* Avatar Gallery Styles */
 .avatar-gallery {
     display: flex;
     flex-wrap: wrap;
     gap: 7px; /* space between the images */
 }
-
+ 
 .avatar-card {
     width: 120px;  /* or whatever you prefer */
     height: 120px;
@@ -223,7 +221,7 @@ h1,h2,h3,h4,h5,h6,p{
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
+ 
 .avatar-card img {
     width: 100%;
     height: 100%;
@@ -231,14 +229,14 @@ h1,h2,h3,h4,h5,h6,p{
     object-fit: cover;  /* important! */
     border-radius: 12px;
 }
-
+ 
 /* .avatar-card p {
     font-size: 14px;
     color: #555;
     margin-top: 10px;
     font-weight: bold;
 } */
-
+ 
 /* Dashed Upload Box */
 .upload-box {
     /* border: 2px dashed #fffbfb; */
@@ -258,17 +256,17 @@ h1,h2,h3,h4,h5,h6,p{
     cursor: pointer;
     display: block;
 }
-
+ 
 .upload-box input[type="file"] {
     display: none; 
 } */
-
+ 
 .custom-upload-icon {
     display: inline-block;
     cursor: pointer;
     margin: 2px 0;
 }
-
+ 
 .upload-icon-img {
     width: 100px;
     height: 100px;
@@ -276,11 +274,11 @@ h1,h2,h3,h4,h5,h6,p{
     cursor: pointer;
     transition: transform 0.2s ease;
 }
-
+ 
 .upload-icon-img:hover {
     transform: scale(1.1);
 }
-
+ 
 .avatar-round {
     width: 150px;
     height: 150px;
@@ -288,14 +286,14 @@ h1,h2,h3,h4,h5,h6,p{
     object-fit: cover;
     cursor: pointer;
 }
-
+ 
 /* Equal Sized Buttons */
 .modal-buttons {
     display: flex;
     justify-content: space-between;
     gap: 20px;
 }
-
+ 
 .modal-buttons button {
     flex: 1;
     padding: 10px;
@@ -303,25 +301,25 @@ h1,h2,h3,h4,h5,h6,p{
     border-radius: 18px;
     border: none;
 }
-
+ 
 .cancel-btn {
     background-color: #e4e1e1;
     color: white;
 }
-
+ 
 .create-btn {
     background-color: #007bff;
     color: white;
 }
-
+ 
 .cancel-btn:hover {
     background-color: #888;
 }
-
+ 
 .create-btn:hover {
     background-color: #0056b3;
 }
-
+ 
 .input-text {
     width: 100%;
     padding: 10px;
@@ -330,7 +328,7 @@ h1,h2,h3,h4,h5,h6,p{
     border: 1px solid #ccc;
     border-radius: 18px;
 }
-
+ 
 .upload-label {
     display: inline-block;
     background-color: #a8abae;
@@ -342,12 +340,109 @@ h1,h2,h3,h4,h5,h6,p{
     margin-bottom: 10px;
     text-align: center;
 }
-
+ 
 .upload-label:hover {
     background-color: #a8abae;
 }
+ 
 
 /* chatbot css */
+.chat-messages {
+    width: 100%;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 15px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+}
+.message {
+    width: 100%;
+}
+ 
+.user-message {
+    background-color: #2E2E2E;
+    border-radius: 18px;
+    word-wrap: break-word;
+    padding: 8px 12px;
+    color: white;
+    max-width: 80%;
+    margin-left: auto;
+    text-align: end;
+    width: max-content;
+}
+.bot-message {
+    background-color: rgba(241, 240, 240, 0.8);
+    border-radius: 18px;
+    word-wrap: break-word;
+    padding: 8px 12px;
+    color: black;
+    max-width: 80%;
+    width: max-content;
+}
+ 
+.chat-input {
+    position: relative;
+    left: 350px;
+    width: 800px;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 👈 Space between input and mic */
+}
+.chat-input input {
+    flex: 1;
+    padding: 10px 45px 10px 15px; /* 👈 Padding for send button inside */
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    background-color: rgba(255, 255, 255, 0.5);
+    outline: none;
+    font-size: 16px;
+    position: relative;
+    align-items: center;
+}
+@keyframes slideUp {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+  }
+  .message {
+      animation: slideUp 0.5s ease;
+ 
+  }
+.send-btn {
+    position: absolute;
+    right: 40px;
+    background:transparent;
+    color: grey;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+}
+.mic-btn {
+    position: absolute;
+    right: 10px;
+    background-color: transparent;
+    color: grey;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.send-btn:hover, .mic-btn:hover {
+    background-color: transparent;
+}
 
 
 
+    
