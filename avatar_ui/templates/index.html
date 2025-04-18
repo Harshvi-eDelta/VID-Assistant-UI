@@ -42,7 +42,7 @@
                 <!-- <img id="uploadedAvatar" src="static/uploads/ABC.png" alt="Avatar" class="avatar-round"> -->
                 <!-- This image should be shown only AFTER user clicks "Create" -->
                 <!-- <img id="uploadedAvatar" src="{{ url_for('static', filename='images/placeholder.png') }}" alt="Avatar" class="avatar-round"> -->
-                <img id="uploadedAvatar" src="{{ avatars[-1].url if avatars else 'static/uploads/default.png' }}" alt="Avatar" class="avatar-round">
+                <img id="uploadedAvatar" src="{{ avatars[-1].url if avatars else 'static/uploads/4.jpg' }}" alt="Avatar" class="avatar-round">
             </div>
             </div>
         </div>
@@ -61,38 +61,38 @@
         <!-- <button class="mic-btn"><i class="fas fa-microphone"></i></button> Mic outside -->
 </div>
 
-    <!-- Modal (Popup) for Avatar Creation -->
-    <div id="avatarModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeModalBtn">&times;</span>
-            <h2>Upload your Image</h2>
-            <form action="/upload" method="post" enctype="multipart/form-data">
-                <div class="upload-box">
-                    <!-- <label for="imageUpload" class="upload-label">
-                        Click to upload an image
-                    </label> -->
-                    <!-- <input type="file" id="upload" name="image" required style="display: none;"> -->
-                    <!-- Hidden file input -->
-                    </div type="file" id="upload" name="image" accept="image/*" style="display: none;" required>
-                    <!-- Image icon that triggers the file input -->
-                    <img id="uploadIcon" 
-                        src="{{ url_for('static', filename='images/upload_icon1.png') }}"
-                        alt="Upload"
-                        class="upload-icon-img"
-                        onclick="document.getElementById('upload').click();">
+ <!-- Modal (Popup) for Avatar Creation -->
+ <div id="avatarModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeModalBtn">&times;</span>
+        <h2>Upload your Image</h2>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <div class="upload-box">
+                <!-- <label for="imageUpload" class="upload-label">
+                    Click to upload an image
+                </label> -->
+                <!-- <input type="file" id="upload" name="image" required style="display: none;"> -->
+                <!-- Hidden file input -->
+                <input type="file" id="upload" name="image" accept="image/*" style="display: none;" required>
+                <!-- Image icon that triggers the file input -->
+                <img id="uploadIcon"
+                    src="{{ url_for('static', filename='images/upload_icon1.png') }}"
+                    alt="Upload"
+                    class="upload-icon-img"
+                    onclick="document.getElementById('upload').click();">
 
-                    <!-- <label for="upload" class="upload-label">
-                        <img src="{{ url_for('static', filename='images/upload_icon1.png') }}" alt="Upload" class="upload-icon-img">
-                    </label> -->
-                </div>
-                <input type="text" name="avatar_name" class="input-text" placeholder="Enter Avatar Name" required>
-                <div class="modal-buttons">
-                  <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
-                  <button type="submit" class="create-btn">Create</button>
-                </div>                           
-            </form>
-        </div>
+                <!-- <label for="upload" class="upload-label">
+                    <img src="{{ url_for('static', filename='images/upload_icon1.png') }}" alt="Upload" class="upload-icon-img">
+                </label> -->
+            </div>
+            <input type="text" name="avatar_name" class="input-text" placeholder="Enter Avatar Name" required>
+            <div class="modal-buttons">
+              <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
+              <button type="submit" class="create-btn">Create</button>
+            </div>                           
+        </form>
     </div>
+</div>
 
     <script>
         // Get Modal and Button Elements
