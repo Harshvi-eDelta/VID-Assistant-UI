@@ -429,7 +429,7 @@ h1,h2,h3,h4,h5,h6,p{
 }
 .mic-btn {
     position: absolute;
-    right: 10px;
+    right: 5px;
     background-color: transparent;
     color: grey;
     border: none;
@@ -442,7 +442,3 @@ h1,h2,h3,h4,h5,h6,p{
 .send-btn:hover, .mic-btn:hover {
     background-color: transparent;
 }
-
-
-
-    
