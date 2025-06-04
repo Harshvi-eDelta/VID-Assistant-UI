@@ -356,6 +356,8 @@ h1,h2,h3,h4,h5,h6,p{
     display: flex;
     flex-direction: column;
     row-gap: 12px;
+    max-width: 800px;
+    margin: auto;
 }
 .message {
     width: 100%;
@@ -391,17 +393,19 @@ h1,h2,h3,h4,h5,h6,p{
     align-items: center;
     gap: 10px; /* 👈 Space between input and mic */
 }
+
 .chat-input input {
     flex: 1;
     padding: 10px 45px 10px 15px; /* 👈 Padding for send button inside */
     border-radius: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #e1dada;
     background-color: rgba(255, 255, 255, 0.5);
     outline: none;
     font-size: 16px;
     position: relative;
     align-items: center;
 }
+
 @keyframes slideUp {
     0% {
       transform: translateY(20px);
