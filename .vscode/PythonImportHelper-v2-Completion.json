@@ -1,0 +1,149 @@
+[
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "send_from_directory",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "render_template",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "send_from_directory",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "avatar_ui.app",
+        "description": "avatar_ui.app",
+        "peekOfCode": "def index():\n    return render_template('index.html')\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\nif __name__ == '__main__':\n    app.run(debug=True)",
+        "detail": "avatar_ui.app",
+        "documentation": {}
+    },
+    {
+        "label": "serve_model",
+        "kind": 2,
+        "importPath": "avatar_ui.app",
+        "description": "avatar_ui.app",
+        "peekOfCode": "def serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\nif __name__ == '__main__':\n    app.run(debug=True)",
+        "detail": "avatar_ui.app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "avatar_ui.app",
+        "description": "avatar_ui.app",
+        "peekOfCode": "app = Flask(__name__)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n@app.route('/')\ndef index():\n    return render_template('index.html')\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):",
+        "detail": "avatar_ui.app",
+        "documentation": {}
+    },
+    {
+        "label": "STATIC_FOLDER",
+        "kind": 5,
+        "importPath": "avatar_ui.app",
+        "description": "avatar_ui.app",
+        "peekOfCode": "STATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n@app.route('/')\ndef index():\n    return render_template('index.html')\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")",
+        "detail": "avatar_ui.app",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['STATIC_FOLDER']",
+        "kind": 5,
+        "importPath": "avatar_ui.app",
+        "description": "avatar_ui.app",
+        "peekOfCode": "app.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n@app.route('/')\ndef index():\n    return render_template('index.html')\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)",
+        "detail": "avatar_ui.app",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "avatar_ui.app1",
+        "description": "avatar_ui.app1",
+        "peekOfCode": "def index():\n    # Renders the index.html template from the 'templates' folder\n    return render_template('index.html')\n# Route to serve 3D models (e.g., GLTF files and their associated bins/textures)\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\nif __name__ == '__main__':\n    app.run(debug=True)",
+        "detail": "avatar_ui.app1",
+        "documentation": {}
+    },
+    {
+        "label": "serve_model",
+        "kind": 2,
+        "importPath": "avatar_ui.app1",
+        "description": "avatar_ui.app1",
+        "peekOfCode": "def serve_model(filename):\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\nif __name__ == '__main__':\n    app.run(debug=True)",
+        "detail": "avatar_ui.app1",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "avatar_ui.app1",
+        "description": "avatar_ui.app1",
+        "peekOfCode": "app = Flask(__name__)\n# Define a directory for your static files (HTML, CSS, JS, 3D models)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\n# Ensure the static/models directory exists for 3D assets\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n@app.route('/')\ndef index():\n    # Renders the index.html template from the 'templates' folder\n    return render_template('index.html')",
+        "detail": "avatar_ui.app1",
+        "documentation": {}
+    },
+    {
+        "label": "STATIC_FOLDER",
+        "kind": 5,
+        "importPath": "avatar_ui.app1",
+        "description": "avatar_ui.app1",
+        "peekOfCode": "STATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\n# Ensure the static/models directory exists for 3D assets\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n@app.route('/')\ndef index():\n    # Renders the index.html template from the 'templates' folder\n    return render_template('index.html')\n# Route to serve 3D models (e.g., GLTF files and their associated bins/textures)\n@app.route('/static/models/<path:filename>')",
+        "detail": "avatar_ui.app1",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['STATIC_FOLDER']",
+        "kind": 5,
+        "importPath": "avatar_ui.app1",
+        "description": "avatar_ui.app1",
+        "peekOfCode": "app.config['STATIC_FOLDER'] = STATIC_FOLDER\n# Ensure the static/models directory exists for 3D assets\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n@app.route('/')\ndef index():\n    # Renders the index.html template from the 'templates' folder\n    return render_template('index.html')\n# Route to serve 3D models (e.g., GLTF files and their associated bins/textures)\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):",
+        "detail": "avatar_ui.app1",
+        "documentation": {}
+    }
+]
