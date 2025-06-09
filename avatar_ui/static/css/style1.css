@@ -1,0 +1,162 @@
+body { margin: 0;overflow: hidden; }
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar on the left */
+.sidebar {
+    width: 300px;
+    background-color: #fefefe;
+    padding: 20px;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+}
+
+.main-content {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Canvas will be sized inside main-content */
+canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Info box on top of 3D area */
+#info {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    color: white;
+    font-family: sans-serif;
+    background: rgba(0,0,0,0.5);
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 10;
+}
+
+
+/* Create Avatar Button */
+.create-avatar-btn {
+    background-color: #043b43a5;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 18px;
+    margin-bottom: 10px;
+}
+  
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+}
+ 
+/* Modal Content */
+.modal-content {
+    background-color: white;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+    border-radius: 8px;
+}
+ 
+/* Close Button */
+/* .close-btn {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+ 
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+} */
+
+.upload-box {
+    /* border: 2px dashed #fffbfb; */
+    padding: 20px;
+    height: 100px;
+    text-align: center;
+    border-radius: 8px;
+    background-color: #ffffff;
+    cursor: pointer;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.upload-icon-img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+ 
+.upload-icon-img:hover {
+    transform: scale(1.1);
+}
+
+.input-text {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 18px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.modal-buttons button {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 18px;
+    border: none;
+}
+
+.cancel-btn {
+    background-color: #b2afaf;
+    color: white;
+}
+ 
+.cancel-btn:hover {
+    background-color: #888;
+}
+
+.create-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.create-btn:hover {
+    background-color: #0056b3;
+}

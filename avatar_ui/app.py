@@ -1,7 +1,7 @@
 # Backend
-from flask import Flask, render_template, request,url_for,redirect
+from flask import Flask, render_template,send_from_directory,request,url_for,redirect
 import os
-from PIL import Image
+# from PIL import Image
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -19,6 +19,14 @@ def index():
     #         name = os.path.splitext(filename)[0]  # Get name without extension
     #         avatars.append({'name': name, 'url': f"/static/uploads/{filename}"})
     return render_template('index.html', avatars=avatars)
+
+STATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+app.config['STATIC_FOLDER'] = STATIC_FOLDER
+
+@app.route('/static/models/<path:filename>')
+def serve_model(filename):
+    print(f"Serving model file: {filename}")
+    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)
 
 @app.route('/upload', methods=['POST'])
 

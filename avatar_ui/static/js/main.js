@@ -6,61 +6,68 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 let scene, camera, renderer, avatar;
 
 function init() {
+    // Get the container where the 3D canvas should be added
+    const container = document.querySelector('.main-content');
+
     // Scene
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x87ceeb); // Light blue background
 
     // Camera
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 1.5, 3); // Position camera to look at a typical avatar height
+    camera = new THREE.PerspectiveCamera(
+        75,
+        container.clientWidth / container.clientHeight,
+        0.1,
+        1000
+    );
+    camera.position.set(0, 5, 0); // A better Z to actually view the model from front->(0,5,5)
 
     // Renderer
     renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
 
-    // Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
-    scene.add(ambientLight);
-
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-    directionalLight.position.set(1, 2, 3).normalize();
+    // Light
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 10);
+    directionalLight.position.set(1, 5, -1).normalize();
     scene.add(directionalLight);
 
-    // OrbitControls (for interaction)
+    // Controls
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true; // smooth rotation
+    controls.enableDamping = true;
     controls.dampingFactor = 0.05;
-    controls.target.set(0, 1, 0); // Target the center of the avatar typically
+    controls.target.set(0, 1, 0);
+    controls.update();
 
-    // Load GLTF Model
+    // Load Model
     const loader = new GLTFLoader();
-    // The URL for the model is relative to the static folder, and Flask serves it
     loader.load(
-        '/static/models/a4.glb', // **IMPORTANT: Replace with your actual model path**
+        '/static/models/a4.glb',
         function (gltf) {
             avatar = gltf.scene;
-            // Scale or position your avatar as needed
             avatar.scale.set(1, 1, 1);
             avatar.position.set(0, 0, 0);
             scene.add(avatar);
             document.getElementById('info').textContent = 'Avatar Loaded!';
         },
         function (xhr) {
-            // Progress callback
-            const progress = (xhr.loaded / xhr.total * 100);
+            const progress = (xhr.loaded / xhr.total) * 100;
             document.getElementById('info').textContent = `Loading: ${progress.toFixed(2)}%`;
-            console.log('Loading ' + progress + '% of model');
         },
         function (error) {
-            // Error callback
-            console.error('An error occurred while loading the model:', error);
+            console.error('Error loading model:', error);
             document.getElementById('info').textContent = 'Error loading avatar!';
         }
     );
 
-    // Handle window resize
-    window.addEventListener('resize', onWindowResize, false);
+    // Resize handling
+    window.addEventListener('resize', () => {
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+    });
 }
 
 function onWindowResize() {
@@ -78,9 +85,90 @@ function animate() {
     }
     renderer.render(scene, camera);
 }
-
 init();
 animate();
+
+// import * as THREE from 'three';
+// import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+// import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+// // let scene, camera, renderer, avatar;
+
+// function init() {
+//     // Scene
+//     scene = new THREE.Scene();
+//     scene.background = new THREE.Color(0x87ceeb); // Light blue background
+
+//     // Camera
+//     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+//     camera.position.set(0, 5, 0); // Position camera to look at a typical avatar height
+
+//     // Renderer
+//     renderer = new THREE.WebGLRenderer({ antialias: true });
+//     renderer.setSize(window.innerWidth, window.innerHeight);
+//     document.body.appendChild(renderer.domElement);
+//     // Lights
+//     // const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+//     // scene.add(ambientLight);
+
+//     const directionalLight = new THREE.DirectionalLight(0xffffff, 10);
+//     directionalLight.position.set(1, 5, -1).normalize();
+//     scene.add(directionalLight);
+
+//     // OrbitControls (for interaction)
+//     const controls = new OrbitControls(camera, renderer.domElement);
+//     controls.enableDamping = true; // smooth rotation
+//     controls.dampingFactor = 0.05;
+//     controls.target.set(0, 1, 0); // Target the center of the avatar typically
+
+//     // Load GLTF Model
+//     const loader = new GLTFLoader();
+//     // The URL for the model is relative to the static folder, and Flask serves it
+//     loader.load(
+//         '/static/models/a4.glb', // **IMPORTANT: Replace with your actual model path**
+//         function (gltf) {
+//             avatar = gltf.scene;
+//             // Scale or position your avatar as needed
+//             avatar.scale.set(1, 1, 1);
+//             avatar.position.set(0, 0, 0);
+//             scene.add(avatar);
+//             document.getElementById('info').textContent = 'Avatar Loaded!';
+//         },
+//         function (xhr) {
+//             // Progress callback
+//             const progress = (xhr.loaded / xhr.total * 100);
+//             document.getElementById('info').textContent = `Loading: ${progress.toFixed(2)}%`;
+//             console.log('Loading ' + progress + '% of model');
+//         },
+//         function (error) {
+//             // Error callback
+//             console.error('An error occurred while loading the model:', error);
+//             document.getElementById('info').textContent = 'Error loading avatar!';
+//         }
+//     );
+
+//     // Handle window resize
+//     window.addEventListener('resize', onWindowResize, false);
+// }
+
+// function onWindowResize() {
+//     camera.aspect = window.innerWidth / window.innerHeight;
+//     camera.updateProjectionMatrix();
+//     renderer.setSize(window.innerWidth, window.innerHeight);
+// }
+
+// function animate() {
+//     requestAnimationFrame(animate);
+//     // Update controls if damping is enabled
+//     if (avatar) {
+//          // You can add animation updates here if your GLTF has animations
+//          // mixer.update(delta);
+//     }
+//     renderer.render(scene, camera);
+// }
+// init();
+// animate();
+
 
 /*
 import * as THREE from 'three';

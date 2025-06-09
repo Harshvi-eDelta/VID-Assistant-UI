@@ -1,26 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <title>Avatar UI</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-    <!-- for image icon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <!-- for gradient background -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style1.css') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VID-Assistant</title>
-    <link rel="stylesheet" href="css/style.css">
-
+    <!-- <link rel="stylesheet" href="static/css/style1.css"> -->
 </head>
 
 <body>
     <div class="container">
-        <!-- Sidebar -->
+        <!-- Sidebar on the left -->
         <div class="sidebar">
-            <!-- <h2>Upload Your Image</h2> -->
             <h3>Avatars</h3>
             <button id="openModalBtn" class="create-avatar-btn">Create Your Avatar</button>
 
@@ -34,41 +25,14 @@
                 {% endfor %}
             </div>
         </div>
-        
-        <!-- Main Content -->
-        <div class="main-content">
-            <h2>Welcome to Your Avatar Gallery</h2>
-            <div class="avatar-box">
-                <!-- <img id="uploadedAvatar" src="static/uploads/ABC.png" alt="Avatar" class="avatar-round"> -->
-                <!-- This image should be shown only AFTER user clicks "Create" -->
-                <!-- <img id="uploadedAvatar" src="{{ url_for('static', filename='images/placeholder.png') }}" alt="Avatar" class="avatar-round"> -->
-                <img id="uploadedAvatar" src="{{ avatars[-1].url if avatars else 'static/uploads/4.jpg' }}" alt="Avatar"
-                    class="avatar-round">
-            </div>
-            <!-- chatbot code -->
-            <div id="chatMessages" class="chat-messages">
-                <!-- Messages will be added here -->
-            </div>
-            <div class="message">
-                <div class="chat-input">
-                    <input type="text" id="userInput" placeholder="Type a message...">
-                    <button class="send-btn" onclick="sendMessage()">➤</button>
-                    <!-- Replace this: -->
-                    <button class="mic-btn" onclick="startListening()" title="Start Voice Input">
-                    <i class="fa fa-volume-up" aria-hidden="true"></i>
-                    </button>
-                </div>
-                <!-- <button class="mic-btn" onclick="startListening()" title="Start Voice Input">
-                <i class="fas fa-microphone"></i> 
-            </button> -->
-                <!-- <button class="mic-btn"><i class="fas fa-microphone" title="Start Voice Input" ></i></button>  -->
-            </div>
 
+        <!-- 3D Model Area on the right -->
+        <div class="main-content">
+            <div id="info">Loading 3D Avatar...</div>
+            <!-- Your Three.js canvas will appear here -->
         </div>
     </div>
-    </div>
 
-    <!-- Modal (Popup) for Avatar Creation -->
     <div id="avatarModal" class="modal">
         <div class="modal-content">
             <span class="close" id="closeModalBtn">&times;</span>
@@ -97,6 +61,7 @@
             </form>
         </div>
     </div>
+
 
     <script>
         // Get Modal and Button Elements
@@ -166,55 +131,6 @@
 
     </script>
 
-    <!-- chatbot script -->
-    <script>
-        function sendMessage() {
-            const input = document.getElementById('userInput');
-            const message = input.value.trim();
-            if (message != "") {
-                const chatMessages = document.getElementById('chatMessages');
-
-                const userMessage = document.createElement('div');
-                userMessage.className = 'message ';
-
-                const userText = document.createElement('p'); // 👈 Create <p> element
-                userText.innerText = message; // 👈 Set the message inside <p>
-                userText.className = 'user-message ';
-                userMessage.appendChild(userText); // 👈 Append <p> into the div
-                chatMessages.appendChild(userMessage); // 👈 Append div to chat container
-
-                input.value = '';
-                smoothScrollToBottom(chatMessages);
-
-
-                // Bot reply
-                setTimeout(() => {
-                    const botMessage = document.createElement('div');
-                    botMessage.className = 'message';
-
-                    const botText = document.createElement('p'); // 👈 Create <p> for bot
-                    botText.innerText = " " + message;
-                    botText.className = 'bot-message';
-                    botMessage.appendChild(botText); // 👈 Append <p> to bot div
-                    chatMessages.appendChild(botMessage);
-
-                    smoothScrollToBottom(chatMessages);
-                }, 500);
-            }
-        }
-        function startListening() {
-            alert('Microphone clicked! (You can implement voice recording here)');
-        }
-
-        function smoothScrollToBottom(element) {
-            element.scrollTo({
-                top: element.scrollHeight,
-                behavior: 'smooth'
-            });
-        }
-
-    </script>
-
     <!-- Scripts -->
     <script type="importmap">
         {
@@ -225,7 +141,6 @@
         }
     </script>
     <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
-
 </body>
 
 </html>
