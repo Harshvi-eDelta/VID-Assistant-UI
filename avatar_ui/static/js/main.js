@@ -11,7 +11,10 @@ function init() {
 
     // Scene
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x87ceeb); // Light blue background
+    scene.background = null;
+    // scene.background = new THREE.Color(0x87ceeb); // Light blue background
+
+
 
     // Camera
     camera = new THREE.PerspectiveCamera(
@@ -23,7 +26,7 @@ function init() {
     camera.position.set(0, 5, 0); // A better Z to actually view the model from front->(0,5,5)
 
     // Renderer
-    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer = new THREE.WebGLRenderer({ antialias: true ,alpha:true});
     renderer.setSize(container.clientWidth, container.clientHeight);
     container.appendChild(renderer.domElement);
 

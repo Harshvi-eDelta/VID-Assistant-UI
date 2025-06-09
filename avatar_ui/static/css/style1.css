@@ -17,6 +17,7 @@ body { margin: 0;overflow: hidden; }
 .main-content {
     flex: 1;
     position: relative;
+    background: linear-gradient(to bottom left,rgb(224, 148, 213,100) 5%,rgb(56, 56, 207,100) 90%);
     overflow: hidden;
 }
 
