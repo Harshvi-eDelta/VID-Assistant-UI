@@ -39,8 +39,8 @@
                 <!-- <img id="uploadedAvatar" src="static/uploads/ABC.png" alt="Avatar" class="avatar-round"> -->
                 <!-- This image should be shown only AFTER user clicks "Create" -->
                 <!-- <img id="uploadedAvatar" src="{{ url_for('static', filename='images/placeholder.png') }}" alt="Avatar" class="avatar-round"> -->
-                <img id="uploadedAvatar" src="{{ avatars[-1].url if avatars else 'static/uploads/4.jpg' }}" alt="Avatar"
-                    class="avatar-round">
+                <!-- img id="uploadedAvatar" src="{{ avatars[-1].url if avatars else 'static/uploads/4.jpg' }}" alt="Avatar"
+                    class="avatar-round" -->
             </div>
             <!-- chatbot code -->
             <div id="chatMessages" class="chat-messages">
@@ -48,10 +48,10 @@
             </div>
             <div class="message">
                 <div class="chat-input">
-                    <input type="text" id="userInput" placeholder="Type a message...">
+                    <input type="text" id="userInput" placeholder="Ask your Question...">
                     <button class="send-btn" onclick="sendMessage()">➤</button>
                     <!-- Replace this: -->
-                    <button class="mic-btn" onclick="startListening()" title="Start Voice Input">
+                    <button class="mic-btn" onclick="startListening()">
                     <i class="fa fa-volume-up" aria-hidden="true"></i>
                     </button>
                 </div>
