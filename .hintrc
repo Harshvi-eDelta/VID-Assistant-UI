@@ -17,6 +17,18 @@
       {
         "button-name": "off"
       }
-    ]
-  }
+    ],
+    "button-type": "off"
+  },
+  "browserslist": [
+    "defaults",
+    "not ie 11",
+    "not and_chr <= 135",
+    "not and_ff <= 137",
+    "not chrome <= 135",
+    "not edge <= 135",
+    "not firefox <= 137",
+    "not opera <= 117",
+    "not samsung <= 27"
+  ]
 }

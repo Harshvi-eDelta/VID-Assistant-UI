@@ -1,4 +1,7 @@
-body { margin: 0;overflow: hidden; }
+body { 
+    margin: 0;
+    overflow: hidden; 
+}
 
 .container {
     display: flex;
@@ -161,3 +164,119 @@ canvas {
 .create-btn:hover {
     background-color: #0056b3;
 }
+
+
+
+.main-container{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+        position: relative;
+    z-index: 1;
+        max-width: 800px;
+    width: 100%;
+    margin: auto;
+}
+
+.chat-container{
+    flex: 1;
+}
+/* chatbot css */
+.chat-messages {
+    width: 100%;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 15px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    row-gap: 12px;
+    max-width: 800px;
+    margin: auto;
+}
+.message {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 12px;
+    gap: 8px;
+}
+ 
+.user-message {
+    background-color: #2E2E2E;
+    border-radius: 18px;
+    word-wrap: break-word;
+    padding: 8px 12px;
+    color: white;
+    max-width: 80%;
+    margin-left: auto;
+    text-align: end;
+    width: max-content;
+}
+.bot-message {
+    background-color: rgba(241, 240, 240, 0.8);
+    border-radius: 18px;
+    word-wrap: break-word;
+    padding: 8px 12px;
+    color: black;
+    max-width: 80%;
+    width: max-content;
+}
+ 
+
+
+.chat-input {
+    flex: 1;
+    padding: 10px 45px 10px 15px; /* 👈 Padding for send button inside */
+    border-radius: 20px;
+    border: 1px solid #e1dada;
+    background-color:#fff;
+    outline: none;
+    font-size: 16px;
+    position: relative;
+    align-items: center;
+
+
+}
+
+.chat-input input{
+    background: transparent;
+    border: none;
+    width: 100%;
+    outline: none;
+}
+
+@keyframes slideUp {
+    0% {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0px);
+      opacity: 1;
+    }
+  }
+  .message {
+      animation: slideUp 0.5s ease;
+ 
+  }
+.send-btn {
+    position: absolute;
+    right: 16px;
+    top: 8px;
+    background: transparent;
+    border: none;
+    padding:0;
+     cursor: pointer;
+}
+.mic-btn {
+   background-color: white;
+    color: grey;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+

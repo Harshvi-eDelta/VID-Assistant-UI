@@ -14,10 +14,6 @@ avatars = []
 
 @app.route('/')
 def index():
-    # for filename in os.listdir(app.config['UPLOAD_FOLDER']):
-    #     if filename.endswith(('.jpg', '.jpeg', '.png')):
-    #         name = os.path.splitext(filename)[0]  # Get name without extension
-    #         avatars.append({'name': name, 'url': f"/static/uploads/{filename}"})
     return render_template('index.html', avatars=avatars)
 
 STATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
