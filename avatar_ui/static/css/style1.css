@@ -50,7 +50,7 @@ canvas {
 
 /* Create Avatar Button */
 .create-avatar-btn {
-    background-color: #043b43a5;
+    background-color: #524deda5;
     color: white;
     padding: 10px;
     width: 100%;
@@ -165,15 +165,47 @@ canvas {
     background-color: #0056b3;
 }
 
-
+/* Avatar Gallery Styles */
+.avatar-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+ 
+.avatar-card {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f5f5f5;
+    padding: 5px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+ 
+}
+ 
+.avatar-card img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+ 
+.avatar-card p {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
 
 .main-container{
     display: flex;
     flex-direction: column;
     height: 100%;
-        position: relative;
+    position: relative;
     z-index: 1;
-        max-width: 800px;
+    max-width: 800px;
     width: 100%;
     margin: auto;
 }
@@ -215,7 +247,7 @@ canvas {
     width: max-content;
 }
 .bot-message {
-    background-color: rgba(241, 240, 240, 0.8);
+    background-color: #2E2E2E;
     border-radius: 18px;
     word-wrap: break-word;
     padding: 8px 12px;
