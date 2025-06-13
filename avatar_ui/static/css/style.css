@@ -74,7 +74,7 @@ h1,h2,h3,h4,h5,h6,p{
 .avatar-card {
     width: 100px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     background: #f5f5f5;
     padding: 10px;
@@ -83,7 +83,7 @@ h1,h2,h3,h4,h5,h6,p{
 }
  
 .avatar-card img {
-    width: 200px;
+    width: 200px;   
     height: 200px;
     object-fit: cover;
     border-radius: 6px;

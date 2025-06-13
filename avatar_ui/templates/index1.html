@@ -20,36 +20,51 @@
             <div class="avatar-gallery">
                 {% for avatar in avatars %}
                 <div class="avatar-card">
-                    <img src="{{ avatar.url }}" alt="{{ avatar.name }}">
-                    <p>{{ avatar.name }}</p>
+                    <div>
+                        <img src="{{ avatar.url }}" alt="{{ avatar.name }}" class="avatar-thumbnail"
+                            data-url="{{ avatar.url }}">
+                        <p>{{ avatar.name }}</p>
+                    </div>
                 </div>
                 {% endfor %}
             </div>
         </div>
 
         <!-- 3D Model Area on the right -->
+        <!-- 3D Model / Avatar Display Area -->
         <div class="main-content">
-            <div id="info">Loading 3D Avatar...</div>
-            <!-- Your Three.js canvas will appear here -->
+
 
             <div class="main-container">
-                <div class="chat-container">dfdf</div>
+                <!-- Avatar Display -->
+                <div class="main-avatar-container">
+                    <img id="mainAvatarDisplay" src="" alt="Main Avatar"
+                        style="max-height: 200px; border-radius: 12px;">
+                </div>
+
+                <!-- Chat Container -->
+                <div class="chat-history">
+                    <div class="chat-container" id="chatMessages"></div>
+                </div>
+                <div id="info">Avatar Loaded!</div>
+
+                <!-- Chat Input -->
+
 
                 <div class="message">
                     <div class="chat-input">
                         <input type="text" id="userInput" placeholder="Ask your Question...">
                         <button class="send-btn" onclick="sendMessage()">
-
                             <img src="../static/images/sendicon.svg" alt="">
                         </button>
                     </div>
-                     <button class="mic-btn" onclick="startListening()">
-                             <img src="../static/images/micicon.svg" alt="">
-                        </button>
+                    <button class="mic-btn" onclick="startListening()">
+                        <img src="../static/images/micicon.svg" alt="">
+                    </button>
                 </div>
-
             </div>
         </div>
+
 
         <div id="avatarModal" class="modal">
             <div class="modal-content">
@@ -118,6 +133,22 @@
     </script>
 
     <script>
+        // Change avatar in main display when clicked
+        document.addEventListener('DOMContentLoaded', function () {
+            const thumbnails = document.querySelectorAll('.avatar-thumbnail');
+            const mainDisplay = document.getElementById('mainAvatarDisplay');
+
+            thumbnails.forEach(img => {
+                img.addEventListener('click', function () {
+                    const selectedURL = this.getAttribute('data-url');
+                    mainDisplay.src = selectedURL;
+                });
+            });
+        });
+    </script>
+
+
+    <script>
 
         const uploadInput = document.getElementById('upload');
         const uploadIcon = document.getElementById('uploadIcon');
@@ -142,34 +173,33 @@
         });
 
         // When user clicks the Create button
-       createBtn.addEventListener('click', function (event) {
-    event.preventDefault(); // stop form from submitting
-    // No need to assign to uploadedAvatar
-    createBtn.closest('form').submit(); // submit it manually
-});
-
-
+        createBtn.addEventListener('click', function (event) {
+            event.preventDefault(); // stop form from submitting
+            // No need to assign to uploadedAvatar
+            createBtn.closest('form').submit(); // submit it manually
+        });
     </script>
 
     <!-- chatbot script -->
     <script>
         function sendMessage() {
+            // alert()
             const input = document.getElementById('userInput');
             const message = input.value.trim();
             if (message != "") {
                 const chatMessages = document.getElementById('chatMessages');
 
                 const userMessage = document.createElement('div');
-                userMessage.className = 'message ';
+                // userMessage.className = 'message ';
 
                 const userText = document.createElement('p'); // 👈 Create <p> element
                 userText.innerText = message; // 👈 Set the message inside <p>
                 userText.className = 'user-message ';
                 userMessage.appendChild(userText); // 👈 Append <p> into the div
-                // chatMessages.appendChild(userMessage); // 👈 Append div to chat container
+                chatMessages.appendChild(userMessage); // 👈 Append div to chat container
 
                 input.value = '';
-                // smoothScrollToBottom(chatMessages);
+                smoothScrollToBottom(chatMessages);
 
 
                 // Bot reply
@@ -181,9 +211,9 @@
                     botText.innerText = " " + message;
                     botText.className = 'bot-message';
                     botMessage.appendChild(botText); // 👈 Append <p> to bot div
-                    // chatMessages.appendChild(botMessage);
+                    chatMessages.appendChild(botMessage);
 
-                    // smoothScrollToBottom(chatMessages);
+                    smoothScrollToBottom(chatMessages);
                 }, 500);
             }
         }
@@ -191,12 +221,12 @@
             alert('Microphone clicked! (You can implement voice recording here)');
         }
 
-        // function smoothScrollToBottom(element) {
-        //     element.scrollTo({
-        //         top: element.scrollHeight,
-        //         behavior: 'smooth'
-        //     });
-        // }
+        function smoothScrollToBottom(element) {
+            element.scrollTo({
+                top: element.scrollHeight,
+                behavior: 'smooth'
+            });
+        }
 
     </script>
 
