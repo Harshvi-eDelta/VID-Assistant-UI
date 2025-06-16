@@ -1,7 +1,12 @@
 from flask import Flask, render_template, send_from_directory,request,url_for,redirect
 import os
+import sys
 # from PIL import Image
 from werkzeug.utils import secure_filename
+# For chatbot response
+from flask import Flask,request,jsonify
+from rag import get_chat_response   # Added for chatbot integration
+
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'avatar_ui/static/uploads'
@@ -9,7 +14,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Get all uploaded avatars and their names
-avatars = []
+avatars = []    
 
 @app.route('/')
 def index():
@@ -41,6 +46,12 @@ def upload():
 
     return redirect(url_for('index'))
 
+@app.route('/get-response', methods=['POST'])
+
+def get_response():
+    user_input = request.json.get("message")
+    bot_response = get_chat_response(user_input)  
+    return jsonify({"response": bot_response})
 
 if __name__ == '__main__':
     app.run(debug=True)

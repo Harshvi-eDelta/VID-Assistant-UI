@@ -75,7 +75,7 @@ function init() {
             avatar.position.set(0, 0, -1.5);
             scene.add(avatar);
             // document.getElementById('info').textContent = 'Avatar Loaded!';
-            console.log("avtar loaded!.....")
+            console.log("avatar loaded!.....")
             console.log(avatar)
         },
         function (xhr) {

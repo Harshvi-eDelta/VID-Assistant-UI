@@ -36,6 +36,3 @@ SpeechRecognition
 pydub
 js
 chromadb
-langchain_community
-llama-cpp-python
-pandas

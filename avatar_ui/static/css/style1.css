@@ -235,11 +235,16 @@ canvas {
     
 }
 
+/* chatbot css */
 .chat-container{
     height: 100%;
     max-width: 800px;
     width: 100%;
     margin: auto;
+
+    /* 🔽 Fade-out transparency at top
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0,0,0,0.7) 20%, rgba(0,0,0,1));
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0,0,0,0.7) 20%, rgba(0,0,0,1)); */
 
 }
 
@@ -249,10 +254,11 @@ canvas {
     display: flex;
     flex-direction: column;
     max-height: 60%;
-    margin-top: auto;
+    margin-top: auto;   
     margin-bottom: 12px;
 }
-/* chatbot css */
+
+
 .chat-messages {
     width: 100%;
     flex-grow: 1;
@@ -264,19 +270,23 @@ canvas {
     row-gap: 12px;
     max-width: 800px;
     margin: auto;
+    max-height: 70vh;
+    scroll-behavior: smooth;
+    /* padding-top: 60px;   */
 }
+
+
 .message {
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     padding-bottom: 12px;
     gap: 8px;
-    z-index: 101;
     max-width: 800px;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
+    /* padding-top: 60px;*/
 }
 
 .user-message {
@@ -288,7 +298,7 @@ canvas {
     max-width: 80%;
     margin-left: auto;
     text-align: end;
-    width: max-content;
+    width: max-content; 
 }
 .bot-message {
     background-color: #f1f2f2b4;
@@ -300,8 +310,6 @@ canvas {
     width: max-content;
 }
  
-
-
 .chat-input {
     flex: 1;
     padding: 10px 45px 10px 15px; /* 👈 Padding for send button inside */
@@ -312,8 +320,6 @@ canvas {
     font-size: 16px;
     position: relative;
     align-items: center;
-
-
 }
 
 .chat-input input{
@@ -333,18 +339,18 @@ canvas {
       opacity: 1;
     }
   }
-  .message {
+.message {
       animation: slideUp 0.5s ease;
  
   }
 .send-btn {
     position: absolute;
-    right: 16px;
+    right: 10px;
     top: 8px;
     background: transparent;
     border: none;
     padding:0;
-     cursor: pointer;
+    cursor: pointer;
 }
 .mic-btn {
    background-color: #ffffff9c;
@@ -354,6 +360,10 @@ canvas {
     height: 40px;
     border-radius: 50%;
     cursor: pointer;
+}
+
+.mic-btn img{
+    width: 20px;
 }
 
 ::-webkit-scrollbar {
@@ -371,4 +381,58 @@ canvas {
   background: #9d8aa1a3; 
   border-radius: 10px;
 }
+
+/* --- Bot Typing Indicator (WhatsApp-style) --- */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  background-color: transparent;
+  border-radius: 18px;
+  width: fit-content;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.typing-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #fff;
+  border-radius: 50%;
+  animation: typingBounce 1.4s infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.typing-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingBounce {
+  0%, 80%, 100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+
+/* Fade-out animation */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+/* Reusable fade-out class */
+.fade-out {
+    animation: fadeOut 0.6s ease forwards;
+}
+
 

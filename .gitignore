@@ -7,3 +7,34 @@ avatar_ui/static/lip-sync/
 avatar_ui/static/audio/
 .vscode/
 avatar_ui/TTS_pipeline/__pycache__/
+models/
+models/
+
+avatar_ui/static/audio/# Ignore Python virtual environment
+env/
+
+# Ignore machine learning model files and outputs
+models/
+*.h5
+*.pt
+*.pkl
+*.gguf
+
+# Ignore ChromaDB persistent storage
+chroma_db/
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+*.so
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore logs and temp files
+*.log
+*.tmp
+
+# Ignore system files
+.DS_Store
+Thumbs.db

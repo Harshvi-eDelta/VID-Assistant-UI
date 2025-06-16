@@ -33,11 +33,9 @@
             </div>
         </div>
 
-        <!-- 3D Model Area on the right -->
+        
         <!-- 3D Model / Avatar Display Area -->
         <div class="main-content">
-
-
             <div class="main-container">
                 <!-- Avatar Display -->
                 <div class="main-avatar-container">
@@ -54,12 +52,12 @@
                 <!-- Chat Input -->
                 <div class="message">
                     <div class="chat-input">
-                        <input type="text" id="userInput" placeholder="Ask your Question...">
-                        <button id="sendButton" class="send-btn" >
+                        <input type="text" id="userInput" placeholder="Type a message..">
+                        <button class="send-btn" onclick="sendMessage()">
                             <img src="../static/images/sendicon.svg" alt="">
                         </button>
                     </div>
-                    <button id="micButton" class="mic-btn" >
+                    <button id="micButton" class="mic-btn" onclick="startListening()">
                         <img src="../static/images/micicon.svg" alt="">
                     </button>
                 </div>
@@ -69,7 +67,7 @@
 
         <div id="avatarModal" class="modal">
             <div class="modal-content">
-                <!-- <span class="close" id="closeModalBtn">&times;</span> -->
+                <span class="close" id="closeModalBtn">&times;</span>
                 <h2>Upload your Image</h2>
                 <form action="/upload" method="post" enctype="multipart/form-data">
                     <div class="upload-box">
@@ -115,22 +113,22 @@
             modal.style.display = "block";
         }
 
-        // // When the user clicks on <span> (x), close the modal
-        // closeModalBtn.onclick = function () {
-        //     modal.style.display = "none";
-        // }
+        // When the user clicks on <span> (x), close the modal
+        closeModalBtn.onclick = function () {
+            modal.style.display = "none";
+        }
 
         // When the user clicks on Cancel button, close the modal
         cancelBtn.onclick = function () {
             modal.style.display = "none";
         }
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
+        // // When the user clicks anywhere outside of the modal, close it
+        // window.onclick = function (event) {
+        //     if (event.target == modal) {
+        //         modal.style.display = "none";
+        //     }
+        // }
     </script>
 
     <script>
@@ -180,7 +178,91 @@
             createBtn.closest('form').submit(); // submit it manually
         });
     </script>
-    
+
+    <!-- chatbot script -->
+<script>
+    function sendMessage() {
+        const input = document.getElementById('userInput');
+        const message = input.value.trim();
+
+        if (message !== "") {
+            const chatMessages = document.getElementById('chatMessages');
+
+            // Display user message
+            const userMessage = document.createElement('div');
+            const userText = document.createElement('p');
+            userText.innerText = message;
+            userText.className = 'user-message';
+            userMessage.appendChild(userText);
+            chatMessages.appendChild(userMessage);
+
+            input.value = '';
+            smoothScrollToBottom(chatMessages);
+
+            // Show typing dots
+            const typingIndicator = document.createElement('div');
+            typingIndicator.className = 'typing-indicator';
+            typingIndicator.innerHTML = `
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            <span class="typing-dot"></span>
+            `;
+            chatMessages.appendChild(typingIndicator);
+            smoothScrollToBottom(chatMessages);
+
+            // Send request to backend
+            fetch("/get-response", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message })
+            })
+            .then(res => res.json())
+            .then(data => {
+                // Remove typing indicator
+                chatMessages.removeChild(typingIndicator);
+
+                // Add bot message
+                const botMessage = document.createElement('div');
+                const botText = document.createElement('p');
+                botText.innerText = data.response;
+                botText.className = 'bot-message';
+                botMessage.appendChild(botText);
+                chatMessages.appendChild(botMessage);
+                smoothScrollToBottom(chatMessages);
+            })
+            .catch(err => {
+                console.error("Error:", err);
+                chatMessages.removeChild(typingIndicator);
+            });
+
+        }
+    }
+
+    function startListening() {
+        alert('Microphone clicked! (You can implement voice recording here)');
+    }
+
+    function smoothScrollToBottom(element) {
+        element.scrollTo({
+            top: element.scrollHeight,  
+            behavior: 'smooth'
+        });
+    }
+
+        // Enable Enter key to send message
+    document.getElementById("userInput").addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault();  // prevent newline (if needed)
+            sendMessage();
+        }
+    });
+
+</script>
+
+
+    <!-- Scripts -->
     <script type="importmap">
         {
             "imports": {
