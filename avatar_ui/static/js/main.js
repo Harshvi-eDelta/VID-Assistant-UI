@@ -1,174 +1,113 @@
-
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 let scene, camera, renderer, avatar;
+// let audio, audioLoader;
+// let lipSyncData = [];
+// let currentPhonemeIndex = 0;
+// let avatarMeshesWithMorphTargets = []; // To store meshes that have morph targets
+
+// // Define your string here
+// const SPEECH_TEXT = "in being comparatively modern";
+// const AUDIO_FILE_PATH = '/static/audio/2.wav'; // Path to your generated audio
+// const LIPSINC_DATA_PATH = '/static/data/lipsync_data.json'; // Path to your generated phoneme data
 
 function init() {
-    // Get the container where the 3D canvas should be added
     const container = document.querySelector('.main-content');
 
     // Scene
     scene = new THREE.Scene();
-    scene.background = null;
-    // scene.background = new THREE.Color(0x87ceeb); // Light blue background
+    scene.background = null; // Light blue background
 
     // Camera
-    camera = new THREE.PerspectiveCamera(
-        75,
-        container.clientWidth / container.clientHeight,
-        0.1,
-        1000
-    );
-    camera.position.set(0, 5, 0); // A better Z to actually view the model from front->(0,5,5)
+    camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.set(0, 5, 0); // Position camera to look at a typical avatar height
 
     // Renderer
     renderer = new THREE.WebGLRenderer({ antialias: true ,alpha:true});
-    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setSize(container.clientWidth, container.clientHeight); // Reduced size for demo
     container.appendChild(renderer.domElement);
 
-    // Light
+    // Lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+    scene.add(ambientLight);
+
     const directionalLight = new THREE.DirectionalLight(0xffffff, 10);
-    directionalLight.position.set(1, 5, -1).normalize();
+    directionalLight.position.set(1, 5, 2).normalize();
     scene.add(directionalLight);
 
-    // Controls
+    // OrbitControls (for interaction)
     const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
+    controls.enableDamping = true; // smooth rotation
     controls.dampingFactor = 0.05;
-    controls.target.set(0, 1, 0);
+    controls.target.set(0, 1, 0); // Target the center of the avatar typically
     controls.update();
 
-    // Load Model
+    // // Audio setup
+    // const listener = new THREE.AudioListener();
+    // camera.add(listener);
+    // audio = new THREE.Audio(listener);
+    // audioLoader = new THREE.AudioLoader();
+
+    // const micButton = document.getElementById('micButton');
+
+    // micButton.addEventListener('click', () => {
+    //     console.log("click mic.....")
+    //     if (audio) {
+    //         console.log("play audio....",audio)
+    //         audio.play();
+    //         currentPhonemeIndex = 0; // Reset for new playback
+    //         document.getElementById('info').textContent = 'Playing audio...';
+    //     } else {
+    //         console.log("no audio or data")
+    //         document.getElementById('info').textContent = 'Audio or lip-sync data not ready.';
+    //     }
+    // });
+
+    // Load GLTF Model
     const loader = new GLTFLoader();
     loader.load(
-        '/static/models/a4.glb',
+        '/static/models/a4.glb', // **IMPORTANT: Replace with your actual model path**
         function (gltf) {
             avatar = gltf.scene;
             avatar.scale.set(1, 1, 1);
-            avatar.position.set(0, 0, -1.8);
+            avatar.position.set(0, 0, 0);
             scene.add(avatar);
-            document.getElementById('info').textContent = 'Avatar Loaded!';
+            // document.getElementById('info').textContent = 'Avatar Loaded!';
+            console.log("avtar loaded!.....")
+            console.log(avatar)
         },
         function (xhr) {
-            const progress = (xhr.loaded / xhr.total) * 100;
+            const progress = (xhr.loaded / xhr.total * 100);
             document.getElementById('info').textContent = `Loading: ${progress.toFixed(2)}%`;
+            console.log('Loading ' + progress + '% of model');
         },
         function (error) {
-            console.error('Error loading model:', error);
+            console.error('An error occurred while loading the model:', error);
             document.getElementById('info').textContent = 'Error loading avatar!';
         }
     );
 
-    // Resize handling
+    // Handle window resize
+    // window.addEventListener('resize', onWindowResize, false);
     window.addEventListener('resize', () => {
-        const width = container.clientWidth;
-        const height = container.clientHeight;
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-        renderer.setSize(width, height);
-    });
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+            });
 }
 
-function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-}
 
 function animate() {
     requestAnimationFrame(animate);
-    // Update controls if damping is enabled
-    if (avatar) {
-         // You can add animation updates here if your GLTF has animations
-         // mixer.update(delta);
-    }
     renderer.render(scene, camera);
 }
+
 init();
 animate();
-
-// import * as THREE from 'three';
-// import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-// import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
-// // let scene, camera, renderer, avatar;
-
-// function init() {
-//     // Scene
-//     scene = new THREE.Scene();
-//     scene.background = new THREE.Color(0x87ceeb); // Light blue background
-
-//     // Camera
-//     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-//     camera.position.set(0, 5, 0); // Position camera to look at a typical avatar height
-
-//     // Renderer
-//     renderer = new THREE.WebGLRenderer({ antialias: true });
-//     renderer.setSize(window.innerWidth, window.innerHeight);
-//     document.body.appendChild(renderer.domElement);
-//     // Lights
-//     // const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
-//     // scene.add(ambientLight);
-
-//     const directionalLight = new THREE.DirectionalLight(0xffffff, 10);
-//     directionalLight.position.set(1, 5, -1).normalize();
-//     scene.add(directionalLight);
-
-//     // OrbitControls (for interaction)
-//     const controls = new OrbitControls(camera, renderer.domElement);
-//     controls.enableDamping = true; // smooth rotation
-//     controls.dampingFactor = 0.05;
-//     controls.target.set(0, 1, 0); // Target the center of the avatar typically
-
-//     // Load GLTF Model
-//     const loader = new GLTFLoader();
-//     // The URL for the model is relative to the static folder, and Flask serves it
-//     loader.load(
-//         '/static/models/a4.glb', // **IMPORTANT: Replace with your actual model path**
-//         function (gltf) {
-//             avatar = gltf.scene;
-//             // Scale or position your avatar as needed
-//             avatar.scale.set(1, 1, 1);
-//             avatar.position.set(0, 0, 0);
-//             scene.add(avatar);
-//             document.getElementById('info').textContent = 'Avatar Loaded!';
-//         },
-//         function (xhr) {
-//             // Progress callback
-//             const progress = (xhr.loaded / xhr.total * 100);
-//             document.getElementById('info').textContent = `Loading: ${progress.toFixed(2)}%`;
-//             console.log('Loading ' + progress + '% of model');
-//         },
-//         function (error) {
-//             // Error callback
-//             console.error('An error occurred while loading the model:', error);
-//             document.getElementById('info').textContent = 'Error loading avatar!';
-//         }
-//     );
-
-//     // Handle window resize
-//     window.addEventListener('resize', onWindowResize, false);
-// }
-
-// function onWindowResize() {
-//     camera.aspect = window.innerWidth / window.innerHeight;
-//     camera.updateProjectionMatrix();
-//     renderer.setSize(window.innerWidth, window.innerHeight);
-// }
-
-// function animate() {
-//     requestAnimationFrame(animate);
-//     // Update controls if damping is enabled
-//     if (avatar) {
-//          // You can add animation updates here if your GLTF has animations
-//          // mixer.update(delta);
-//     }
-//     renderer.render(scene, camera);
-// }
-// init();
-// animate();
 
 
 // import * as THREE from 'three';
@@ -177,32 +116,34 @@ animate();
 
 // let scene, camera, renderer, avatar;
 // let audio, audioLoader;
-// let lipSyncData = [];
-// let currentPhonemeIndex = 0;
-// let avatarMeshesWithMorphTargets = []; // To store meshes that have morph targets
+// let audioLoaded = false; // Flag to track if audio is loaded
+// // Removed: let lipSyncData = [];
+// // Removed: let currentPhonemeIndex = 0;
+// // Removed: let avatarMeshesWithMorphTargets = []; // To store meshes that have morph targets
 
-// Define your string here
-// const SPEECH_TEXT = "Hello, world! This is a lip-sync demo.";
+// // // Define your string here (not used for audio playback only)
 // const SPEECH_TEXT = "in being comparatively modern";
-// const AUDIO_FILE_PATH = '/static/audio/1.wav'; // Path to your generated audio
-// const LIPSINC_DATA_PATH = '/static/data/lipsync_data.json'; // Path to your generated phoneme data
+// const AUDIO_FILE_PATH = '/static/audio/2.wav'; // Path to your generated audio
+// // Removed: const LIPSINC_DATA_PATH = '/static/data/lipsync_data.json'; // Path to your generated phoneme data
 
-// // Map of common viseme names to their blend shape indices (will be populated dynamically)
-// const visemeMorphTargetIndices = {};
+// // Removed: Map of common viseme names to their blend shape indices (will be populated dynamically)
+// // Removed: const visemeMorphTargetIndices = {};
 
 // function init() {
+//     const container = document.querySelector('.main-content');
+
 //     // Scene
 //     scene = new THREE.Scene();
-//     scene.background = new THREE.Color(0x87ceeb); // Light blue background
+//     scene.background = null; // Light blue background
 
 //     // Camera
-//     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-//     camera.position.set(0, 1.5, 3); // Position camera to look at a typical avatar height
+//     camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+//     camera.position.set(0, 5, 0); // Position camera to look at a typical avatar height
 
 //     // Renderer
-//     renderer = new THREE.WebGLRenderer({ antialias: true });
-//     renderer.setSize(window.innerWidth / 2, window.innerHeight / 2); // Reduced size for demo
-//     document.body.appendChild(renderer.domElement);
+//     renderer = new THREE.WebGLRenderer({ antialias: true ,alpha:true});
+//     renderer.setSize(container.clientWidth, container.clientHeight); // Reduced size for demo
+//     container.appendChild(renderer.domElement);
 
 //     // Lights
 //     const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
@@ -217,6 +158,7 @@ animate();
 //     controls.enableDamping = true; // smooth rotation
 //     controls.dampingFactor = 0.05;
 //     controls.target.set(0, 1, 0); // Target the center of the avatar typically
+//     controls.update();
 
 //     // Audio setup
 //     const listener = new THREE.AudioListener();
@@ -224,27 +166,88 @@ animate();
 //     audio = new THREE.Audio(listener);
 //     audioLoader = new THREE.AudioLoader();
 
-//     // UI for starting playback
-//     const startButton = document.createElement('button');
-//     startButton.textContent = 'Start Lip-Sync (Play Audio)';
-//     startButton.style.position = 'absolute';
-//     startButton.style.bottom = '20px';
-//     startButton.style.left = '50%';
-//     startButton.style.transform = 'translateX(-50%)';
-//     startButton.style.padding = '10px 20px';
-//     startButton.style.fontSize = '18px';
-//     startButton.style.cursor = 'pointer';
-//     document.body.appendChild(startButton);
+//     // Removed: Lip-sync data loading
+//     // fetch(LIPSINC_DATA_PATH)
+//     //     .then(response => {
+//     //         if (!response.ok) {
+//     //             throw new Error(`HTTP error! status: ${response.status}`);
+//     //         }
+//     //         return response.json();
+//     //     })
+//     //     .then(data => {
+//     //         lipSyncData = data;
+//     //         document.getElementById('info').textContent = 'Lip-sync data loaded.';
+//     //         console.log("Lip-sync data loaded successfully:", lipSyncData);
+//     //     })
+//     //     .catch(error => {
+//     //         console.error('Error loading lip-sync data:', error);
+//     //         document.getElementById('info').textContent = 'Error loading lip-sync data!';
+//     //     });
 
-//     startButton.addEventListener('click', () => {
-//         if (audio && lipSyncData.length > 0) {
-//             console.log("play audio....")
+//     function load_Audio(){
+//         // IMPORTANT: Load the audio file here!
+//         audioLoader.load(AUDIO_FILE_PATH, function(buffer) {
+//             audio.setBuffer(buffer);
+//             audio.setLoop(false); // Set to true if you want it to loop
+//             audio.setVolume(0.5); // Adjust volume as needed
+//             document.getElementById('info').textContent = 'Audio loaded. Click the mic button to play.';
+//             console.log("Audio buffer loaded successfully.");
+//         },
+//         function (xhr) {
+//             // Optional: Progress callback for audio loading
+//             console.log((xhr.loaded / xhr.total * 100) + '% loaded audio');
+//         },
+//         function (err) {
+//             console.error('An error occurred while loading the audio:', err);
+//             document.getElementById('info').textContent = 'Error loading audio!';
+//         });
+
+//     }
+
+//     const micButton = document.getElementById('micButton');
+//     micButton.addEventListener('click', () => {
+//         console.log("Mic button clicked.");
+
+//         if (!audioLoaded) {
+//             // Audio not loaded yet, initiate loading and then play
+//             document.getElementById('info').textContent = 'Loading audio...';
+//             console.log("Loading audio from:", AUDIO_FILE_PATH);
+
+//             audioLoader.load(AUDIO_FILE_PATH, function(buffer) {
+//                 audio.setBuffer(buffer);
+//                 audio.setLoop(false);
+//                 audio.setVolume(0.5);
+//                 audioLoaded = true; // Set flag to true once loaded
+//                 document.getElementById('info').textContent = 'Audio loaded and playing.';
+//                 console.log("Audio buffer loaded successfully. Playing audio...");
+//                 audio.play(); // Play immediately after loading
+//             },
+//             function (xhr) {
+//                 // Optional: Progress callback for audio loading
+//                 const progress = (xhr.loaded / xhr.total * 100);
+//                 document.getElementById('info').textContent = `Loading audio: ${progress.toFixed(2)}%`;
+//                 console.log(`Loading audio: ${progress.toFixed(2)}%`);
+//             },
+//             function (err) {
+//                 console.error('An error occurred while loading the audio:', err);
+//                 document.getElementById('info').textContent = 'Error loading audio!';
+//             });
+//         } else if (audio.buffer) {
+//             // Audio already loaded
+//             console.log("Audio already loaded.");
+
+//             // *** NEW: Stop audio if it's currently playing ***
+//             if (audio.isPlaying) {
+//                 audio.stop();
+//                 console.log("Audio stopped. Restarting...");
+//             }
+
+//             // Play it from the beginning
 //             audio.play();
-//             currentPhonemeIndex = 0; // Reset for new playback
 //             document.getElementById('info').textContent = 'Playing audio...';
 //         } else {
-//             console.log("no audio or data")
-//             document.getElementById('info').textContent = 'Audio or lip-sync data not ready.';
+//             document.getElementById('info').textContent = 'Audio is in an unexpected state. Try again.';
+//             console.log("Audio in unexpected state.");
 //         }
 //     });
 
@@ -257,27 +260,20 @@ animate();
 //             avatar.scale.set(1, 1, 1);
 //             avatar.position.set(0, 0, 0);
 //             scene.add(avatar);
-//             document.getElementById('info').textContent = 'Avatar Loaded!';
+//             console.log("Avatar loaded!.....")
 //             console.log(avatar)
-//             // Collect all meshes that have morph targets
-//             avatar.traverse((o) => {
-                
-//                 if (o.isMesh && o.morphTargetDictionary && o.morphTargetInfluences) {
-//                     avatarMeshesWithMorphTargets.push(o);
-//                     // Store the index for each possible viseme blend shape
-//                     for (const visemeName in o.morphTargetDictionary) {
-//                         visemeMorphTargetIndices[visemeName] = o.morphTargetDictionary[visemeName];
-//                     }
-//                     console.log("Found blend shapes:", Object.keys(o.morphTargetDictionary));
-//                 }
-//             });
 
-//             if (avatarMeshesWithMorphTargets.length === 0) {
-//                 console.warn('No meshes with morph targets found on the avatar. Lip-sync will not work.');
-//                 document.getElementById('info').textContent = 'Error: No blend shapes found on avatar!';
-//             } else {
-//                 loadAudioAndLipSyncData();
-//             }
+//             // Removed: Populate avatarMeshesWithMorphTargets and visemeMorphTargetIndices after avatar is loaded
+//             // avatar.traverse(node => {
+//             //     if (node.isMesh && node.morphTargetInfluences && node.morphTargetDictionary) {
+//             //         avatarMeshesWithMorphTargets.push(node);
+//             //         for (const [key, value] of Object.entries(node.morphTargetDictionary)) {
+//             //             visemeMorphTargetIndices[key.toLowerCase()] = value;
+//             //         }
+//             //     }
+//             // });
+//             // console.log("Meshes with morph targets:", avatarMeshesWithMorphTargets);
+//             // console.log("Viseme Morph Target Indices:", visemeMorphTargetIndices);
 //         },
 //         function (xhr) {
 //             const progress = (xhr.loaded / xhr.total * 100);
@@ -291,94 +287,82 @@ animate();
 //     );
 
 //     // Handle window resize
-//     window.addEventListener('resize', onWindowResize, false);
-// }
-
-// function loadAudioAndLipSyncData() {
-//     // Load audio
-//     audioLoader.load(AUDIO_FILE_PATH, function (buffer) {
-//         audio.setBuffer(buffer);
-//         document.getElementById('info').textContent = 'Audio loaded. Loading lip-sync data...';
-//     }, undefined, function (err) {
-//         console.error('Error loading audio:', err);
-//         document.getElementById('info').textContent = 'Error loading audio!';
-//     });
-
-//     // Load lip-sync data (JSON)
-//     fetch(LIPSINC_DATA_PATH)
-//         .then(response => response.json())
-//         .then(data => {
-//             lipSyncData = data.sort((a, b) => a.time - b.time); // Ensure data is sorted by time
-//             document.getElementById('info').textContent = 'Lip-sync data loaded. Click "Start Lip-Sync"';
-//             console.log('Lip-sync data:', lipSyncData);
-//         })
-//         .catch(error => {
-//             console.error('Error loading lip-sync data:', error);
-//             document.getElementById('info').textContent = 'Error loading lip-sync data!';
-//         });
-// }
-
-// // Function to set all blend shapes to 0 influence
-// function resetAllVisemes() {
-//     avatarMeshesWithMorphTargets.forEach(mesh => {
-//         if (mesh.morphTargetInfluences) {
-//             for (let i = 0; i < mesh.morphTargetInfluences.length; i++) {
-//                 mesh.morphTargetInfluences[i] = 0;
-//             }
-//         }
+//     window.addEventListener('resize', () => {
+//         const width = container.clientWidth;
+//         const height = container.clientHeight;
+//         camera.aspect = width / height;
+//         camera.updateProjectionMatrix();
+//         renderer.setSize(width, height);
 //     });
 // }
 
-// function applyViseme(visemeName, influence = 1.0) {
-//     // Reset all visemes first to avoid overlapping shapes (optional, but often good)
-//     resetAllVisemes();
-
-//     avatarMeshesWithMorphTargets.forEach(mesh => {
-//         const visemeIndex = visemeMorphTargetIndices[visemeName];
-//         if (visemeIndex !== undefined && mesh.morphTargetInfluences) {
-//             mesh.morphTargetInfluences[visemeIndex] = influence;
-//         }
-//     });
-// }
-
-// function onWindowResize() {
-//     camera.aspect = window.innerWidth / window.innerHeight;
-//     camera.updateProjectionMatrix();
-//     renderer.setSize(window.innerWidth / 2, window.innerHeight / 2); // Keep reduced size
-// }
 
 // function animate() {
 //     requestAnimationFrame(animate);
 
-//     if (audio && audio.isPlaying && lipSyncData.length > 0 && avatarMeshesWithMorphTargets.length > 0) {
-//         const currentTime = audio.context.currentTime - audio.startTime;
-
-//         // Advance through phonemes based on current audio time
-//         while (currentPhonemeIndex < lipSyncData.length - 1 &&
-//                lipSyncData[currentPhonemeIndex + 1].time <= currentTime) {
-//             currentPhonemeIndex++;
-//         }
-
-//         const currentPhoneme = lipSyncData[currentPhonemeIndex];
-//         // console.log(`Time: ${currentTime.toFixed(2)}, Viseme: ${currentPhoneme.viseme}`);
-
-//         // Apply the current viseme. You might want to add interpolation here
-//         // to smooth transitions between visemes, especially for short phonemes.
-//         applyViseme(currentPhoneme.viseme, 1.0); // Apply full influence for now
-
-//         // Optionally, reset to idle when audio finishes
-//         if (!audio.isPlaying && currentTime >= audio.buffer.duration) {
-//             applyViseme('viseme_idle', 1.0); // Or whatever your idle/closed mouth blend shape is
-//             currentPhonemeIndex = 0; // Reset for next play
-//         }
-//     } else if (avatar && avatarMeshesWithMorphTargets.length > 0 && !audio.isPlaying) {
-//         // Ensure mouth is closed/idle when not speaking
-//         applyViseme('viseme_idle', 1.0); // Ensure your model has a 'viseme_idle' or similar
-//     }
-
+//     // Removed: Lip-sync logic
+//     // if (audio && audio.isPlaying && lipSyncData.length > 0) {
+//     //     const currentTime = audio.context.currentTime - audio.startTime;
+//     //     while (currentPhonemeIndex < lipSyncData.length &&
+//     //            lipSyncData[currentPhonemeIndex].start_time <= currentTime) {
+//     //         currentPhonemeIndex++;
+//     //     }
+//     //     if (currentPhonemeIndex > 0) {
+//     //         const currentPhoneme = lipSyncData[currentPhonemeIndex - 1];
+//     //         applyPhonemeToAvatar(currentPhoneme.phoneme);
+//     //     } else {
+//     //         applyPhonemeToAvatar('');
+//     //     }
+//     // } else if (audio && !audio.isPlaying) {
+//     //     resetMorphTargets();
+//     // }
 
 //     renderer.render(scene, camera);
 // }
+
+// // Removed: Lip-sync related functions
+// // function applyPhonemeToAvatar(phoneme) {
+// //     resetMorphTargets();
+// //     let viseme = getVisemeForPhoneme(phoneme);
+// //     if (viseme && visemeMorphTargetIndices.hasOwnProperty(viseme)) {
+// //         const morphIndex = visemeMorphTargetIndices[viseme];
+// //         avatarMeshesWithMorphTargets.forEach(mesh => {
+// //             if (mesh.morphTargetInfluences && mesh.morphTargetInfluences[morphIndex] !== undefined) {
+// //                 mesh.morphTargetInfluences[morphIndex] = 1.0;
+// //             }
+// //         });
+// //     }
+// // }
+
+// // function resetMorphTargets() {
+// //     avatarMeshesWithMorphTargets.forEach(mesh => {
+// //         if (mesh.morphTargetInfluences) {
+// //             for (let i = 0; i < mesh.morphTargetInfluences.length; i++) {
+// //                 mesh.morphTargetInfluences[i] = 0;
+// //             }
+// //         }
+// //     });
+// // }
+
+// // function getVisemeForPhoneme(phoneme) {
+// //     phoneme = phoneme.toLowerCase();
+// //     if (phoneme === 'p' || phoneme === 'b' || phoneme === 'm') return 'viseme_PP';
+// //     if (phoneme === 'f' || phoneme === 'v') return 'viseme_FF';
+// //     if (phoneme === 'th' || phoneme === 'dh') return 'viseme_TH';
+// //     if (phoneme === 's' || phoneme === 'z' || phoneme === 'sh' || phoneme === 'zh' || phoneme === 'ch' || phoneme === 'jh') return 'viseme_SS';
+// //     if (phoneme === 't' || phoneme === 'd' || phoneme === 'n' || phoneme === 'l') return 'viseme_DD';
+// //     if (phoneme === 'k' || phoneme === 'g' || phoneme === 'ng') return 'viseme_KK';
+// //     if (phoneme === 'r') return 'viseme_RR';
+// //     if (phoneme === 'w' || phoneme === 'wh') return 'viseme_WW';
+// //     if (phoneme === 'y' || phoneme === 'ih' || phoneme === 'iy') return 'viseme_IH';
+// //     if (phoneme === 'aa' || phoneme === 'ao') return 'viseme_AA';
+// //     if (phoneme === 'ah' || phoneme === 'uh' || phoneme === 'er') return 'viseme_AH';
+// //     if (phoneme === 'eh') return 'viseme_EH';
+// //     if (phoneme === 'aw') return 'viseme_AW';
+// //     if (phoneme === 'ow' || phoneme === 'uw') return 'viseme_OW';
+// //     if (phoneme === 'oy') return 'viseme_OY';
+// //     return 'viseme_sil';
+// // }
 
 // init();
 // animate();

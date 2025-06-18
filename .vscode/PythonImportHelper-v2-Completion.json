@@ -1,5 +1,32 @@
 [
     {
+        "label": "js",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "js",
+        "description": "js",
+        "detail": "js",
+        "documentation": {}
+    },
+    {
+        "label": "asyncio",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "asyncio",
+        "description": "asyncio",
+        "detail": "asyncio",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
         "label": "Flask",
         "importPath": "flask",
         "description": "flask",
@@ -72,6 +99,30 @@
         "documentation": {}
     },
     {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "url_for",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "redirect",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "os",
         "kind": 6,
         "isExtraImport": true,
@@ -89,11 +140,46 @@
         "documentation": {}
     },
     {
+        "label": "secure_filename",
+        "importPath": "werkzeug.utils",
+        "description": "werkzeug.utils",
+        "isExtraImport": true,
+        "detail": "werkzeug.utils",
+        "documentation": {}
+    },
+    {
+        "label": "update_info",
+        "kind": 2,
+        "importPath": "avatar_ui.static.py.b_event",
+        "description": "avatar_ui.static.py.b_event",
+        "peekOfCode": "def update_info(message):\n    \"\"\"Helper function to update the info div in HTML.\"\"\"\n    info_div = js.document.getElementById('info')\n    if info_div:\n        info_div.textContent = message\n    else:\n        print(f\"Python Warning: Could not find #info div. Message: {message}\")\nasync def handle_mic_click(event=None):\n    \"\"\"\n    Handles the mic button click event to start/stop speech recognition.",
+        "detail": "avatar_ui.static.py.b_event",
+        "documentation": {}
+    },
+    {
+        "label": "speech_recognition_active",
+        "kind": 5,
+        "importPath": "avatar_ui.static.py.b_event",
+        "description": "avatar_ui.static.py.b_event",
+        "peekOfCode": "speech_recognition_active = False\ndef update_info(message):\n    \"\"\"Helper function to update the info div in HTML.\"\"\"\n    info_div = js.document.getElementById('info')\n    if info_div:\n        info_div.textContent = message\n    else:\n        print(f\"Python Warning: Could not find #info div. Message: {message}\")\nasync def handle_mic_click(event=None):\n    \"\"\"",
+        "detail": "avatar_ui.static.py.b_event",
+        "documentation": {}
+    },
+    {
+        "label": "update_output",
+        "kind": 2,
+        "importPath": "avatar_ui.static.py.test_pyscript",
+        "description": "avatar_ui.static.py.test_pyscript",
+        "peekOfCode": "def update_output(message):\n    \"\"\"Updates the content of the #output div.\"\"\"\n    output_div = js.document.getElementById('output')\n    if output_div:\n        output_div.textContent = message\n    else:\n        print(f\"Error: Could not find #output div. Message: {message}\") # Fallback for console\ntry:\n    update_output(\"PyScript is running...\")\n    print(\"Python: PyScript is running!\")",
+        "detail": "avatar_ui.static.py.test_pyscript",
+        "documentation": {}
+    },
+    {
         "label": "index",
         "kind": 2,
         "importPath": "avatar_ui.app",
         "description": "avatar_ui.app",
-        "peekOfCode": "def index():\n    # for filename in os.listdir(app.config['UPLOAD_FOLDER']):\n    #     if filename.endswith(('.jpg', '.jpeg', '.png')):\n    #         name = os.path.splitext(filename)[0]  # Get name without extension\n    #         avatars.append({'name': name, 'url': f\"/static/uploads/{filename}\"})\n    return render_template('index.html', avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):",
+        "peekOfCode": "def index():\n    return render_template('index.html', avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\n@app.route('/upload', methods=['POST'])\ndef upload():",
         "detail": "avatar_ui.app",
         "documentation": {}
     },
@@ -138,7 +224,7 @@
         "kind": 5,
         "importPath": "avatar_ui.app",
         "description": "avatar_ui.app",
-        "peekOfCode": "app = Flask(__name__)\nUPLOAD_FOLDER = 'avatar_ui/static/uploads'\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []\n@app.route('/')\ndef index():\n    # for filename in os.listdir(app.config['UPLOAD_FOLDER']):\n    #     if filename.endswith(('.jpg', '.jpeg', '.png')):",
+        "peekOfCode": "app = Flask(__name__)\nUPLOAD_FOLDER = 'avatar_ui/static/uploads'\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []\n@app.route('/')\ndef index():\n    return render_template('index.html', avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')",
         "detail": "avatar_ui.app",
         "documentation": {}
     },
@@ -147,7 +233,7 @@
         "kind": 5,
         "importPath": "avatar_ui.app",
         "description": "avatar_ui.app",
-        "peekOfCode": "UPLOAD_FOLDER = 'avatar_ui/static/uploads'\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []\n@app.route('/')\ndef index():\n    # for filename in os.listdir(app.config['UPLOAD_FOLDER']):\n    #     if filename.endswith(('.jpg', '.jpeg', '.png')):\n    #         name = os.path.splitext(filename)[0]  # Get name without extension",
+        "peekOfCode": "UPLOAD_FOLDER = 'avatar_ui/static/uploads'\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []\n@app.route('/')\ndef index():\n    return render_template('index.html', avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER",
         "detail": "avatar_ui.app",
         "documentation": {}
     },
@@ -156,7 +242,7 @@
         "kind": 5,
         "importPath": "avatar_ui.app",
         "description": "avatar_ui.app",
-        "peekOfCode": "app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []\n@app.route('/')\ndef index():\n    # for filename in os.listdir(app.config['UPLOAD_FOLDER']):\n    #     if filename.endswith(('.jpg', '.jpeg', '.png')):\n    #         name = os.path.splitext(filename)[0]  # Get name without extension\n    #         avatars.append({'name': name, 'url': f\"/static/uploads/{filename}\"})\n    return render_template('index.html', avatars=avatars)",
+        "peekOfCode": "app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []\n@app.route('/')\ndef index():\n    return render_template('index.html', avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):",
         "detail": "avatar_ui.app",
         "documentation": {}
     },
@@ -165,7 +251,7 @@
         "kind": 5,
         "importPath": "avatar_ui.app",
         "description": "avatar_ui.app",
-        "peekOfCode": "avatars = []\n@app.route('/')\ndef index():\n    # for filename in os.listdir(app.config['UPLOAD_FOLDER']):\n    #     if filename.endswith(('.jpg', '.jpeg', '.png')):\n    #         name = os.path.splitext(filename)[0]  # Get name without extension\n    #         avatars.append({'name': name, 'url': f\"/static/uploads/{filename}\"})\n    return render_template('index.html', avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER",
+        "peekOfCode": "avatars = []\n@app.route('/')\ndef index():\n    return render_template('index.html', avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)",
         "detail": "avatar_ui.app",
         "documentation": {}
     },
@@ -219,7 +305,7 @@
         "kind": 2,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "def index():\n    return render_template('index1.html')\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\nif __name__ == '__main__':\n    app.run(debug=True)",
+        "peekOfCode": "def index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -228,7 +314,16 @@
         "kind": 2,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "def serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\nif __name__ == '__main__':\n    app.run(debug=True)",
+        "peekOfCode": "def serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\n@app.route('/upload', methods=['POST'])\ndef upload():\n    image = request.files['image']\n    avatar_name = request.form['avatar_name']\n    if image:\n        filename = secure_filename(image.filename)\n        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))",
+        "detail": "avatar_ui.app_render3d",
+        "documentation": {}
+    },
+    {
+        "label": "upload",
+        "kind": 2,
+        "importPath": "avatar_ui.app_render3d",
+        "description": "avatar_ui.app_render3d",
+        "peekOfCode": "def upload():\n    image = request.files['image']\n    avatar_name = request.form['avatar_name']\n    if image:\n        filename = secure_filename(image.filename)\n        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))\n        avatar_url = url_for('static', filename=f'uploads/{filename}')\n        avatars.append({'name': avatar_name, 'url': avatar_url})\n    return redirect(url_for('index'))\nif __name__ == '__main__':",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -237,7 +332,34 @@
         "kind": 5,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "app = Flask(__name__)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n@app.route('/')\ndef index():\n    return render_template('index1.html')\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):",
+        "peekOfCode": "app = Flask(__name__)\nUPLOAD_FOLDER = 'avatar_ui/static/uploads'\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []\n@app.route('/')\ndef index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')",
+        "detail": "avatar_ui.app_render3d",
+        "documentation": {}
+    },
+    {
+        "label": "UPLOAD_FOLDER",
+        "kind": 5,
+        "importPath": "avatar_ui.app_render3d",
+        "description": "avatar_ui.app_render3d",
+        "peekOfCode": "UPLOAD_FOLDER = 'avatar_ui/static/uploads'\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []\n@app.route('/')\ndef index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER",
+        "detail": "avatar_ui.app_render3d",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['UPLOAD_FOLDER']",
+        "kind": 5,
+        "importPath": "avatar_ui.app_render3d",
+        "description": "avatar_ui.app_render3d",
+        "peekOfCode": "app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []\n@app.route('/')\ndef index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n# This route serves ANY file from the static/models subdirectory, including .glb",
+        "detail": "avatar_ui.app_render3d",
+        "documentation": {}
+    },
+    {
+        "label": "avatars",
+        "kind": 5,
+        "importPath": "avatar_ui.app_render3d",
+        "description": "avatar_ui.app_render3d",
+        "peekOfCode": "avatars = []\n@app.route('/')\ndef index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -246,7 +368,7 @@
         "kind": 5,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "STATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n@app.route('/')\ndef index():\n    return render_template('index1.html')\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")",
+        "peekOfCode": "STATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\n@app.route('/upload', methods=['POST'])\ndef upload():",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -255,7 +377,7 @@
         "kind": 5,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "app.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n@app.route('/')\ndef index():\n    return render_template('index1.html')\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)",
+        "peekOfCode": "app.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\n@app.route('/upload', methods=['POST'])\ndef upload():\n    image = request.files['image']",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     }
