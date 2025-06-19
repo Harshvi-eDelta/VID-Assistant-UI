@@ -1,5 +1,41 @@
 [
     {
+        "label": "pyttsx3",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pyttsx3",
+        "description": "pyttsx3",
+        "detail": "pyttsx3",
+        "documentation": {}
+    },
+    {
+        "label": "io",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "io",
+        "description": "io",
+        "detail": "io",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "time",
+        "description": "time",
+        "detail": "time",
+        "documentation": {}
+    },
+    {
         "label": "pandas",
         "kind": 6,
         "isExtraImport": true,
@@ -85,15 +121,6 @@
         "importPath": "contractions",
         "description": "contractions",
         "detail": "contractions",
-        "documentation": {}
-    },
-    {
-        "label": "os",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
         "documentation": {}
     },
     {
@@ -235,6 +262,24 @@
         "documentation": {}
     },
     {
+        "label": "PyTTSx3Service",
+        "kind": 6,
+        "importPath": "avatar_ui.TTS_pipeline.TTS_inference",
+        "description": "avatar_ui.TTS_pipeline.TTS_inference",
+        "peekOfCode": "class PyTTSx3Service:\n    def __init__(self):\n        self.engine = None\n        self.is_loaded = False\n        self._initialize_engine() # Initialize the engine on startup\n    def _initialize_engine(self):\n        \"\"\"Initializes the pyttsx3 engine.\"\"\"\n        try:\n            print(\"PyTTSx3Service: Initializing pyttsx3 engine...\")\n            self.engine = pyttsx3.init()",
+        "detail": "avatar_ui.TTS_pipeline.TTS_inference",
+        "documentation": {}
+    },
+    {
+        "label": "tts_service_instance",
+        "kind": 5,
+        "importPath": "avatar_ui.TTS_pipeline.TTS_inference",
+        "description": "avatar_ui.TTS_pipeline.TTS_inference",
+        "peekOfCode": "tts_service_instance = PyTTSx3Service()\n# Optional: You can check if it loaded successfully\nif not tts_service_instance.is_loaded:\n    print(\"PyTTSx3Service: WARNING: PyTTSx3 engine failed to load during initialization.\")",
+        "detail": "avatar_ui.TTS_pipeline.TTS_inference",
+        "documentation": {}
+    },
+    {
         "label": "G2PConverter",
         "kind": 6,
         "importPath": "avatar_ui.TTS_pipeline.hybrid_G2P",
@@ -302,7 +347,7 @@
         "kind": 2,
         "importPath": "avatar_ui.static.py.STT",
         "description": "avatar_ui.static.py.STT",
-        "peekOfCode": "def smooth_scroll_to_bottom(element):\n    \"\"\"Calls the JavaScript smoothScrollToBottom function.\"\"\"\n    js.window.smoothScrollToBottom(element) # Call the JS function\nasync def py_sendMessage(event=None): # event=None to accept JS event object if passed\n    \"\"\"\n    Handles sending and displaying chat messages in the chat interface.\n    This function replaces the original JavaScript sendMessage.\n    \"\"\"\n    input_element = js.document.getElementById('userInput')\n    message = input_element.value.strip()",
+        "peekOfCode": "def smooth_scroll_to_bottom(element):\n    \"\"\"Calls the JavaScript smoothScrollToBottom function.\"\"\"\n    js.window.smoothScrollToBottom(element) # Call the JS function\nasync def get_bot_response(user_message):\n    \"\"\"\n    Simulates getting a response from a bot.\n    In a real application, this would involve an HTTP request to a backend API.\n    For now, a simple conditional response.\n    \"\"\"\n    print(f\"Python: Getting bot response for: '{user_message}'\")",
         "detail": "avatar_ui.static.py.STT",
         "documentation": {}
     },

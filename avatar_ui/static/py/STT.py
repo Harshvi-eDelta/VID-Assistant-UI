@@ -2,6 +2,7 @@
 
 import js
 import asyncio
+# import pyttsx3
 
 # Global state for speech recognition
 speech_recognition_active = False
@@ -68,40 +69,122 @@ def smooth_scroll_to_bottom(element):
     """Calls the JavaScript smoothScrollToBottom function."""
     js.window.smoothScrollToBottom(element) # Call the JS function
 
+async def get_bot_response(user_message):
+    """
+    Simulates getting a response from a bot.
+    In a real application, this would involve an HTTP request to a backend API.
+    For now, a simple conditional response.
+    """
+    print(f"Python: Getting bot response for: '{user_message}'")
+    # Replace this with an actual API call to your backend
+    # Example using pyfetch (PyScript's fetch API wrapper):
+    try:
+        # Assuming you have a Flask backend running at /api/chat
+        # response = await pyfetch("/api/chat", method='POST',
+        #                          headers={'Content-Type': 'application/json'},
+        #                          body=js.JSON.stringify({'message': user_message}))
+        # if response.ok:
+        #     data = await response.json()
+        #     bot_reply = data.get('response', 'Sorry, I could not get a response.')
+        # else:
+        #     bot_reply = f"Error: {response.status} {await response.text()}"
+
+        # Simple static response for demonstration
+        if "hello" in user_message.lower() or "hi" in user_message.lower():
+            bot_reply = "Hello there! How can I assist you today?"
+        elif "time" in user_message.lower():
+            bot_reply = "I'm a virtual assistant, I don't have a concept of time, but I can tell you the current time is 3:55 PM IST, June 19, 2025 in Surat, Gujarat, India."
+        elif "name" in user_message.lower():
+            bot_reply = "I am VID-Assistant, your virtual interactive digital assistant."
+        elif "who are you" in user_message.lower():
+            bot_reply = "I am VID-Assistant, your virtual interactive digital assistant. I can help you with your queries."
+        elif "help" in user_message.lower():
+            bot_reply = "I can help you with various tasks, just ask me anything!"
+        else:
+            bot_reply = f"You asked: '{user_message}'. now i don't understand what are u saying. How else can I help?"
+        await asyncio.sleep(0.5) # Simulate network delay
+        return bot_reply
+    except Exception as e:
+        print(f"Python Error fetching bot response: {e}")
+        return "I'm sorry, I encountered an error while trying to respond."
+
+# async def py_sendMessage(event=None): # event=None to accept JS event object if passed
+#     """
+#     Handles sending and displaying chat messages in the chat interface.
+#     This function replaces the original JavaScript sendMessage.
+#     """
+#     input_element = js.document.getElementById('userInput')
+#     message = input_element.value.strip()
+
+#     if message != "":
+#         chat_messages_container = js.document.getElementById('chatMessages')
+
+#         # User message
+#         user_message_div = js.document.createElement('div')
+#         user_text_p = js.document.createElement('p')
+#         user_text_p.innerText = message
+#         user_text_p.className = 'user-message' # Note: No leading/trailing space needed for single class
+#         user_message_div.appendChild(user_text_p)
+#         chat_messages_container.appendChild(user_message_div)
+
+#         input_element.value = '' # Clear input
+#         # smooth_scroll_to_bottom(chat_messages_container)
+#         print("python: create msg")
+#         # Bot reply (simulated with a delay)
+#         await asyncio.sleep(0.5) # Equivalent to setTimeout(..., 500)
+
+#         bot_message_div = js.document.createElement('div')
+#         # bot_message_div.className = 'message' # You might not need this if p tag has enough styling
+#         bot_text_p = js.document.createElement('p')
+#         bot_text_p.innerText = message 
+#         bot_text_p.className = 'bot-message'
+#         bot_message_div.appendChild(bot_text_p)
+#         chat_messages_container.appendChild(bot_message_div)
+        
+#         js.window.speakText(bot_reply_text)
+#         # smooth_scroll_to_bottom(chat_messages_container)
+
 async def py_sendMessage(event=None): # event=None to accept JS event object if passed
     """
-    Handles sending and displaying chat messages in the chat interface.
-    This function replaces the original JavaScript sendMessage.
+    Handles sending and displaying chat messages in the chat interface,
+    and gets a bot response which is then spoken in audio.
     """
     input_element = js.document.getElementById('userInput')
     message = input_element.value.strip()
 
-    if message != "":
-        chat_messages_container = js.document.getElementById('chatMessages')
+    if message == "":
+        return # Do nothing if message is empty
 
-        # User message
-        user_message_div = js.document.createElement('div')
-        user_text_p = js.document.createElement('p')
-        user_text_p.innerText = message
-        user_text_p.className = 'user-message' # Note: No leading/trailing space needed for single class
-        user_message_div.appendChild(user_text_p)
-        chat_messages_container.appendChild(user_message_div)
+    chat_messages_container = js.document.getElementById('chatMessages')
 
-        input_element.value = '' # Clear input
-        # smooth_scroll_to_bottom(chat_messages_container)
-        print("create msg")
-        # Bot reply (simulated with a delay)
-        await asyncio.sleep(0.5) # Equivalent to setTimeout(..., 500)
+    # 1. Display User message
+    user_message_div = js.document.createElement('div')
+    user_text_p = js.document.createElement('p')
+    user_text_p.innerText = message
+    user_text_p.className = 'user-message'
+    user_message_div.appendChild(user_text_p)
+    chat_messages_container.appendChild(user_message_div)
 
-        bot_message_div = js.document.createElement('div')
-        # bot_message_div.className = 'message' # You might not need this if p tag has enough styling
-        bot_text_p = js.document.createElement('p')
-        bot_text_p.innerText = message 
-        bot_text_p.className = 'bot-message'
-        bot_message_div.appendChild(bot_text_p)
-        chat_messages_container.appendChild(bot_message_div)
-        
-        # smooth_scroll_to_bottom(chat_messages_container)
+    input_element.value = '' # Clear input after sending
+    # js.window.smoothScrollToBottom(chat_messages_container) # Scroll after adding user message
+
+    # 2. Get Bot Response
+    bot_reply_text = await get_bot_response(message)
+    print(f"Python: Bot response received: '{bot_reply_text}'")
+
+    # 3. Display Bot Response
+    bot_message_div = js.document.createElement('div')
+    bot_text_p = js.document.createElement('p')
+    bot_text_p.innerText = bot_reply_text
+    bot_text_p.className = 'bot-message'
+    bot_message_div.appendChild(bot_text_p)
+    chat_messages_container.appendChild(bot_message_div)
+
+    # js.window.smoothScrollToBottom(chat_messages_container) # Scroll after adding bot message
+
+    # 4. Speak Response in Audio
+    print(f"Python: Speaking bot response: '{bot_reply_text}'")
+    js.window.speakText(bot_reply_text) # Call the JavaScript TTS function
 
 
 # Main initialization for PyScript

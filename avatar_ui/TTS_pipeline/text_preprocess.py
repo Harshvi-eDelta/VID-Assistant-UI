@@ -275,7 +275,7 @@ class TextNormalizer:
 if __name__ == "__main__":
 
     from hybrid_G2P import G2PConverter
-    print(os.path.dirname(__file__))
+    # print(os.path.dirname(__file__))
     normalizer = TextNormalizer()
     raw_text = "Dr. Smith is going to the store. Visit http://www.example.com/test123//shruti.com/page or email me at test@example.com! I'm excited, No. 1 fan! c34545"
 
