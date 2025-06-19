@@ -6,3 +6,4 @@ avatar_ui/static/images/
 avatar_ui/static/lip-sync/
 avatar_ui/static/audio/
 .vscode/
+avatar_ui/TTS_pipeline/__pycache__/
