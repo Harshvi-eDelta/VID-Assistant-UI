@@ -64,16 +64,62 @@ async def handle_mic_click(event=None):
         update_info("Listening stopped.")
 
 
+def smooth_scroll_to_bottom(element):
+    """Calls the JavaScript smoothScrollToBottom function."""
+    js.window.smoothScrollToBottom(element) # Call the JS function
+
+async def py_sendMessage(event=None): # event=None to accept JS event object if passed
+    """
+    Handles sending and displaying chat messages in the chat interface.
+    This function replaces the original JavaScript sendMessage.
+    """
+    input_element = js.document.getElementById('userInput')
+    message = input_element.value.strip()
+
+    if message != "":
+        chat_messages_container = js.document.getElementById('chatMessages')
+
+        # User message
+        user_message_div = js.document.createElement('div')
+        user_text_p = js.document.createElement('p')
+        user_text_p.innerText = message
+        user_text_p.className = 'user-message' # Note: No leading/trailing space needed for single class
+        user_message_div.appendChild(user_text_p)
+        chat_messages_container.appendChild(user_message_div)
+
+        input_element.value = '' # Clear input
+        # smooth_scroll_to_bottom(chat_messages_container)
+        print("create msg")
+        # Bot reply (simulated with a delay)
+        await asyncio.sleep(0.5) # Equivalent to setTimeout(..., 500)
+
+        bot_message_div = js.document.createElement('div')
+        # bot_message_div.className = 'message' # You might not need this if p tag has enough styling
+
+        bot_text_p = js.document.createElement('p')
+        bot_text_p.innerText = message # Add "Processing:" prefix
+        bot_text_p.className = 'bot-message'
+        bot_message_div.appendChild(bot_text_p)
+        chat_messages_container.appendChild(bot_message_div)
+
+        # smooth_scroll_to_bottom(chat_messages_container)
+
+
 # Main initialization for PyScript
 async def main_pyscript_init():
     mic_button = js.document.getElementById('micButton')
-    if mic_button:
+    send_button = js.document.getElementById('sendButton') 
+    print(send_button)
+    if mic_button and send_button:
         mic_button.onclick = handle_mic_click 
+        send_button.onclick = py_sendMessage
         # print("PyScript initialized. Click mic to speak.")
         update_info("PyScript initialized. Click mic to speak.")
     else:
         update_info("Error: Mic button not found for PyScript control.")
     print("Python: PyScript main initialization complete.")
+    # js.window.py_sendMessage = py_sendMessage
+    # print("Python: py_sendMessage exposed to JS.")
 
 # Ensure the main PyScript initialization runs
 asyncio.ensure_future(main_pyscript_init())

@@ -72,7 +72,7 @@ function init() {
         function (gltf) {
             avatar = gltf.scene;
             avatar.scale.set(1, 1, 1);
-            avatar.position.set(0, 0, 0);
+            avatar.position.set(0, 0, -1.5);
             scene.add(avatar);
             // document.getElementById('info').textContent = 'Avatar Loaded!';
             console.log("avtar loaded!.....")

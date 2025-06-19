@@ -1,7 +1,7 @@
 env/
-.vscode/
 avatar_ui/static/uploads/
 avatar_ui/static/models/
 avatar_ui/static/images/
 avatar_ui/static/lip-sync/
 avatar_ui/static/audio/
+.vscode/

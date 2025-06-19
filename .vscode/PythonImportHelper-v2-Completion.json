@@ -157,6 +157,15 @@
         "documentation": {}
     },
     {
+        "label": "smooth_scroll_to_bottom",
+        "kind": 2,
+        "importPath": "avatar_ui.static.py.b_event",
+        "description": "avatar_ui.static.py.b_event",
+        "peekOfCode": "def smooth_scroll_to_bottom(element):\n    \"\"\"Calls the JavaScript smoothScrollToBottom function.\"\"\"\n    js.window.smoothScrollToBottom(element) # Call the JS function\nasync def py_sendMessage(event=None): # event=None to accept JS event object if passed\n    \"\"\"\n    Handles sending and displaying chat messages in the chat interface.\n    This function replaces the original JavaScript sendMessage.\n    \"\"\"\n    input_element = js.document.getElementById('userInput')\n    message = input_element.value.strip()",
+        "detail": "avatar_ui.static.py.b_event",
+        "documentation": {}
+    },
+    {
         "label": "speech_recognition_active",
         "kind": 5,
         "importPath": "avatar_ui.static.py.b_event",

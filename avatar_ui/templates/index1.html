@@ -66,11 +66,11 @@
                 <div class="message">
                     <div class="chat-input">
                         <input type="text" id="userInput" placeholder="Ask your Question...">
-                        <button class="send-btn" onclick="sendMessage()">
+                        <button id="sendButton" class="send-btn" >
                             <img src="../static/images/sendicon.svg" alt="">
                         </button>
                     </div>
-                    <button id="micButton" class="mic-btn" onclick="startListening()">
+                    <button id="micButton" class="mic-btn" >
                         <img src="../static/images/micicon.svg" alt="">
                     </button>
                 </div>
@@ -191,58 +191,7 @@
             createBtn.closest('form').submit(); // submit it manually
         });
     </script>
-
-    <!-- chatbot script -->
-    <script>
-        function sendMessage() {
-            // alert()
-            const input = document.getElementById('userInput');
-            const message = input.value.trim();
-            if (message != "") {
-                const chatMessages = document.getElementById('chatMessages');
-
-                const userMessage = document.createElement('div');
-                // userMessage.className = 'message ';
-
-                const userText = document.createElement('p'); // 👈 Create <p> element
-                userText.innerText = message; // 👈 Set the message inside <p>
-                userText.className = 'user-message ';
-                userMessage.appendChild(userText); // 👈 Append <p> into the div
-                chatMessages.appendChild(userMessage); // 👈 Append div to chat container
-
-                input.value = '';
-                smoothScrollToBottom(chatMessages);
-
-
-                // Bot reply
-                setTimeout(() => {
-                    const botMessage = document.createElement('div');
-                    botMessage.className = 'message';
-
-                    const botText = document.createElement('p'); // 👈 Create <p> for bot
-                    botText.innerText = " " + message;
-                    botText.className = 'bot-message';
-                    botMessage.appendChild(botText); // 👈 Append <p> to bot div
-                    chatMessages.appendChild(botMessage);
-
-                    smoothScrollToBottom(chatMessages);
-                }, 500);
-            }
-        }
-        function startListening() {
-            alert('Microphone clicked! (You can implement voice recording here)');
-        }
-
-        function smoothScrollToBottom(element) {
-            element.scrollTo({
-                top: element.scrollHeight,
-                behavior: 'smooth'
-            });
-        }
-
-    </script>
-
-    <!-- Scripts -->
+    
     <script type="importmap">
         {
             "imports": {
