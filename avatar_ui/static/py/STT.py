@@ -109,7 +109,7 @@ async def get_bot_response(user_message):
         return "I'm sorry, I encountered an error while trying to respond."
 
 def py_speak_text(text):
-    global current_py_utterance # Declare global here to access/modify the module-level variable
+    global current_py_utterance 
 
     if not text or text.strip() == '':
         print('Python TTS: Attempted to speak empty or null text.')
@@ -120,9 +120,9 @@ def py_speak_text(text):
         update_info('Text-to-Speech not supported in your browser.')
         return
 
-    # Cancel any currently speaking utterance
-    if current_py_utterance and js.window.speechSynthesis.speaking:
-        js.window.speechSynthesis.cancel()
+    # # Cancel any currently speaking utterance
+    # if current_py_utterance and js.window.speechSynthesis.speaking:
+    #     js.window.speechSynthesis.cancel()
 
     utterance = js.new(js.window.SpeechSynthesisUtterance, text)
     utterance.lang = 'en-US'

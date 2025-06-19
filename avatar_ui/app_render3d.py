@@ -5,7 +5,7 @@ import sys
 from werkzeug.utils import secure_filename
 # For chatbot response
 from flask import Flask,request,jsonify
-from rag import get_chat_response   # Added for chatbot integration
+# from rag import get_chat_response   # Added for chatbot integration
 
 
 app = Flask(__name__)
@@ -46,12 +46,12 @@ def upload():
 
     return redirect(url_for('index'))
 
-@app.route('/get-response', methods=['POST'])
+# @app.route('/get-response', methods=['POST'])
 
-def get_response():
-    user_input = request.json.get("message")
-    bot_response = get_chat_response(user_input)  
-    return jsonify({"response": bot_response})
+# def get_response():
+    # user_input = request.json.get("message")
+    # bot_response = get_chat_response(user_input)  
+    # return jsonify({"response": bot_response})
 
 if __name__ == '__main__':
     app.run(debug=True)

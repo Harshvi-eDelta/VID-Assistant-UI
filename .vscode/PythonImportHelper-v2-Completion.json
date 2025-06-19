@@ -246,6 +246,30 @@
         "documentation": {}
     },
     {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "secure_filename",
         "importPath": "werkzeug.utils",
         "description": "werkzeug.utils",
@@ -259,6 +283,65 @@
         "description": "werkzeug.utils",
         "isExtraImport": true,
         "detail": "werkzeug.utils",
+        "documentation": {}
+    },
+    {
+        "label": "sys",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sys",
+        "description": "sys",
+        "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "chromadb",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "chromadb",
+        "description": "chromadb",
+        "detail": "chromadb",
+        "documentation": {}
+    },
+    {
+        "label": "Chroma",
+        "importPath": "langchain_community.vectorstores",
+        "description": "langchain_community.vectorstores",
+        "isExtraImport": true,
+        "detail": "langchain_community.vectorstores",
+        "documentation": {}
+    },
+    {
+        "label": "HuggingFaceEmbeddings",
+        "importPath": "langchain_community.embeddings",
+        "description": "langchain_community.embeddings",
+        "isExtraImport": true,
+        "detail": "langchain_community.embeddings",
+        "documentation": {}
+    },
+    {
+        "label": "Llama",
+        "importPath": "llama_cpp",
+        "description": "llama_cpp",
+        "isExtraImport": true,
+        "detail": "llama_cpp",
+        "documentation": {}
+    },
+    {
+        "label": "Settings",
+        "importPath": "chromadb.config",
+        "description": "chromadb.config",
+        "isExtraImport": true,
+        "detail": "chromadb.config",
         "documentation": {}
     },
     {
@@ -356,7 +439,7 @@
         "kind": 2,
         "importPath": "avatar_ui.static.py.STT",
         "description": "avatar_ui.static.py.STT",
-        "peekOfCode": "def py_speak_text(text):\n    global current_py_utterance # Declare global here to access/modify the module-level variable\n    if not text or text.strip() == '':\n        print('Python TTS: Attempted to speak empty or null text.')\n        return\n    if not hasattr(js.window, 'speechSynthesis'):\n        print('Python TTS: Text-to-Speech not supported in this browser.')\n        update_info('Text-to-Speech not supported in your browser.')\n        return\n    # Cancel any currently speaking utterance",
+        "peekOfCode": "def py_speak_text(text):\n    global current_py_utterance \n    if not text or text.strip() == '':\n        print('Python TTS: Attempted to speak empty or null text.')\n        return\n    if not hasattr(js.window, 'speechSynthesis'):\n        print('Python TTS: Text-to-Speech not supported in this browser.')\n        update_info('Text-to-Speech not supported in your browser.')\n        return\n    # # Cancel any currently speaking utterance",
         "detail": "avatar_ui.static.py.STT",
         "documentation": {}
     },
@@ -527,7 +610,7 @@
         "kind": 2,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "def upload():\n    image = request.files['image']\n    avatar_name = request.form['avatar_name']\n    if image:\n        filename = secure_filename(image.filename)\n        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))\n        avatar_url = url_for('static', filename=f'uploads/{filename}')\n        avatars.append({'name': avatar_name, 'url': avatar_url})\n    return redirect(url_for('index'))\nif __name__ == '__main__':",
+        "peekOfCode": "def upload():\n    image = request.files['image']\n    avatar_name = request.form['avatar_name']\n    if image:\n        filename = secure_filename(image.filename)\n        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))\n        avatar_url = url_for('static', filename=f'uploads/{filename}')\n        avatars.append({'name': avatar_name, 'url': avatar_url})\n    return redirect(url_for('index'))\n# @app.route('/get-response', methods=['POST'])",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -536,7 +619,7 @@
         "kind": 5,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "app = Flask(__name__)\nUPLOAD_FOLDER = 'avatar_ui/static/uploads'\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []\n@app.route('/')\ndef index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')",
+        "peekOfCode": "app = Flask(__name__)\nUPLOAD_FOLDER = 'avatar_ui/static/uploads'\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []    \n@app.route('/')\ndef index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -545,7 +628,7 @@
         "kind": 5,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "UPLOAD_FOLDER = 'avatar_ui/static/uploads'\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []\n@app.route('/')\ndef index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER",
+        "peekOfCode": "UPLOAD_FOLDER = 'avatar_ui/static/uploads'\nos.makedirs(UPLOAD_FOLDER, exist_ok=True)\napp.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []    \n@app.route('/')\ndef index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -554,7 +637,7 @@
         "kind": 5,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []\n@app.route('/')\ndef index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n# This route serves ANY file from the static/models subdirectory, including .glb",
+        "peekOfCode": "app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []    \n@app.route('/')\ndef index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n# This route serves ANY file from the static/models subdirectory, including .glb",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -563,7 +646,7 @@
         "kind": 5,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "avatars = []\n@app.route('/')\ndef index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):",
+        "peekOfCode": "avatars = []    \n@app.route('/')\ndef index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -583,6 +666,105 @@
         "description": "avatar_ui.app_render3d",
         "peekOfCode": "app.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\n@app.route('/upload', methods=['POST'])\ndef upload():\n    image = request.files['image']",
         "detail": "avatar_ui.app_render3d",
+        "documentation": {}
+    },
+    {
+        "label": "retrieve_response",
+        "kind": 2,
+        "importPath": "avatar_ui.rag",
+        "description": "avatar_ui.rag",
+        "peekOfCode": "def retrieve_response(query):\n    docs = vector_store.similarity_search(query, k=1)\n    # print(\"\\n🟢 Retrieved document:\", docs[0].metadata[\"answer\"] if docs else \"None\")\n    return docs[0].metadata[\"answer\"] if docs else \"Sorry, I don't know the answer.\"\n# Load LLaMA model\nllm = Llama(model_path=\"avatar_ui/models/mistral-7b-instruct-v0.1.Q2_K.gguf\",\n            verbose=False)\n# RAG logic\ndef rag_chatbot(query):\n    retrieved_text = retrieve_response(query)",
+        "detail": "avatar_ui.rag",
+        "documentation": {}
+    },
+    {
+        "label": "rag_chatbot",
+        "kind": 2,
+        "importPath": "avatar_ui.rag",
+        "description": "avatar_ui.rag",
+        "peekOfCode": "def rag_chatbot(query):\n    retrieved_text = retrieve_response(query)\n    prompt = (\n        f\"User asked: {query}\\n\\n\"\n        f\"Relevant Info: {retrieved_text}\\n\\n\"\n        f\"Answer: concisely based only on the relevant info above:\"\n    )\n    print(\"\\n🟡 Prompt sent to LLaMA:\\n\", prompt)\n    response = llm(f\"[INST] {prompt} [/INST]\", max_tokens=100, temperature=0.7)\n    print(\"\\n🔵 LLaMA raw response:\\n\", response)",
+        "detail": "avatar_ui.rag",
+        "documentation": {}
+    },
+    {
+        "label": "get_chat_response",
+        "kind": 2,
+        "importPath": "avatar_ui.rag",
+        "description": "avatar_ui.rag",
+        "peekOfCode": "def get_chat_response(prompt):\n    return rag_chatbot(prompt)",
+        "detail": "avatar_ui.rag",
+        "documentation": {}
+    },
+    {
+        "label": "json_file_path",
+        "kind": 5,
+        "importPath": "avatar_ui.rag",
+        "description": "avatar_ui.rag",
+        "peekOfCode": "json_file_path = os.path.join(os.path.dirname(__file__), \"Expertise.json\")\nwith open(json_file_path, \"r\", encoding=\"utf-8\") as f:\n    dataset = json.load(f)\nquestions = [item[\"question\"] for item in dataset]\nanswers = [item[\"answer\"] for item in dataset]\n# Initialize ChromaDB\nchroma_path = os.path.join(\"avatar_ui\", \"chroma_db\")\nchroma_client = chromadb.PersistentClient(path=chroma_path)\n# Load embeddings model\nembeddings = HuggingFaceEmbeddings(",
+        "detail": "avatar_ui.rag",
+        "documentation": {}
+    },
+    {
+        "label": "questions",
+        "kind": 5,
+        "importPath": "avatar_ui.rag",
+        "description": "avatar_ui.rag",
+        "peekOfCode": "questions = [item[\"question\"] for item in dataset]\nanswers = [item[\"answer\"] for item in dataset]\n# Initialize ChromaDB\nchroma_path = os.path.join(\"avatar_ui\", \"chroma_db\")\nchroma_client = chromadb.PersistentClient(path=chroma_path)\n# Load embeddings model\nembeddings = HuggingFaceEmbeddings(\n    model_name=\"sentence-transformers/all-MiniLM-L6-v2\",\n    encode_kwargs={\"batch_size\": 256}\n)",
+        "detail": "avatar_ui.rag",
+        "documentation": {}
+    },
+    {
+        "label": "answers",
+        "kind": 5,
+        "importPath": "avatar_ui.rag",
+        "description": "avatar_ui.rag",
+        "peekOfCode": "answers = [item[\"answer\"] for item in dataset]\n# Initialize ChromaDB\nchroma_path = os.path.join(\"avatar_ui\", \"chroma_db\")\nchroma_client = chromadb.PersistentClient(path=chroma_path)\n# Load embeddings model\nembeddings = HuggingFaceEmbeddings(\n    model_name=\"sentence-transformers/all-MiniLM-L6-v2\",\n    encode_kwargs={\"batch_size\": 256}\n)\n# Store data in ChromaDB",
+        "detail": "avatar_ui.rag",
+        "documentation": {}
+    },
+    {
+        "label": "chroma_path",
+        "kind": 5,
+        "importPath": "avatar_ui.rag",
+        "description": "avatar_ui.rag",
+        "peekOfCode": "chroma_path = os.path.join(\"avatar_ui\", \"chroma_db\")\nchroma_client = chromadb.PersistentClient(path=chroma_path)\n# Load embeddings model\nembeddings = HuggingFaceEmbeddings(\n    model_name=\"sentence-transformers/all-MiniLM-L6-v2\",\n    encode_kwargs={\"batch_size\": 256}\n)\n# Store data in ChromaDB\nvector_store = Chroma.from_texts(\n    texts=questions,",
+        "detail": "avatar_ui.rag",
+        "documentation": {}
+    },
+    {
+        "label": "chroma_client",
+        "kind": 5,
+        "importPath": "avatar_ui.rag",
+        "description": "avatar_ui.rag",
+        "peekOfCode": "chroma_client = chromadb.PersistentClient(path=chroma_path)\n# Load embeddings model\nembeddings = HuggingFaceEmbeddings(\n    model_name=\"sentence-transformers/all-MiniLM-L6-v2\",\n    encode_kwargs={\"batch_size\": 256}\n)\n# Store data in ChromaDB\nvector_store = Chroma.from_texts(\n    texts=questions,\n    metadatas=[{\"answer\": ans} for ans in answers],",
+        "detail": "avatar_ui.rag",
+        "documentation": {}
+    },
+    {
+        "label": "embeddings",
+        "kind": 5,
+        "importPath": "avatar_ui.rag",
+        "description": "avatar_ui.rag",
+        "peekOfCode": "embeddings = HuggingFaceEmbeddings(\n    model_name=\"sentence-transformers/all-MiniLM-L6-v2\",\n    encode_kwargs={\"batch_size\": 256}\n)\n# Store data in ChromaDB\nvector_store = Chroma.from_texts(\n    texts=questions,\n    metadatas=[{\"answer\": ans} for ans in answers],\n    embedding=embeddings,\n    persist_directory=chroma_path",
+        "detail": "avatar_ui.rag",
+        "documentation": {}
+    },
+    {
+        "label": "vector_store",
+        "kind": 5,
+        "importPath": "avatar_ui.rag",
+        "description": "avatar_ui.rag",
+        "peekOfCode": "vector_store = Chroma.from_texts(\n    texts=questions,\n    metadatas=[{\"answer\": ans} for ans in answers],\n    embedding=embeddings,\n    persist_directory=chroma_path\n)\nprint(\"Dataset successfully stored in ChromaDB!\")\n# Function to retrieve response from ChromaDB\ndef retrieve_response(query):\n    docs = vector_store.similarity_search(query, k=1)",
+        "detail": "avatar_ui.rag",
+        "documentation": {}
+    },
+    {
+        "label": "llm",
+        "kind": 5,
+        "importPath": "avatar_ui.rag",
+        "description": "avatar_ui.rag",
+        "peekOfCode": "llm = Llama(model_path=\"avatar_ui/models/mistral-7b-instruct-v0.1.Q2_K.gguf\",\n            verbose=False)\n# RAG logic\ndef rag_chatbot(query):\n    retrieved_text = retrieve_response(query)\n    prompt = (\n        f\"User asked: {query}\\n\\n\"\n        f\"Relevant Info: {retrieved_text}\\n\\n\"\n        f\"Answer: concisely based only on the relevant info above:\"\n    )",
+        "detail": "avatar_ui.rag",
         "documentation": {}
     }
 ]

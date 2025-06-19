@@ -53,11 +53,11 @@
                 <div class="message">
                     <div class="chat-input">
                         <input type="text" id="userInput" placeholder="Type a message..">
-                        <button class="send-btn" onclick="sendMessage()">
+                        <button id="sendButton" class="send-btn" >
                             <img src="../static/images/sendicon.svg" alt="">
                         </button>
                     </div>
-                    <button id="micButton" class="mic-btn" onclick="startListening()">
+                    <button id="micButton" class="mic-btn">
                         <img src="../static/images/micicon.svg" alt="">
                     </button>
                 </div>
@@ -178,86 +178,6 @@
             createBtn.closest('form').submit(); // submit it manually
         });
     </script>
-
-    <!-- chatbot script -->
-<script>
-    function sendMessage() {
-        const input = document.getElementById('userInput');
-        const message = input.value.trim();
-
-        if (message !== "") {
-            const chatMessages = document.getElementById('chatMessages');
-
-            // Display user message
-            const userMessage = document.createElement('div');
-            const userText = document.createElement('p');
-            userText.innerText = message;
-            userText.className = 'user-message';
-            userMessage.appendChild(userText);
-            chatMessages.appendChild(userMessage);
-
-            input.value = '';
-            smoothScrollToBottom(chatMessages);
-
-            // Show typing dots
-            const typingIndicator = document.createElement('div');
-            typingIndicator.className = 'typing-indicator';
-            typingIndicator.innerHTML = `
-            <span class="typing-dot"></span>
-            <span class="typing-dot"></span>
-            <span class="typing-dot"></span>
-            `;
-            chatMessages.appendChild(typingIndicator);
-            smoothScrollToBottom(chatMessages);
-
-            // Send request to backend
-            fetch("/get-response", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ message })
-            })
-            .then(res => res.json())
-            .then(data => {
-                // Remove typing indicator
-                chatMessages.removeChild(typingIndicator);
-
-                // Add bot message
-                const botMessage = document.createElement('div');
-                const botText = document.createElement('p');
-                botText.innerText = data.response;
-                botText.className = 'bot-message';
-                botMessage.appendChild(botText);
-                chatMessages.appendChild(botMessage);
-                smoothScrollToBottom(chatMessages);
-            })
-            .catch(err => {
-                console.error("Error:", err);
-                chatMessages.removeChild(typingIndicator);
-            });
-
-        }
-    }
-
-    function startListening() {
-        alert('Microphone clicked! (You can implement voice recording here)');
-    }
-
-    function smoothScrollToBottom(element) {
-        element.scrollTo({
-            top: element.scrollHeight,  
-            behavior: 'smooth'
-        });
-    }
-
-        // Enable Enter key to send message
-    document.getElementById("userInput").addEventListener("keydown", function (event) {
-        if (event.key === "Enter") {
-            event.preventDefault();  // prevent newline (if needed)
-            sendMessage();
-        }
-    });
 
 </script>
 
