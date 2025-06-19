@@ -1,4 +1,5 @@
 env/
+avatar_ui/__pycache__/
 avatar_ui/static/uploads/
 avatar_ui/static/models/
 avatar_ui/static/images/

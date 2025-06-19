@@ -35,3 +35,7 @@ urllib3==2.3.0
 SpeechRecognition
 pydub
 js
+chromadb
+langchain_community
+llama-cpp-python
+pandas

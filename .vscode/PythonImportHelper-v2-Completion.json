@@ -1,5 +1,110 @@
 [
     {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "tensorflow",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tensorflow",
+        "description": "tensorflow",
+        "detail": "tensorflow",
+        "documentation": {}
+    },
+    {
+        "label": "ast",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "ast",
+        "description": "ast",
+        "detail": "ast",
+        "documentation": {}
+    },
+    {
+        "label": "cmudict",
+        "importPath": "nltk.corpus",
+        "description": "nltk.corpus",
+        "isExtraImport": true,
+        "detail": "nltk.corpus",
+        "documentation": {}
+    },
+    {
+        "label": "cmudict",
+        "importPath": "nltk.corpus",
+        "description": "nltk.corpus",
+        "isExtraImport": true,
+        "detail": "nltk.corpus",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "unicodedata",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "unicodedata",
+        "description": "unicodedata",
+        "detail": "unicodedata",
+        "documentation": {}
+    },
+    {
+        "label": "string",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "string",
+        "description": "string",
+        "detail": "string",
+        "documentation": {}
+    },
+    {
+        "label": "contractions",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "contractions",
+        "description": "contractions",
+        "detail": "contractions",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "num2words",
+        "importPath": "num2words",
+        "description": "num2words",
+        "isExtraImport": true,
+        "detail": "num2words",
+        "documentation": {}
+    },
+    {
         "label": "js",
         "kind": 6,
         "isExtraImport": true,
@@ -18,15 +123,6 @@
         "documentation": {}
     },
     {
-        "label": "numpy",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "numpy",
-        "description": "numpy",
-        "detail": "numpy",
-        "documentation": {}
-    },
-    {
         "label": "Flask",
         "importPath": "flask",
         "description": "flask",
@@ -123,64 +219,100 @@
         "documentation": {}
     },
     {
-        "label": "os",
+        "label": "secure_filename",
+        "importPath": "werkzeug.utils",
+        "description": "werkzeug.utils",
+        "isExtraImport": true,
+        "detail": "werkzeug.utils",
+        "documentation": {}
+    },
+    {
+        "label": "secure_filename",
+        "importPath": "werkzeug.utils",
+        "description": "werkzeug.utils",
+        "isExtraImport": true,
+        "detail": "werkzeug.utils",
+        "documentation": {}
+    },
+    {
+        "label": "G2PConverter",
         "kind": 6,
-        "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
+        "importPath": "avatar_ui.TTS_pipeline.hybrid_G2P",
+        "description": "avatar_ui.TTS_pipeline.hybrid_G2P",
+        "peekOfCode": "class G2PConverter:\n    # def __init__(self, model_path=None, vocab_path=\"dataset/G2P_dataset/cmu_dict_no_stress.csv\", max_len=33, load_model=True):\n    # def __init__(self, model_path=None, vocab_path=\"dataset/G2P_dataset/cmu_dict_pun_stress.csv\", max_len=33, load_model=True):\n    def __init__(self, model_path=None, vocab_path=\"avatar_ui/TTS_pipeline/dataset/cmu_dict_with_stress.csv\", max_len=33, load_model=True):\n        self.max_len = max_len\n        self.phoneme_dict=cmudict.dict()\n        # print(self.phoneme_dict.keys())\n        if load_model and model_path:\n            self.model = tf.keras.models.load_model(model_path)\n        self._load_vocab(vocab_path)",
+        "detail": "avatar_ui.TTS_pipeline.hybrid_G2P",
         "documentation": {}
     },
     {
-        "label": "secure_filename",
-        "importPath": "werkzeug.utils",
-        "description": "werkzeug.utils",
-        "isExtraImport": true,
-        "detail": "werkzeug.utils",
+        "label": "TextNormalizer",
+        "kind": 6,
+        "importPath": "avatar_ui.TTS_pipeline.text_preprocess",
+        "description": "avatar_ui.TTS_pipeline.text_preprocess",
+        "peekOfCode": "class TextNormalizer:\n    def __init__(self):\n        self.abbreviations = [(re.compile('\\\\b%s\\\\.' % x[0], re.IGNORECASE), x[1]) for x in [\n                ('mrs', 'misess'),\n                ('mr', 'mister'),\n                ('dr', 'doctor'),\n                ('drs', 'doctors'),\n                ('st', 'saint'),\n                ('co', 'company'),\n                ('jr', 'junior'),",
+        "detail": "avatar_ui.TTS_pipeline.text_preprocess",
         "documentation": {}
     },
     {
-        "label": "secure_filename",
-        "importPath": "werkzeug.utils",
-        "description": "werkzeug.utils",
-        "isExtraImport": true,
-        "detail": "werkzeug.utils",
+        "label": "_pad",
+        "kind": 5,
+        "importPath": "avatar_ui.TTS_pipeline.text_preprocess",
+        "description": "avatar_ui.TTS_pipeline.text_preprocess",
+        "peekOfCode": "_pad = \"_\"\n_punctuation = \"!'(),.:;? \"\n_special = \"-\"\n_silences = [\"@sp\", \"@spn\", \"@sil\"]\nclass TextNormalizer:\n    def __init__(self):\n        self.abbreviations = [(re.compile('\\\\b%s\\\\.' % x[0], re.IGNORECASE), x[1]) for x in [\n                ('mrs', 'misess'),\n                ('mr', 'mister'),\n                ('dr', 'doctor'),",
+        "detail": "avatar_ui.TTS_pipeline.text_preprocess",
+        "documentation": {}
+    },
+    {
+        "label": "_punctuation",
+        "kind": 5,
+        "importPath": "avatar_ui.TTS_pipeline.text_preprocess",
+        "description": "avatar_ui.TTS_pipeline.text_preprocess",
+        "peekOfCode": "_punctuation = \"!'(),.:;? \"\n_special = \"-\"\n_silences = [\"@sp\", \"@spn\", \"@sil\"]\nclass TextNormalizer:\n    def __init__(self):\n        self.abbreviations = [(re.compile('\\\\b%s\\\\.' % x[0], re.IGNORECASE), x[1]) for x in [\n                ('mrs', 'misess'),\n                ('mr', 'mister'),\n                ('dr', 'doctor'),\n                ('drs', 'doctors'),",
+        "detail": "avatar_ui.TTS_pipeline.text_preprocess",
+        "documentation": {}
+    },
+    {
+        "label": "_special",
+        "kind": 5,
+        "importPath": "avatar_ui.TTS_pipeline.text_preprocess",
+        "description": "avatar_ui.TTS_pipeline.text_preprocess",
+        "peekOfCode": "_special = \"-\"\n_silences = [\"@sp\", \"@spn\", \"@sil\"]\nclass TextNormalizer:\n    def __init__(self):\n        self.abbreviations = [(re.compile('\\\\b%s\\\\.' % x[0], re.IGNORECASE), x[1]) for x in [\n                ('mrs', 'misess'),\n                ('mr', 'mister'),\n                ('dr', 'doctor'),\n                ('drs', 'doctors'),\n                ('st', 'saint'),",
+        "detail": "avatar_ui.TTS_pipeline.text_preprocess",
+        "documentation": {}
+    },
+    {
+        "label": "_silences",
+        "kind": 5,
+        "importPath": "avatar_ui.TTS_pipeline.text_preprocess",
+        "description": "avatar_ui.TTS_pipeline.text_preprocess",
+        "peekOfCode": "_silences = [\"@sp\", \"@spn\", \"@sil\"]\nclass TextNormalizer:\n    def __init__(self):\n        self.abbreviations = [(re.compile('\\\\b%s\\\\.' % x[0], re.IGNORECASE), x[1]) for x in [\n                ('mrs', 'misess'),\n                ('mr', 'mister'),\n                ('dr', 'doctor'),\n                ('drs', 'doctors'),\n                ('st', 'saint'),\n                ('co', 'company'),",
+        "detail": "avatar_ui.TTS_pipeline.text_preprocess",
         "documentation": {}
     },
     {
         "label": "update_info",
         "kind": 2,
-        "importPath": "avatar_ui.static.py.b_event",
-        "description": "avatar_ui.static.py.b_event",
+        "importPath": "avatar_ui.static.py.STT",
+        "description": "avatar_ui.static.py.STT",
         "peekOfCode": "def update_info(message):\n    \"\"\"Helper function to update the info div in HTML.\"\"\"\n    info_div = js.document.getElementById('info')\n    if info_div:\n        info_div.textContent = message\n    else:\n        print(f\"Python Warning: Could not find #info div. Message: {message}\")\nasync def handle_mic_click(event=None):\n    \"\"\"\n    Handles the mic button click event to start/stop speech recognition.",
-        "detail": "avatar_ui.static.py.b_event",
+        "detail": "avatar_ui.static.py.STT",
         "documentation": {}
     },
     {
         "label": "smooth_scroll_to_bottom",
         "kind": 2,
-        "importPath": "avatar_ui.static.py.b_event",
-        "description": "avatar_ui.static.py.b_event",
+        "importPath": "avatar_ui.static.py.STT",
+        "description": "avatar_ui.static.py.STT",
         "peekOfCode": "def smooth_scroll_to_bottom(element):\n    \"\"\"Calls the JavaScript smoothScrollToBottom function.\"\"\"\n    js.window.smoothScrollToBottom(element) # Call the JS function\nasync def py_sendMessage(event=None): # event=None to accept JS event object if passed\n    \"\"\"\n    Handles sending and displaying chat messages in the chat interface.\n    This function replaces the original JavaScript sendMessage.\n    \"\"\"\n    input_element = js.document.getElementById('userInput')\n    message = input_element.value.strip()",
-        "detail": "avatar_ui.static.py.b_event",
+        "detail": "avatar_ui.static.py.STT",
         "documentation": {}
     },
     {
         "label": "speech_recognition_active",
         "kind": 5,
-        "importPath": "avatar_ui.static.py.b_event",
-        "description": "avatar_ui.static.py.b_event",
+        "importPath": "avatar_ui.static.py.STT",
+        "description": "avatar_ui.static.py.STT",
         "peekOfCode": "speech_recognition_active = False\ndef update_info(message):\n    \"\"\"Helper function to update the info div in HTML.\"\"\"\n    info_div = js.document.getElementById('info')\n    if info_div:\n        info_div.textContent = message\n    else:\n        print(f\"Python Warning: Could not find #info div. Message: {message}\")\nasync def handle_mic_click(event=None):\n    \"\"\"",
-        "detail": "avatar_ui.static.py.b_event",
-        "documentation": {}
-    },
-    {
-        "label": "update_output",
-        "kind": 2,
-        "importPath": "avatar_ui.static.py.test_pyscript",
-        "description": "avatar_ui.static.py.test_pyscript",
-        "peekOfCode": "def update_output(message):\n    \"\"\"Updates the content of the #output div.\"\"\"\n    output_div = js.document.getElementById('output')\n    if output_div:\n        output_div.textContent = message\n    else:\n        print(f\"Error: Could not find #output div. Message: {message}\") # Fallback for console\ntry:\n    update_output(\"PyScript is running...\")\n    print(\"Python: PyScript is running!\")",
-        "detail": "avatar_ui.static.py.test_pyscript",
+        "detail": "avatar_ui.static.py.STT",
         "documentation": {}
     },
     {
