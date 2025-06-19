@@ -45,7 +45,7 @@ async def handle_mic_click(event=None):
                 if user_input_field:
                     user_input_field.value = transcribed_text
                     # You might want to automatically send the message here too
-                    # js.sendMessage() # If sendMessage is a global JS function
+                    js.sendMessage() # If sendMessage is a global JS function
                 
             else:
                 update_info("No speech detected or unclear.")
