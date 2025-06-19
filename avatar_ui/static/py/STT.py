@@ -44,8 +44,10 @@ async def handle_mic_click(event=None):
                 user_input_field = js.document.getElementById('userInput')
                 if user_input_field:
                     user_input_field.value = transcribed_text
+                    print("py: auto send")
                     # You might want to automatically send the message here too
-                    js.sendMessage() # If sendMessage is a global JS function
+                    # js.sendMessage() # If sendMessage is a global JS function
+                    await py_sendMessage()
                 
             else:
                 update_info("No speech detected or unclear.")
@@ -191,10 +193,12 @@ async def py_sendMessage(event=None): # event=None to accept JS event object if 
 async def main_pyscript_init():
     mic_button = js.document.getElementById('micButton')
     send_button = js.document.getElementById('sendButton') 
+    user_input = js.document.getElementById('userInput') # Get the input field
     print(send_button)
     if mic_button and send_button:
         mic_button.onclick = handle_mic_click 
         send_button.onclick = py_sendMessage
+        user_input.onkeyup = lambda event: asyncio.ensure_future(py_sendMessage()) if event.key == 'Enter' else None
         # print("PyScript initialized. Click mic to speak.")
         update_info("PyScript initialized. Click mic to speak.")
     else:
