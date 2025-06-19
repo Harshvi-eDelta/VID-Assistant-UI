@@ -1,11 +1,9 @@
-# static/py/app.py
-
 import js
 import asyncio
-# import pyttsx3
 
 # Global state for speech recognition
 speech_recognition_active = False
+current_py_utterance = None
 
 def update_info(message):
     """Helper function to update the info div in HTML."""
@@ -44,7 +42,7 @@ async def handle_mic_click(event=None):
                 user_input_field = js.document.getElementById('userInput')
                 if user_input_field:
                     user_input_field.value = transcribed_text
-                    print("py: auto send")
+                    # print("py: auto send")
                     # You might want to automatically send the message here too
                     # js.sendMessage() # If sendMessage is a global JS function
                     await py_sendMessage()
@@ -110,41 +108,41 @@ async def get_bot_response(user_message):
         print(f"Python Error fetching bot response: {e}")
         return "I'm sorry, I encountered an error while trying to respond."
 
-# async def py_sendMessage(event=None): # event=None to accept JS event object if passed
-#     """
-#     Handles sending and displaying chat messages in the chat interface.
-#     This function replaces the original JavaScript sendMessage.
-#     """
-#     input_element = js.document.getElementById('userInput')
-#     message = input_element.value.strip()
+def py_speak_text(text):
+    global current_py_utterance # Declare global here to access/modify the module-level variable
 
-#     if message != "":
-#         chat_messages_container = js.document.getElementById('chatMessages')
+    if not text or text.strip() == '':
+        print('Python TTS: Attempted to speak empty or null text.')
+        return
 
-#         # User message
-#         user_message_div = js.document.createElement('div')
-#         user_text_p = js.document.createElement('p')
-#         user_text_p.innerText = message
-#         user_text_p.className = 'user-message' # Note: No leading/trailing space needed for single class
-#         user_message_div.appendChild(user_text_p)
-#         chat_messages_container.appendChild(user_message_div)
+    if not hasattr(js.window, 'speechSynthesis'):
+        print('Python TTS: Text-to-Speech not supported in this browser.')
+        update_info('Text-to-Speech not supported in your browser.')
+        return
 
-#         input_element.value = '' # Clear input
-#         # smooth_scroll_to_bottom(chat_messages_container)
-#         print("python: create msg")
-#         # Bot reply (simulated with a delay)
-#         await asyncio.sleep(0.5) # Equivalent to setTimeout(..., 500)
+    # Cancel any currently speaking utterance
+    if current_py_utterance and js.window.speechSynthesis.speaking:
+        js.window.speechSynthesis.cancel()
 
-#         bot_message_div = js.document.createElement('div')
-#         # bot_message_div.className = 'message' # You might not need this if p tag has enough styling
-#         bot_text_p = js.document.createElement('p')
-#         bot_text_p.innerText = message 
-#         bot_text_p.className = 'bot-message'
-#         bot_message_div.appendChild(bot_text_p)
-#         chat_messages_container.appendChild(bot_message_div)
-        
-#         js.window.speakText(bot_reply_text)
-#         # smooth_scroll_to_bottom(chat_messages_container)
+    utterance = js.new(js.window.SpeechSynthesisUtterance, text)
+    utterance.lang = 'en-US'
+
+    def on_end(e):
+        print('Python TTS: Speech synthesis finished.')
+        global current_py_utterance # Declare global here too, as it modifies it
+        current_py_utterance = None
+    utterance.onend = on_end
+
+    def on_error(e):
+        print(f'Python TTS: Speech synthesis error: {e.error}')
+        global current_py_utterance # Declare global here too, as it modifies it
+        current_py_utterance = None
+    utterance.onerror = on_error
+
+    js.window.speechSynthesis.speak(utterance)
+    current_py_utterance = utterance # Store reference
+    print(f'Python TTS: Speaking: "{text}"')
+
 
 async def py_sendMessage(event=None): # event=None to accept JS event object if passed
     """
@@ -185,8 +183,12 @@ async def py_sendMessage(event=None): # event=None to accept JS event object if 
     # js.window.smoothScrollToBottom(chat_messages_container) # Scroll after adding bot message
 
     # 4. Speak Response in Audio
-    print(f"Python: Speaking bot response: '{bot_reply_text}'")
-    js.window.speakText(bot_reply_text) # Call the JavaScript TTS function
+    if bot_reply_text:
+        print(f"Python: Calling internal py_speak_text to speak: '{bot_reply_text}'")
+        py_speak_text(bot_reply_text) # <<< CALLING THE NEW PYTHON TTS FUNCTION
+    else:
+        print("Python: Bot response was empty, nothing to speak.")
+
 
 
 # Main initialization for PyScript
