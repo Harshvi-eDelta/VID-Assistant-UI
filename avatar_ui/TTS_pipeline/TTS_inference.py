@@ -191,7 +191,7 @@ class CustomTTS:
 
             mean_std_path = os.path.join(
                 os.path.dirname(__file__),
-                "dataset/acoustic_dataset/mel_mean_std.npy"
+                "data/acoustic_dataset/mel_mean_std.npy"
             )
             self.mel_mean, self.mel_std = np.load(mean_std_path)
             print("TTS: Mel mean/std loaded.")

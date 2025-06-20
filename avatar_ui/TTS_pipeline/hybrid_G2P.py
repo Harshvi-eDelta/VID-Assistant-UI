@@ -8,7 +8,7 @@ from nltk.corpus import cmudict
 class G2PConverter:
     # def __init__(self, model_path=None, vocab_path="dataset/G2P_dataset/cmu_dict_no_stress.csv", max_len=33, load_model=True):
     # def __init__(self, model_path=None, vocab_path="dataset/G2P_dataset/cmu_dict_pun_stress.csv", max_len=33, load_model=True):
-    def __init__(self, model_path=None, vocab_path="avatar_ui/TTS_pipeline/dataset/cmu_dict_with_stress.csv", max_len=33, load_model=True):
+    def __init__(self, model_path=None, vocab_path="avatar_ui/TTS_pipeline/data/cmu_dict_with_stress.csv", max_len=33, load_model=True):
         self.max_len = max_len
         self.phoneme_dict=cmudict.dict()
         # print(self.phoneme_dict.keys())

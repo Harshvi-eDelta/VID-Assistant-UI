@@ -512,7 +512,7 @@
         "kind": 6,
         "importPath": "avatar_ui.TTS_pipeline.hybrid_G2P",
         "description": "avatar_ui.TTS_pipeline.hybrid_G2P",
-        "peekOfCode": "class G2PConverter:\n    # def __init__(self, model_path=None, vocab_path=\"dataset/G2P_dataset/cmu_dict_no_stress.csv\", max_len=33, load_model=True):\n    # def __init__(self, model_path=None, vocab_path=\"dataset/G2P_dataset/cmu_dict_pun_stress.csv\", max_len=33, load_model=True):\n    def __init__(self, model_path=None, vocab_path=\"avatar_ui/TTS_pipeline/dataset/cmu_dict_with_stress.csv\", max_len=33, load_model=True):\n        self.max_len = max_len\n        self.phoneme_dict=cmudict.dict()\n        # print(self.phoneme_dict.keys())\n        if load_model and model_path:\n            self.model = tf.keras.models.load_model(model_path)\n        self._load_vocab(vocab_path)",
+        "peekOfCode": "class G2PConverter:\n    # def __init__(self, model_path=None, vocab_path=\"dataset/G2P_dataset/cmu_dict_no_stress.csv\", max_len=33, load_model=True):\n    # def __init__(self, model_path=None, vocab_path=\"dataset/G2P_dataset/cmu_dict_pun_stress.csv\", max_len=33, load_model=True):\n    def __init__(self, model_path=None, vocab_path=\"avatar_ui/TTS_pipeline/data/cmu_dict_with_stress.csv\", max_len=33, load_model=True):\n        self.max_len = max_len\n        self.phoneme_dict=cmudict.dict()\n        # print(self.phoneme_dict.keys())\n        if load_model and model_path:\n            self.model = tf.keras.models.load_model(model_path)\n        self._load_vocab(vocab_path)",
         "detail": "avatar_ui.TTS_pipeline.hybrid_G2P",
         "documentation": {}
     },
