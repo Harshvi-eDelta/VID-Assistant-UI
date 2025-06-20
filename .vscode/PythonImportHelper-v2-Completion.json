@@ -1,11 +1,47 @@
 [
     {
-        "label": "pyttsx3",
+        "label": "datetime",
         "kind": 6,
         "isExtraImport": true,
-        "importPath": "pyttsx3",
-        "description": "pyttsx3",
-        "detail": "pyttsx3",
+        "importPath": "datetime",
+        "description": "datetime",
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "tensorflow",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tensorflow",
+        "description": "tensorflow",
+        "detail": "tensorflow",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "librosa",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "librosa",
+        "description": "librosa",
+        "detail": "librosa",
+        "documentation": {}
+    },
+    {
+        "label": "soundfile",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "soundfile",
+        "description": "soundfile",
+        "detail": "soundfile",
         "documentation": {}
     },
     {
@@ -27,12 +63,51 @@
         "documentation": {}
     },
     {
-        "label": "time",
-        "kind": 6,
+        "label": "TextNormalizer",
+        "importPath": "text_preprocess",
+        "description": "text_preprocess",
         "isExtraImport": true,
-        "importPath": "time",
-        "description": "time",
-        "detail": "time",
+        "detail": "text_preprocess",
+        "documentation": {}
+    },
+    {
+        "label": "G2PConverter",
+        "importPath": "hybrid_G2P",
+        "description": "hybrid_G2P",
+        "isExtraImport": true,
+        "detail": "hybrid_G2P",
+        "documentation": {}
+    },
+    {
+        "label": "pad_sequences",
+        "importPath": "tensorflow.keras.preprocessing.sequence",
+        "description": "tensorflow.keras.preprocessing.sequence",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.preprocessing.sequence",
+        "documentation": {}
+    },
+    {
+        "label": "layers",
+        "importPath": "tensorflow.keras",
+        "description": "tensorflow.keras",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras",
+        "documentation": {}
+    },
+    {
+        "label": "register_keras_serializable",
+        "importPath": "keras.saving",
+        "description": "keras.saving",
+        "isExtraImport": true,
+        "detail": "keras.saving",
+        "documentation": {}
+    },
+    {
+        "label": "enable_unsafe_deserialization",
+        "importPath": "keras.config",
+        "description": "keras.config",
+        "isExtraImport": true,
+        "detail": "keras.config",
         "documentation": {}
     },
     {
@@ -42,24 +117,6 @@
         "importPath": "pandas",
         "description": "pandas",
         "detail": "pandas",
-        "documentation": {}
-    },
-    {
-        "label": "numpy",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "numpy",
-        "description": "numpy",
-        "detail": "numpy",
-        "documentation": {}
-    },
-    {
-        "label": "tensorflow",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "tensorflow",
-        "description": "tensorflow",
-        "detail": "tensorflow",
         "documentation": {}
     },
     {
@@ -246,6 +303,14 @@
         "documentation": {}
     },
     {
+        "label": "send_file",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "Flask",
         "importPath": "flask",
         "description": "flask",
@@ -292,6 +357,14 @@
         "importPath": "sys",
         "description": "sys",
         "detail": "sys",
+        "documentation": {}
+    },
+    {
+        "label": "tts_model_instance",
+        "importPath": "TTS_pipeline.TTS_inference",
+        "description": "TTS_pipeline.TTS_inference",
+        "isExtraImport": true,
+        "detail": "TTS_pipeline.TTS_inference",
         "documentation": {}
     },
     {
@@ -345,20 +418,92 @@
         "documentation": {}
     },
     {
-        "label": "PyTTSx3Service",
+        "label": "CropLayer",
         "kind": 6,
         "importPath": "avatar_ui.TTS_pipeline.TTS_inference",
         "description": "avatar_ui.TTS_pipeline.TTS_inference",
-        "peekOfCode": "class PyTTSx3Service:\n    def __init__(self):\n        self.engine = None\n        self.is_loaded = False\n        self._initialize_engine() # Initialize the engine on startup\n    def _initialize_engine(self):\n        \"\"\"Initializes the pyttsx3 engine.\"\"\"\n        try:\n            print(\"PyTTSx3Service: Initializing pyttsx3 engine...\")\n            self.engine = pyttsx3.init()",
+        "peekOfCode": "class CropLayer(tf.keras.layers.Layer):\n    def __init__(self, length, **kwargs):\n        super().__init__(**kwargs)\n        self.length = length\n    def call(self, inputs):\n        return inputs[:, :self.length, :]\n    def get_config(self):\n        config = super().get_config()\n        config.update({'length': self.length})\n        return config",
         "detail": "avatar_ui.TTS_pipeline.TTS_inference",
         "documentation": {}
     },
     {
-        "label": "tts_service_instance",
+        "label": "AdditiveAttention",
+        "kind": 6,
+        "importPath": "avatar_ui.TTS_pipeline.TTS_inference",
+        "description": "avatar_ui.TTS_pipeline.TTS_inference",
+        "peekOfCode": "class AdditiveAttention(tf.keras.layers.Layer):\n    def __init__(self, units, **kwargs):\n        super(AdditiveAttention, self).__init__(**kwargs)\n        self.W_query = tf.keras.layers.Dense(units)\n        self.W_values = tf.keras.layers.Dense(units)\n        self.V = tf.keras.layers.Dense(1)\n    def call(self, query, values, mask=None):\n        query = tf.expand_dims(query, 1)\n        score = self.V(tf.nn.tanh(self.W_query(query) + self.W_values(values)))\n        score = tf.squeeze(score, axis=-1)",
+        "detail": "avatar_ui.TTS_pipeline.TTS_inference",
+        "documentation": {}
+    },
+    {
+        "label": "AttentionContextLayer",
+        "kind": 6,
+        "importPath": "avatar_ui.TTS_pipeline.TTS_inference",
+        "description": "avatar_ui.TTS_pipeline.TTS_inference",
+        "peekOfCode": "class AttentionContextLayer(tf.keras.layers.Layer):\n    def __init__(self, units, input_length, **kwargs):\n        super(AttentionContextLayer, self).__init__(**kwargs)\n        self.units = units\n        self.input_length = input_length\n    def build(self, input_shape):\n        self.attention = AdditiveAttention(units=self.units)\n        super(AttentionContextLayer, self).build(input_shape)\n    def call(self, inputs):\n        query, values, mask = inputs",
+        "detail": "avatar_ui.TTS_pipeline.TTS_inference",
+        "documentation": {}
+    },
+    {
+        "label": "LocationSensitiveAttention",
+        "kind": 6,
+        "importPath": "avatar_ui.TTS_pipeline.TTS_inference",
+        "description": "avatar_ui.TTS_pipeline.TTS_inference",
+        "peekOfCode": "class LocationSensitiveAttention(tf.keras.layers.Layer):\n    def __init__(self, units, filters=32, kernel_size=31, **kwargs):\n        super(LocationSensitiveAttention, self).__init__(**kwargs)\n        self.units = units\n        self.filters = filters\n        self.kernel_size = kernel_size\n        self.W_query = layers.Dense(units)\n        self.W_values = layers.Dense(units)\n        self.W_location = layers.Dense(units)\n        self.V = layers.Dense(1)",
+        "detail": "avatar_ui.TTS_pipeline.TTS_inference",
+        "documentation": {}
+    },
+    {
+        "label": "LocationAttentionContextLayer",
+        "kind": 6,
+        "importPath": "avatar_ui.TTS_pipeline.TTS_inference",
+        "description": "avatar_ui.TTS_pipeline.TTS_inference",
+        "peekOfCode": "class LocationAttentionContextLayer(tf.keras.layers.Layer):\n    def __init__(self, units, input_length, **kwargs):\n        super(LocationAttentionContextLayer, self).__init__(**kwargs)\n        self.units = units\n        self.input_length = input_length\n    def build(self, input_shape):\n        self.attention = LocationSensitiveAttention(units=self.units)\n        super().build(input_shape)\n    def call(self, inputs):\n        query, values, prev_attention, mask = inputs",
+        "detail": "avatar_ui.TTS_pipeline.TTS_inference",
+        "documentation": {}
+    },
+    {
+        "label": "PositionalEncoding",
+        "kind": 6,
+        "importPath": "avatar_ui.TTS_pipeline.TTS_inference",
+        "description": "avatar_ui.TTS_pipeline.TTS_inference",
+        "peekOfCode": "class PositionalEncoding(tf.keras.layers.Layer):\n    def __init__(self, input_length, embed_dim, **kwargs):\n        super(PositionalEncoding, self).__init__(**kwargs)\n        self.pos_embedding = tf.keras.layers.Embedding(input_dim=input_length, output_dim=embed_dim)\n    def call(self, x):\n        seq_len = tf.shape(x)[1]\n        positions = tf.range(start=0, limit=seq_len, delta=1)\n        positions = tf.expand_dims(positions, 0)\n        pos_encoded = self.pos_embedding(positions)\n        return pos_encoded",
+        "detail": "avatar_ui.TTS_pipeline.TTS_inference",
+        "documentation": {}
+    },
+    {
+        "label": "LastTimestep",
+        "kind": 6,
+        "importPath": "avatar_ui.TTS_pipeline.TTS_inference",
+        "description": "avatar_ui.TTS_pipeline.TTS_inference",
+        "peekOfCode": "class LastTimestep(tf.keras.layers.Layer):\n    def call(self, inputs):\n        return inputs[:, -1, :]\nclass CustomTTS:\n    def __init__(self):\n        self.best_model = None\n        self.g2p = None\n        self.normalizer = None\n        self.mel_mean = None\n        self.mel_std = None",
+        "detail": "avatar_ui.TTS_pipeline.TTS_inference",
+        "documentation": {}
+    },
+    {
+        "label": "CustomTTS",
+        "kind": 6,
+        "importPath": "avatar_ui.TTS_pipeline.TTS_inference",
+        "description": "avatar_ui.TTS_pipeline.TTS_inference",
+        "peekOfCode": "class CustomTTS:\n    def __init__(self):\n        self.best_model = None\n        self.g2p = None\n        self.normalizer = None\n        self.mel_mean = None\n        self.mel_std = None\n        self.is_loaded = False\n        self._load_models() # Load models during initialization\n    def _load_models(self):",
+        "detail": "avatar_ui.TTS_pipeline.TTS_inference",
+        "documentation": {}
+    },
+    {
+        "label": "start",
         "kind": 5,
         "importPath": "avatar_ui.TTS_pipeline.TTS_inference",
         "description": "avatar_ui.TTS_pipeline.TTS_inference",
-        "peekOfCode": "tts_service_instance = PyTTSx3Service()\n# Optional: You can check if it loaded successfully\nif not tts_service_instance.is_loaded:\n    print(\"PyTTSx3Service: WARNING: PyTTSx3 engine failed to load during initialization.\")",
+        "peekOfCode": "start = datetime.datetime.now()\nimport tensorflow as tf\nimport numpy as np\nimport librosa\nimport soundfile as sf\nimport io\nimport os\nfrom text_preprocess import TextNormalizer\nfrom hybrid_G2P import G2PConverter\n# Important: Register custom Keras layers before loading the model",
+        "detail": "avatar_ui.TTS_pipeline.TTS_inference",
+        "documentation": {}
+    },
+    {
+        "label": "tts_model_instance",
+        "kind": 5,
+        "importPath": "avatar_ui.TTS_pipeline.TTS_inference",
+        "description": "avatar_ui.TTS_pipeline.TTS_inference",
+        "peekOfCode": "tts_model_instance = CustomTTS()\ntts_model_instance.synthesize(text=text)\n# You can add a check here if model loading failed during initialization\nif not tts_model_instance.is_loaded:\n    print(\"TTS: WARNING: CustomTTS model failed to load during initialization.\")\n# your_project_root/tts_pipeline/tts_inference.py\n# import pyttsx3\n# import io\n# import os\n# import time # For a small delay if needed",
         "detail": "avatar_ui.TTS_pipeline.TTS_inference",
         "documentation": {}
     },
@@ -431,15 +576,6 @@
         "importPath": "avatar_ui.static.py.STT",
         "description": "avatar_ui.static.py.STT",
         "peekOfCode": "def smooth_scroll_to_bottom(element):\n    \"\"\"Calls the JavaScript smoothScrollToBottom function.\"\"\"\n    js.window.smoothScrollToBottom(element) # Call the JS function\nasync def get_bot_response(user_message):\n    \"\"\"\n    Simulates getting a response from a bot.\n    In a real application, this would involve an HTTP request to a backend API.\n    For now, a simple conditional response.\n    \"\"\"\n    print(f\"Python: Getting bot response for: '{user_message}'\")",
-        "detail": "avatar_ui.static.py.STT",
-        "documentation": {}
-    },
-    {
-        "label": "py_speak_text",
-        "kind": 2,
-        "importPath": "avatar_ui.static.py.STT",
-        "description": "avatar_ui.static.py.STT",
-        "peekOfCode": "def py_speak_text(text):\n    global current_py_utterance \n    if not text or text.strip() == '':\n        print('Python TTS: Attempted to speak empty or null text.')\n        return\n    if not hasattr(js.window, 'speechSynthesis'):\n        print('Python TTS: Text-to-Speech not supported in this browser.')\n        update_info('Text-to-Speech not supported in your browser.')\n        return\n    # # Cancel any currently speaking utterance",
         "detail": "avatar_ui.static.py.STT",
         "documentation": {}
     },
@@ -610,7 +746,16 @@
         "kind": 2,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "def upload():\n    image = request.files['image']\n    avatar_name = request.form['avatar_name']\n    if image:\n        filename = secure_filename(image.filename)\n        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))\n        avatar_url = url_for('static', filename=f'uploads/{filename}')\n        avatars.append({'name': avatar_name, 'url': avatar_url})\n    return redirect(url_for('index'))\n# @app.route('/get-response', methods=['POST'])",
+        "peekOfCode": "def upload():\n    image = request.files['image']\n    avatar_name = request.form['avatar_name']\n    if image:\n        filename = secure_filename(image.filename)\n        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))\n        avatar_url = url_for('static', filename=f'uploads/{filename}')\n        avatars.append({'name': avatar_name, 'url': avatar_url})\n    return redirect(url_for('index1'))\n# @app.route('/TTS', methods=['POST'])",
+        "detail": "avatar_ui.app_render3d",
+        "documentation": {}
+    },
+    {
+        "label": "synthesize_speech",
+        "kind": 2,
+        "importPath": "avatar_ui.app_render3d",
+        "description": "avatar_ui.app_render3d",
+        "peekOfCode": "def synthesize_speech():\n    data = request.get_json()\n    text_to_synthesize = data.get('text', '')\n    if not text_to_synthesize:\n        return jsonify({\"error\": \"No text provided\"}), 400\n    # Check if the pyttsx3 service was loaded successfully at app startup\n    if not tts_model_instance.is_loaded:\n        print(\"Flask Error: TTS service not loaded.\")\n        return jsonify({\"error\": \"TTS service not available on server.\"}), 503 # Service Unavailable\n    try:",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },

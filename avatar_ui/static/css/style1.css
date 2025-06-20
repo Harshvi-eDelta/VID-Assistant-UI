@@ -302,7 +302,16 @@ canvas {
     text-align: end;
     width: max-content; 
 }
+
+.bot-message-container {
+    display: flex; /* Use flexbox to align items in a row */
+    align-items: center; /* Vertically center the items */
+    justify-content: flex-start; /* Align items to the start (left) */
+    margin-bottom: 10px; /* Spacing between bot messages */
+}
+
 .bot-message {
+    /* display: flex; */
     background-color: #f1f2f2b4;
     border-radius: 18px;
     word-wrap: break-word;
@@ -310,6 +319,34 @@ canvas {
     color: rgba(19, 19, 19, 0.918);
     max-width: 80%;
     width: max-content;
+}
+
+.mic-button {
+    background-color: #f1f1f200;
+    /* padding: 8px 12px; */
+    margin: 3px 3px;
+    color: rgba(203, 206, 237, 0.517);
+    border: none;
+    border-radius: 50%; /* Make it round */
+    width: 35px; /* Set a fixed width */
+    height: 35px; /* Set a fixed height */
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    cursor: pointer;
+    /* box-shadow: 0 2px 4px rgba(0,0,0,0.2); */
+    /* transition: background-color 0.3s ease; */
+}
+
+.mic-button:hover {
+    background-color: #f1f1f280;
+}
+
+.mic-icon-image {
+    width: 80%; /* Adjust size of the image relative to the button */
+    height: 80%; /* Keep aspect ratio */
+    object-fit: contain; /* Ensures the entire image is visible within its bounds */
+    filter: invert(100%); /* Optional: Make the icon white if it's black */
 }
  
 .chat-input {

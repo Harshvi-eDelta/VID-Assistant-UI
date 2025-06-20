@@ -90,7 +90,7 @@ class G2PConverter:
         for w in words:
             phonemes,phoneme_token = self.word_to_phonemes(w)
             # p = copy.deepcopy(phonemes)
-            p = phonemes.copy()
+            p = phoneme_token.copy()
             # p = phonemes            
             p.append(self.phn2idx['<eow>'])
             predicted_phonemes.append(p)

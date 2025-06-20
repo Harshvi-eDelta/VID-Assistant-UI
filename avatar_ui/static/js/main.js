@@ -116,14 +116,74 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-let scene, camera, renderer, avatar, controls;
-const clock = new THREE.Clock(); 
+let scene, camera, renderer, avatar;
+let controls; 
+// let audio, audioLoader;
+// let lipSyncData = [];
+// let currentPhonemeIndex = 0;
+// let avatarMeshesWithMorphTargets = []; // To store meshes that have morph targets
 
 function loadGLB(path) {
     if (avatar) {
         scene.remove(avatar);
     }
 
+const clock = new THREE.Clock();
+
+function init() {
+    const container = document.querySelector('.main-content');
+
+    // Scene
+    scene = new THREE.Scene();
+    scene.background = null; // Light blue background
+
+    // Camera
+    camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.set(0, 5,0); // Position camera to look at a typical avatar height
+
+    // Renderer
+    renderer = new THREE.WebGLRenderer({ antialias: true ,alpha:true});
+    renderer.setSize(container.clientWidth, container.clientHeight); // Reduced size for demo
+    container.appendChild(renderer.domElement);
+
+    // Lights
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+    scene.add(ambientLight);
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 10);
+    directionalLight.position.set(1, 5, 2).normalize();
+    scene.add(directionalLight);
+
+    // OrbitControls (for interaction)
+    controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true; // smooth rotation
+    controls.dampingFactor = 0.05;
+    controls.target.set(0, 1, 0); // Target the center of the avatar typically
+    controls.update();
+    
+
+    // // Audio setup
+    // const listener = new THREE.AudioListener();
+    // camera.add(listener);
+    // audio = new THREE.Audio(listener);
+    // audioLoader = new THREE.AudioLoader();
+
+    // const micButton = document.getElementById('micButton');
+
+    // micButton.addEventListener('click', () => {
+    //     console.log("click mic.....")
+    //     if (audio) {
+    //         console.log("play audio....",audio)
+    //         audio.play();
+    //         currentPhonemeIndex = 0; // Reset for new playback
+    //         document.getElementById('info').textContent = 'Playing audio...';
+    //     } else {
+    //         console.log("no audio or data")
+    //         document.getElementById('info').textContent = 'Audio or lip-sync data not ready.';
+    //     }
+    // });
+
+    // Load GLTF Model
     const loader = new GLTFLoader();
     const cacheBustedPath = `${path}?t=${Date.now()}`;
 
@@ -210,17 +270,25 @@ function init() {
 // }
 
 function animate() {
+
     requestAnimationFrame(animate);
     const elapsedTime = clock.getElapsedTime();
 
-    if (avatar) {
-        const oscillationSpeed = 0.5;
-        const oscillationAmplitude = Math.PI / 11 ;
-        avatar.rotation.y = Math.sin(elapsedTime * oscillationSpeed) * oscillationAmplitude;
+    // const delta = clock.getDelta();
+    if (avatar) { // Ensure avatar is loaded
+        // Rotate around the Y-axis. Adjust the `0.5` value to change rotation speed.
+        // Higher value = faster rotation.
+        // avatar.rotation.y += 0.5 * delta;
+        // If you want X or Z rotation, you can add them similarly:
+        // avatar.rotation.x += 0.1 * delta;
+        // avatar.rotation.z += 0.1 * delta;
+        const oscillationSpeed = 0.5; // Adjust this value to make it faster or slower
+        const oscillationAmplitude = Math.PI/11; // Adjust this for a wider or narrower swing (in radians)
+        avatar.rotation.z = Math.sin(elapsedTime * oscillationSpeed) * oscillationAmplitude;
     }
-
-    // controls.update();
+    controls.update();
     renderer.render(scene, camera);
+    // requestAnimationFrame(animate);
 }
 
 function bindAvatarThumbnailClicks() {

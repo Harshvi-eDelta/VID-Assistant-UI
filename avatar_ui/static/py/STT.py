@@ -108,42 +108,6 @@ async def get_bot_response(user_message):
         print(f"Python Error fetching bot response: {e}")
         return "I'm sorry, I encountered an error while trying to respond."
 
-def py_speak_text(text):
-    global current_py_utterance 
-
-    if not text or text.strip() == '':
-        print('Python TTS: Attempted to speak empty or null text.')
-        return
-
-    if not hasattr(js.window, 'speechSynthesis'):
-        print('Python TTS: Text-to-Speech not supported in this browser.')
-        update_info('Text-to-Speech not supported in your browser.')
-        return
-
-    # # Cancel any currently speaking utterance
-    # if current_py_utterance and js.window.speechSynthesis.speaking:
-    #     js.window.speechSynthesis.cancel()
-
-    utterance = js.new(js.window.SpeechSynthesisUtterance, text)
-    utterance.lang = 'en-US'
-
-    def on_end(e):
-        print('Python TTS: Speech synthesis finished.')
-        global current_py_utterance # Declare global here too, as it modifies it
-        current_py_utterance = None
-    utterance.onend = on_end
-
-    def on_error(e):
-        print(f'Python TTS: Speech synthesis error: {e.error}')
-        global current_py_utterance # Declare global here too, as it modifies it
-        current_py_utterance = None
-    utterance.onerror = on_error
-
-    js.window.speechSynthesis.speak(utterance)
-    current_py_utterance = utterance # Store reference
-    print(f'Python TTS: Speaking: "{text}"')
-
-
 async def py_sendMessage(event=None): # event=None to accept JS event object if passed
     """
     Handles sending and displaying chat messages in the chat interface,
@@ -174,21 +138,64 @@ async def py_sendMessage(event=None): # event=None to accept JS event object if 
 
     # 3. Display Bot Response
     bot_message_div = js.document.createElement('div')
+    bot_message_div.className = 'bot-message-container' # Add a container for styling purposes
+
     bot_text_p = js.document.createElement('p')
-    bot_text_p.innerText = bot_reply_text
+    bot_text_p.innerText = message
     bot_text_p.className = 'bot-message'
     bot_message_div.appendChild(bot_text_p)
+
+    # Create the microphone button
+    mic_button = js.document.createElement('button')
+    mic_button.className = 'mic-button'
+    mic_image = js.document.createElement('img')
+    mic_image.src = '../static/images/speack-btn.png'
+    mic_image.className = 'mic-icon-image'
+    mic_button.appendChild(mic_image)
+
+    # Add event listener to the microphone button
+    # When clicked, it will re-speak the bot's reply
+    def re_speak_bot_message(event):
+        """
+        Function to be called when the microphone button is clicked.
+        It will re-speak the bot's message.
+        """
+        if bot_reply_text: # Ensure there's text to speak
+            print(f"Python: Re-speaking bot message: '{bot_reply_text}'")
+            # --- THIS IS THE KEY PART TO UNCOMMENT/ENABLE ---
+            # You should use the function that handles your Text-to-Speech (TTS)
+            # Choose one based on your actual TTS implementation:
+
+            # Option 1: If you have a specific function like py_speak_text
+            # that takes the string directly and plays it.
+            js.window.py_speak_text(bot_reply_text)
+
+            # Option 2: If CustomTTS() is a function that, when called,
+            # knows how to get the most recent bot_reply_text and speak it.
+            # js.window.CustomTTS()
+
+            # For most direct control, passing the text is usually better.
+            # Make sure the 'py_speak_text' or 'CustomTTS' function is available
+            # in the JavaScript global scope (window object) if it's defined
+            # outside of Brython, or simply a Brython function if it's pure Python.
+        else:
+            print("Python: No text to re-speak for this message.")
+
+    mic_button.addEventListener('click', re_speak_bot_message)
+    bot_message_div.appendChild(mic_button)
+
     chat_messages_container.appendChild(bot_message_div)
 
-    # js.window.smoothScrollToBottom(chat_messages_container) # Scroll after adding bot message
-
-    # 4. Speak Response in Audio
+    # ... (rest of your code for initial speaking of response) ...
+    # 4. Speak Response in Audio (initial speaking, can be removed if you only want click-to-speak)
+    # If you also want the bot to speak immediately after responding, keep this:
     if bot_reply_text:
         print(f"Python: Calling internal py_speak_text to speak: '{bot_reply_text}'")
-        py_speak_text(bot_reply_text) # <<< CALLING THE NEW PYTHON TTS FUNCTION
+        # Ensure this also uses the same function you've decided on above
+        js.window.py_speak_text(bot_reply_text)
+        # js.window.CustomTTS() # Or CustomTTS() if that's your primary TTS function
     else:
         print("Python: Bot response was empty, nothing to speak.")
-
 
 
 # Main initialization for PyScript

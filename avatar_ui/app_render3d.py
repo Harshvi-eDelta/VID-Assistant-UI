@@ -1,10 +1,11 @@
 '''from flask import Flask, render_template, send_from_directory,request,url_for,redirect
 import os
 import sys
-# from PIL import Image
+import io
 from werkzeug.utils import secure_filename
-# For chatbot response
 from flask import Flask,request,jsonify
+from TTS_pipeline.TTS_inference import tts_model_instance
+# For chatbot response
 # from rag import get_chat_response   # Added for chatbot integration
 
 
@@ -15,14 +16,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # Get all uploaded avatars and their names
 avatars = []    
-
 @app.route('/')
 def index():
     return render_template('index1.html',avatars=avatars)
 
 STATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
 app.config['STATIC_FOLDER'] = STATIC_FOLDER
-
 os.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)
 
 # This route serves ANY file from the static/models subdirectory, including .glb
@@ -32,7 +31,6 @@ def serve_model(filename):
     return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)
 
 @app.route('/upload', methods=['POST'])
-
 def upload():
     image = request.files['image']
     avatar_name = request.form['avatar_name']
@@ -44,10 +42,46 @@ def upload():
         avatar_url = url_for('static', filename=f'uploads/{filename}')
         avatars.append({'name': avatar_name, 'url': avatar_url})
 
-    return redirect(url_for('index'))
+    return redirect(url_for('index1'))
+
+# @app.route('/TTS', methods=['POST'])
+# def TTS():
+#     text = request.form['text']
+#     audio = tts_model_instance(text)
+#     return send_file(audio, as_attachment=True, attachment_filename='audio.mp3')
+
+@app.route('/synthesize-speech', methods=['POST'])
+def synthesize_speech():
+    data = request.get_json()
+    text_to_synthesize = data.get('text', '')
+
+    if not text_to_synthesize:
+        return jsonify({"error": "No text provided"}), 400
+
+    # Check if the pyttsx3 service was loaded successfully at app startup
+    if not tts_model_instance.is_loaded:
+        print("Flask Error: TTS service not loaded.")
+        return jsonify({"error": "TTS service not available on server."}), 503 # Service Unavailable
+
+    try:
+        # Call the pyttsx3 service instance to synthesize audio
+        print(f"Flask: Requesting pyttsx3 synthesis for: '{text_to_synthesize}'")
+        audio_bytes = tts_model_instance.synthesize(text_to_synthesize)
+        print("Flask: pyttsx3 synthesis complete. Sending audio.")
+        
+        # Send the audio data back as a WAV file
+        return send_file(
+            io.BytesIO(audio_bytes),
+            mimetype='audio/wav',
+            as_attachment=False, # Do not force download in the browser
+            download_name='synthesized_speech.wav' # Suggested filename for the browser
+        )
+    except Exception as e:
+        print(f"Flask Error during pyttsx3 speech synthesis: {e}")
+        return jsonify({"error": f"Speech synthesis failed: {str(e)}"}), 500
+
 
 # @app.route('/get-response', methods=['POST'])
-
 # def get_response():
     # user_input = request.json.get("message")
     # bot_response = get_chat_response(user_input)  
