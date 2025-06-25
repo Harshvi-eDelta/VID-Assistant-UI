@@ -1,7 +1,7 @@
 import js
 import asyncio
+import json
 
-# Global state for speech recognition
 speech_recognition_active = False
 current_py_utterance = None
 
@@ -108,11 +108,90 @@ async def get_bot_response(user_message):
         print(f"Python Error fetching bot response: {e}")
         return "I'm sorry, I encountered an error while trying to respond."
 
+
+# async def py_sendMessage(event=None): # event=None to accept JS event object if passed
+#     """
+#     Handles sending and displaying chat messages in the chat interface,
+#     and gets a bot response which is then spoken in audio.
+#     """
+#     input_element = js.document.getElementById('userInput')
+#     message = input_element.value.strip()
+
+#     if message == "":
+#         return # Do nothing if message is empty
+
+#     chat_messages_container = js.document.getElementById('chatMessages')
+
+#     # 1. Display User message
+#     user_message_div = js.document.createElement('div')
+#     user_text_p = js.document.createElement('p')
+#     user_text_p.innerText = message
+#     user_text_p.className = 'user-message'
+#     user_message_div.appendChild(user_text_p)
+#     chat_messages_container.appendChild(user_message_div)
+
+#     input_element.value = '' # Clear input after sending
+#     # js.window.smoothScrollToBottom(chat_messages_container) # Scroll after adding user message
+
+#     # 2. Get Bot Response
+#     bot_reply_text = await get_bot_response(message)
+#     print(f"Python: Bot response received: '{bot_reply_text}'")
+
+#     # 3. Display Bot Response
+#     bot_message_div = js.document.createElement('div')
+#     bot_message_div.className = 'bot-message-container' # Add a container for styling purposes
+
+#     bot_text_p = js.document.createElement('p')
+#     bot_text_p.innerText = message
+#     bot_text_p.className = 'bot-message'
+#     bot_message_div.appendChild(bot_text_p)
+
+#     # Create the microphone button
+#     mic_button = js.document.createElement('button')
+#     mic_button.className = 'mic-button'
+#     mic_image = js.document.createElement('img')
+#     mic_image.src = '../static/images/speack-btn.png'
+#     mic_image.className = 'mic-icon-image'
+#     mic_button.appendChild(mic_image)
+#     bot_message_div.appendChild(mic_button)
+#     chat_messages_container.appendChild(bot_message_div)
+
+#     if bot_reply_text:
+#         print(f"Python: Sending bot response to Flask TTS for playback: '{bot_reply_text}'")
+
+#         try:
+#             # Send POST request to Flask /synthesize-speech
+#             # response = await js.fetch(
+#             #     "/synthesize-speech",
+#             #     {
+#             #         "method": "POST",
+#             #         "headers": {"Content-Type": "application/json"},
+#             #         "body": js.JSON.stringify({"text": bot_reply_text})
+#             #     }
+#             # )
+#             response = await js.pyscript.fetch("/synthesize-speech", method="POST", body="HELLO").text()
+#             if response.ok:
+#                 audio_blob = await response.blob()
+#                 audio_url = js.URL.createObjectURL(audio_blob)
+#                 audio = js.Audio.new(audio_url)
+#                 audio.play()
+#                 print("Python: Auto-played TTS audio after bot response.")
+#             else:
+#                 print(f"Python Error: TTS request failed with status {response.status}")
+
+#         except Exception as e:
+#             print(f"Python Exception while auto-playing audio: {e}")
+
+
 async def py_sendMessage(event=None): # event=None to accept JS event object if passed
     """
     Handles sending and displaying chat messages in the chat interface,
     and gets a bot response which is then spoken in audio.
     """
+
+    if event is not None:
+        event.preventDefault()
+
     input_element = js.document.getElementById('userInput')
     message = input_element.value.strip()
 
@@ -130,7 +209,7 @@ async def py_sendMessage(event=None): # event=None to accept JS event object if 
     chat_messages_container.appendChild(user_message_div)
 
     input_element.value = '' # Clear input after sending
-    # js.window.smoothScrollToBottom(chat_messages_container) # Scroll after adding user message
+    # smooth_scroll_to_bottom(chat_messages_container) # Scroll after adding user message
 
     # 2. Get Bot Response
     bot_reply_text = await get_bot_response(message)
@@ -141,61 +220,68 @@ async def py_sendMessage(event=None): # event=None to accept JS event object if 
     bot_message_div.className = 'bot-message-container' # Add a container for styling purposes
 
     bot_text_p = js.document.createElement('p')
-    bot_text_p.innerText = message
+    bot_text_p.innerText = bot_reply_text # Display the actual bot reply
     bot_text_p.className = 'bot-message'
     bot_message_div.appendChild(bot_text_p)
 
-    # Create the microphone button
+    # Create the microphone button (for replaying bot message)
     mic_button = js.document.createElement('button')
     mic_button.className = 'mic-button'
     mic_image = js.document.createElement('img')
-    mic_image.src = '../static/images/speack-btn.png'
+    mic_image.src = '../static/images/speack-btn.png' # Ensure this path is correct
     mic_image.className = 'mic-icon-image'
     mic_button.appendChild(mic_image)
-
-    # Add event listener to the microphone button
-    # When clicked, it will re-speak the bot's reply
-    def re_speak_bot_message(event):
-        """
-        Function to be called when the microphone button is clicked.
-        It will re-speak the bot's message.
-        """
-        if bot_reply_text: # Ensure there's text to speak
-            print(f"Python: Re-speaking bot message: '{bot_reply_text}'")
-            # --- THIS IS THE KEY PART TO UNCOMMENT/ENABLE ---
-            # You should use the function that handles your Text-to-Speech (TTS)
-            # Choose one based on your actual TTS implementation:
-
-            # Option 1: If you have a specific function like py_speak_text
-            # that takes the string directly and plays it.
-            js.window.py_speak_text(bot_reply_text)
-
-            # Option 2: If CustomTTS() is a function that, when called,
-            # knows how to get the most recent bot_reply_text and speak it.
-            # js.window.CustomTTS()
-
-            # For most direct control, passing the text is usually better.
-            # Make sure the 'py_speak_text' or 'CustomTTS' function is available
-            # in the JavaScript global scope (window object) if it's defined
-            # outside of Brython, or simply a Brython function if it's pure Python.
-        else:
-            print("Python: No text to re-speak for this message.")
-
-    mic_button.addEventListener('click', re_speak_bot_message)
     bot_message_div.appendChild(mic_button)
-
     chat_messages_container.appendChild(bot_message_div)
+    
+    # Add an event listener to the "speaker" button on the bot message
+    # When clicked, it will re-synthesize and play *that specific bot message*
+    # mic_button.onclick = lambda e: asyncio.ensure_future(play_bot_speech(bot_reply_text))
 
-    # ... (rest of your code for initial speaking of response) ...
-    # 4. Speak Response in Audio (initial speaking, can be removed if you only want click-to-speak)
-    # If you also want the bot to speak immediately after responding, keep this:
+    # 4. Auto-play Bot Response using TTS from Flask backend
     if bot_reply_text:
-        print(f"Python: Calling internal py_speak_text to speak: '{bot_reply_text}'")
-        # Ensure this also uses the same function you've decided on above
-        js.window.py_speak_text(bot_reply_text)
-        # js.window.CustomTTS() # Or CustomTTS() if that's your primary TTS function
-    else:
-        print("Python: Bot response was empty, nothing to speak.")
+        await play_bot_speech(bot_reply_text)
+
+async def play_bot_speech(text_to_speak):
+    print(f"Python: Sending text to Flask TTS for playback: '{text_to_speak}'")
+# Send
+    try:
+        # response = await js.fetch(
+        #     "/synthesize-speech",
+        #     {
+        #         "method": "POST",
+        #         "headers": {"Content-Type": "application/json"},
+        #         "body": js.JSON.stringify({'text': ' hello9 from code'})
+        #     }
+        # )
+
+        my_headers = js.Headers.new()
+        my_headers.append("Content-Type", "application/json")
+        response = await js.fetch(
+            "/synthesize-speech",method= "POST",headers=my_headers,body=json.dumps({"text": "The second step we have taken in the restoration of normal business enterprise"})
+        )   
+
+        # --- How to check response values in PyScript ---
+        print(f"PyScript Response: Status Code: {response.status}")
+
+        if response.ok:
+            # For successful audio response (Blob)
+            audio_blob = await response.blob()
+            print(f"PyScript Response: Received audio Blob of size {audio_blob.size} bytes.")
+            # Now proceed to play the audio
+            audio_url = js.URL.createObjectURL(audio_blob)
+            audio = js.Audio.new(audio_url)
+            audio.play()
+            print("Python: Auto-played TTS audio after bot response.")
+        else:
+            # For error responses (likely text/JSON)
+            error_text = await response.text() # Read the response body as plain text
+            print(f"PyScript Response: Error Body: {error_text}")
+            print(f"Python Error: TTS request failed with status {response.status}. Response: {error_text}")
+            # update_info(f"TTS Error: Status {response.status}") # Update UI with error
+    except Exception as e:
+        print(f"Python Exception while requesting/playing TTS audio: {e}")
+        # update_info(f"Audio playback error: {e}")
 
 
 # Main initialization for PyScript
@@ -203,18 +289,18 @@ async def main_pyscript_init():
     mic_button = js.document.getElementById('micButton')
     send_button = js.document.getElementById('sendButton') 
     user_input = js.document.getElementById('userInput') # Get the input field
-    print(send_button)
+    # print(send_button)
     if mic_button and send_button:
         mic_button.onclick = handle_mic_click 
-        send_button.onclick = py_sendMessage
+        #send_button.onclick = py_sendMessage
+        send_button.onclick = lambda event: asyncio.ensure_future(py_sendMessage(event))
         user_input.onkeyup = lambda event: asyncio.ensure_future(py_sendMessage()) if event.key == 'Enter' else None
         # print("PyScript initialized. Click mic to speak.")
         update_info("PyScript initialized. Click mic to speak.")
     else:
         update_info("Error: Mic button not found for PyScript control.")
     print("Python: PyScript main initialization complete.")
-    # js.window.py_sendMessage = py_sendMessage
-    # print("Python: py_sendMessage exposed to JS.")
+
 
 # Ensure the main PyScript initialization runs
 asyncio.ensure_future(main_pyscript_init())

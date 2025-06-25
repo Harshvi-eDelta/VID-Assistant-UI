@@ -10,7 +10,12 @@
     
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
     <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script> 
+<<<<<<< HEAD
 
+=======
+    <!-- <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+    <script defer src="https://pyscript.net/latest/pyscript.js"></script> -->
+>>>>>>> 0a8cc1f (api call,connect,fetch backend and frontend)
 </head>
 
 <body>
@@ -54,7 +59,7 @@
                 <div class="message">
                     <div class="chat-input">
                         <input type="text" id="userInput" placeholder="Type a message..">
-                        <button id="sendButton" class="send-btn" >
+                        <button id="sendButton" class="send-btn">
                             <img src="../static/images/sendicon.svg" alt="">
                         </button>
                     </div>
@@ -240,6 +245,17 @@
     <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script src="{{ url_for('static', filename='js/speech_recognition_helper.js') }}"></script>
 
+    <py-config>
+        {
+            "packages": ["numpy"]
+        }
+        </py-config>
+
+    <py-script>
+        import pyscript
+        import numpy as np
+        print("hebnsjkd========")
+    </py-script>
     <py-script src="{{ url_for('static', filename='py/STT.py') }}"></py-script>
 
 </body>

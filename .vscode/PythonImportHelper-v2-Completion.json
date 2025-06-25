@@ -64,18 +64,18 @@
     },
     {
         "label": "TextNormalizer",
-        "importPath": "text_preprocess",
-        "description": "text_preprocess",
+        "importPath": "avatar_ui.TTS_pipeline.text_preprocess",
+        "description": "avatar_ui.TTS_pipeline.text_preprocess",
         "isExtraImport": true,
-        "detail": "text_preprocess",
+        "detail": "avatar_ui.TTS_pipeline.text_preprocess",
         "documentation": {}
     },
     {
         "label": "G2PConverter",
-        "importPath": "hybrid_G2P",
-        "description": "hybrid_G2P",
+        "importPath": "avatar_ui.TTS_pipeline.hybrid_G2P",
+        "description": "avatar_ui.TTS_pipeline.hybrid_G2P",
         "isExtraImport": true,
-        "detail": "hybrid_G2P",
+        "detail": "avatar_ui.TTS_pipeline.hybrid_G2P",
         "documentation": {}
     },
     {
@@ -207,6 +207,15 @@
         "documentation": {}
     },
     {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
         "label": "Flask",
         "importPath": "flask",
         "description": "flask",
@@ -311,6 +320,14 @@
         "documentation": {}
     },
     {
+        "label": "Response",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
         "label": "Flask",
         "importPath": "flask",
         "description": "flask",
@@ -360,20 +377,11 @@
         "documentation": {}
     },
     {
-        "label": "tts_model_instance",
-        "importPath": "TTS_pipeline.TTS_inference",
-        "description": "TTS_pipeline.TTS_inference",
+        "label": "TTS_inference",
+        "importPath": "avatar_ui.TTS_pipeline",
+        "description": "avatar_ui.TTS_pipeline",
         "isExtraImport": true,
-        "detail": "TTS_pipeline.TTS_inference",
-        "documentation": {}
-    },
-    {
-        "label": "json",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "json",
-        "description": "json",
-        "detail": "json",
+        "detail": "avatar_ui.TTS_pipeline",
         "documentation": {}
     },
     {
@@ -485,7 +493,7 @@
         "kind": 6,
         "importPath": "avatar_ui.TTS_pipeline.TTS_inference",
         "description": "avatar_ui.TTS_pipeline.TTS_inference",
-        "peekOfCode": "class CustomTTS:\n    def __init__(self):\n        self.best_model = None\n        self.g2p = None\n        self.normalizer = None\n        self.mel_mean = None\n        self.mel_std = None\n        self.is_loaded = False\n        self._load_models() # Load models during initialization\n    def _load_models(self):",
+        "peekOfCode": "class CustomTTS:\n    def __init__(self):\n        self.best_model = None\n        self.g2p = None\n        self.normalizer = None\n        self.mel_mean = None\n        self.mel_std = None\n        self.is_loaded = False\n        self._load_models()\n    def _load_models(self):",
         "detail": "avatar_ui.TTS_pipeline.TTS_inference",
         "documentation": {}
     },
@@ -494,7 +502,7 @@
         "kind": 5,
         "importPath": "avatar_ui.TTS_pipeline.TTS_inference",
         "description": "avatar_ui.TTS_pipeline.TTS_inference",
-        "peekOfCode": "start = datetime.datetime.now()\nimport tensorflow as tf\nimport numpy as np\nimport librosa\nimport soundfile as sf\nimport io\nimport os\nfrom text_preprocess import TextNormalizer\nfrom hybrid_G2P import G2PConverter\n# Important: Register custom Keras layers before loading the model",
+        "peekOfCode": "start = datetime.datetime.now()\nimport tensorflow as tf\nimport numpy as np\nimport librosa\nimport soundfile as sf\nimport io\nimport os\nfrom avatar_ui.TTS_pipeline.text_preprocess import TextNormalizer\nfrom avatar_ui.TTS_pipeline.hybrid_G2P import G2PConverter\nfrom tensorflow.keras.preprocessing.sequence import pad_sequences",
         "detail": "avatar_ui.TTS_pipeline.TTS_inference",
         "documentation": {}
     },
@@ -503,7 +511,7 @@
         "kind": 5,
         "importPath": "avatar_ui.TTS_pipeline.TTS_inference",
         "description": "avatar_ui.TTS_pipeline.TTS_inference",
-        "peekOfCode": "tts_model_instance = CustomTTS()\ntts_model_instance.synthesize(text=text)\n# You can add a check here if model loading failed during initialization\nif not tts_model_instance.is_loaded:\n    print(\"TTS: WARNING: CustomTTS model failed to load during initialization.\")\n# your_project_root/tts_pipeline/tts_inference.py\n# import pyttsx3\n# import io\n# import os\n# import time # For a small delay if needed",
+        "peekOfCode": "tts_model_instance = CustomTTS()\n# tts_model_instance.synthesize(text=text)\nif not tts_model_instance.is_loaded:\n    print(\"TTS: WARNING: CustomTTS model failed to load during initialization.\")",
         "detail": "avatar_ui.TTS_pipeline.TTS_inference",
         "documentation": {}
     },
@@ -728,7 +736,7 @@
         "kind": 2,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "def index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)",
+        "peekOfCode": "def index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\napp.config['MODEL_FOLDER'] = os.path.join(STATIC_FOLDER, 'models')\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -737,7 +745,7 @@
         "kind": 2,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "def serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\n@app.route('/upload', methods=['POST'])\ndef upload():\n    image = request.files['image']\n    avatar_name = request.form['avatar_name']\n    if image:\n        filename = secure_filename(image.filename)\n        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))",
+        "peekOfCode": "def serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\n@app.route('/upload', methods=['POST'])\ndef upload():\n    image = request.files['image']\n    avatar_name = request.form['avatar_name']\n    if image:\n        filename = secure_filename(image.filename)\n        image.save(os.path.join(app.config['MODEL_FOLDER'], filename))",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -746,7 +754,7 @@
         "kind": 2,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "def upload():\n    image = request.files['image']\n    avatar_name = request.form['avatar_name']\n    if image:\n        filename = secure_filename(image.filename)\n        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))\n        avatar_url = url_for('static', filename=f'uploads/{filename}')\n        avatars.append({'name': avatar_name, 'url': avatar_url})\n    return redirect(url_for('index1'))\n# @app.route('/TTS', methods=['POST'])",
+        "peekOfCode": "def upload():\n    image = request.files['image']\n    avatar_name = request.form['avatar_name']\n    if image:\n        filename = secure_filename(image.filename)\n        image.save(os.path.join(app.config['MODEL_FOLDER'], filename))\n        avatar_url = url_for('static', filename=f'models/{filename}')\n        print(\"---------0\",avatar_url)\n        avatars.append({'name': avatar_name, 'url': avatar_url})\n    return redirect(url_for('index'))",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -755,7 +763,7 @@
         "kind": 2,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "def synthesize_speech():\n    data = request.get_json()\n    text_to_synthesize = data.get('text', '')\n    if not text_to_synthesize:\n        return jsonify({\"error\": \"No text provided\"}), 400\n    # Check if the pyttsx3 service was loaded successfully at app startup\n    if not tts_model_instance.is_loaded:\n        print(\"Flask Error: TTS service not loaded.\")\n        return jsonify({\"error\": \"TTS service not available on server.\"}), 503 # Service Unavailable\n    try:",
+        "peekOfCode": "def synthesize_speech():\n    # print(f\"Flask Request: Method: {request.method}\")\n    # print(f\"Flask Request: Headers: {request.headers}\")\n    # print(f\"Flask Request: Content-Type: {request.headers.get('Content-Type')}\")\n    try:\n        # Attempt to get JSON data\n        data = request.get_json(silent=True) #  silent=True prevents error if not JSON\n        print(\"====\",data)\n        if data is None:\n            # If get_json returned None, it means the body was not valid JSON",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -782,7 +790,7 @@
         "kind": 5,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []    \n@app.route('/')\ndef index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n# This route serves ANY file from the static/models subdirectory, including .glb",
+        "peekOfCode": "app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER\n# Get all uploaded avatars and their names\navatars = []    \n@app.route('/')\ndef index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\napp.config['MODEL_FOLDER'] = os.path.join(STATIC_FOLDER, 'models')",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -791,7 +799,7 @@
         "kind": 5,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "avatars = []    \n@app.route('/')\ndef index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):",
+        "peekOfCode": "avatars = []    \n@app.route('/')\ndef index():\n    return render_template('index1.html',avatars=avatars)\nSTATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\napp.config['MODEL_FOLDER'] = os.path.join(STATIC_FOLDER, 'models')\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -800,7 +808,7 @@
         "kind": 5,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "STATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\n@app.route('/upload', methods=['POST'])\ndef upload():",
+        "peekOfCode": "STATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')\napp.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\napp.config['MODEL_FOLDER'] = os.path.join(STATIC_FOLDER, 'models')\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\n@app.route('/upload', methods=['POST'])",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -809,7 +817,16 @@
         "kind": 5,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "app.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\n@app.route('/upload', methods=['POST'])\ndef upload():\n    image = request.files['image']",
+        "peekOfCode": "app.config['STATIC_FOLDER'] = STATIC_FOLDER\nos.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)\napp.config['MODEL_FOLDER'] = os.path.join(STATIC_FOLDER, 'models')\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\n@app.route('/upload', methods=['POST'])\ndef upload():",
+        "detail": "avatar_ui.app_render3d",
+        "documentation": {}
+    },
+    {
+        "label": "app.config['MODEL_FOLDER']",
+        "kind": 5,
+        "importPath": "avatar_ui.app_render3d",
+        "description": "avatar_ui.app_render3d",
+        "peekOfCode": "app.config['MODEL_FOLDER'] = os.path.join(STATIC_FOLDER, 'models')\n# This route serves ANY file from the static/models subdirectory, including .glb\n@app.route('/static/models/<path:filename>')\ndef serve_model(filename):\n    print(f\"Serving model file: {filename}\")\n    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)\n@app.route('/upload', methods=['POST'])\ndef upload():\n    image = request.files['image']\n    avatar_name = request.form['avatar_name']",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },

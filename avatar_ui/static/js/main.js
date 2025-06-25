@@ -147,11 +147,11 @@ function init() {
     container.appendChild(renderer.domElement);
 
     // Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
-    scene.add(ambientLight);
+    // const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+    // scene.add(ambientLight);
 
     const directionalLight = new THREE.DirectionalLight(0xffffff, 10);
-    directionalLight.position.set(1, 5, 2).normalize();
+    directionalLight.position.set(0, 5, 0).normalize();
     scene.add(directionalLight);
 
     // OrbitControls (for interaction)

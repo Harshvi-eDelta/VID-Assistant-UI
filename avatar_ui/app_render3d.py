@@ -1,18 +1,20 @@
-'''from flask import Flask, render_template, send_from_directory,request,url_for,redirect
+from flask import Flask, render_template, send_from_directory,request,url_for,redirect,send_file,Response
 import os
 import sys
 import io
 from werkzeug.utils import secure_filename
 from flask import Flask,request,jsonify
-from TTS_pipeline.TTS_inference import tts_model_instance
+from avatar_ui.TTS_pipeline import TTS_inference
 # For chatbot response
 # from rag import get_chat_response   # Added for chatbot integration
 
 
 app = Flask(__name__)
+
 UPLOAD_FOLDER = 'avatar_ui/static/uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
 
 # Get all uploaded avatars and their names
 avatars = []    
@@ -23,6 +25,7 @@ def index():
 STATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
 app.config['STATIC_FOLDER'] = STATIC_FOLDER
 os.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)
+app.config['MODEL_FOLDER'] = os.path.join(STATIC_FOLDER, 'models')
 
 # This route serves ANY file from the static/models subdirectory, including .glb
 @app.route('/static/models/<path:filename>')
@@ -37,48 +40,59 @@ def upload():
 
     if image:
         filename = secure_filename(image.filename)
-        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        image.save(os.path.join(app.config['MODEL_FOLDER'], filename))
 
-        avatar_url = url_for('static', filename=f'uploads/{filename}')
+        avatar_url = url_for('static', filename=f'models/{filename}')
+        print("---------0",avatar_url)
         avatars.append({'name': avatar_name, 'url': avatar_url})
 
-    return redirect(url_for('index1'))
-
-# @app.route('/TTS', methods=['POST'])
-# def TTS():
-#     text = request.form['text']
-#     audio = tts_model_instance(text)
-#     return send_file(audio, as_attachment=True, attachment_filename='audio.mp3')
+    return redirect(url_for('index'))
 
 @app.route('/synthesize-speech', methods=['POST'])
 def synthesize_speech():
-    data = request.get_json()
-    text_to_synthesize = data.get('text', '')
-
-    if not text_to_synthesize:
-        return jsonify({"error": "No text provided"}), 400
-
-    # Check if the pyttsx3 service was loaded successfully at app startup
-    if not tts_model_instance.is_loaded:
-        print("Flask Error: TTS service not loaded.")
-        return jsonify({"error": "TTS service not available on server."}), 503 # Service Unavailable
+    
+    # print(f"Flask Request: Method: {request.method}")
+    # print(f"Flask Request: Headers: {request.headers}")
+    # print(f"Flask Request: Content-Type: {request.headers.get('Content-Type')}")
 
     try:
-        # Call the pyttsx3 service instance to synthesize audio
-        print(f"Flask: Requesting pyttsx3 synthesis for: '{text_to_synthesize}'")
-        audio_bytes = tts_model_instance.synthesize(text_to_synthesize)
-        print("Flask: pyttsx3 synthesis complete. Sending audio.")
+        # Attempt to get JSON data
+        data = request.get_json(silent=True) #  silent=True prevents error if not JSON
+        print("====",data)
+        if data is None:
+            # If get_json returned None, it means the body was not valid JSON
+            print("Flask Request: Body is not valid JSON or is empty.")
+            # Read raw data for debugging if needed
+            # raw_body = request.data.decode('utf-8')
+            # print(f"Flask Request: Raw Body: {raw_body}")
+            return jsonify({"error": "Invalid JSON or empty body provided"}), 400
+
+        text = data.get('text')
         
-        # Send the audio data back as a WAV file
-        return send_file(
-            io.BytesIO(audio_bytes),
-            mimetype='audio/wav',
-            as_attachment=False, # Do not force download in the browser
-            download_name='synthesized_speech.wav' # Suggested filename for the browser
-        )
+        if not text:
+            print("Flask Request: 'text' field missing from JSON payload.")
+            return jsonify({"error": "No text provided in JSON payload"}), 400
+
+        print(f"Flask: Received text for TTS: '{text}'")
+
+        # Call your TTS inference pipeline
+        audio_bytes = TTS_inference.tts_model_instance.synthesize(text) 
+        
+        # --- How to check outgoing response values in Flask ---
+        # Before returning, you can print details about what you're sending
+        print(f"Flask Response: Synthesized audio bytes length: {len(audio_bytes)} bytes")
+        # In this case, you're directly streaming bytes, so no complex properties here,
+        # but you confirm the length and that it's bytes.
+
+        print("Flask: Sending synthesized audio back to client.")
+        return Response(audio_bytes, mimetype="audio/wav")
+
     except Exception as e:
-        print(f"Flask Error during pyttsx3 speech synthesis: {e}")
-        return jsonify({"error": f"Speech synthesis failed: {str(e)}"}), 500
+        print(f"Flask Error during TTS synthesis: {e}")
+        import traceback
+        traceback.print_exc() 
+        return jsonify({"error": str(e)}), 500
+
 
 
 # @app.route('/get-response', methods=['POST'])

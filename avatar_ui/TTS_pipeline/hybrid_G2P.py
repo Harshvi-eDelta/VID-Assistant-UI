@@ -31,7 +31,7 @@ class G2PConverter:
         self.char2idx['<sos>'] = len(self.char2idx)
         self.char2idx['<eos>'] = len(self.char2idx)
         self.idx2char = {i: c for c, i in self.char2idx.items()}
-        print(self.char2idx)
+        # print(self.char2idx)
 
         # Build phoneme vocab
         phoneme_set = sorted(set(p for ph in self.phonemes for p in ph))
@@ -41,7 +41,7 @@ class G2PConverter:
         self.phn2idx['<eow>'] = len(self.phn2idx)
         self.phn2idx['<eos>'] = len(self.phn2idx)
         self.idx2phn = {i: p for p, i in self.phn2idx.items()}
-        print(self.phn2idx)
+        # print(self.phn2idx)
 
     def _phoneme_string_to_list(self, phoneme_strs):
         return [p.split() for p in phoneme_strs]
