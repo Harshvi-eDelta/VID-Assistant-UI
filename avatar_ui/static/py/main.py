@@ -31,7 +31,7 @@ async def handle_mic_click(event=None):
                 user_input_field = js.document.getElementById('userInput')
                 if user_input_field:
                     user_input_field.value = transcribed_text
-                    js.sendMessage() 
+                    # js.sendMessage() 
                     await py_sendMessage()
                 
             else:
@@ -164,9 +164,8 @@ async def play_bot_speech(text_to_speak):
         my_headers = js.Headers.new()
         my_headers.append("Content-Type", "application/json")
         response = await js.fetch(
-            # "/synthesize-speech",method= "POST",headers=my_headers,body=json.dumps({"text": "The second step we have taken in the restoration of normal business enterprise"})
             "/synthesize-speech",method= "POST",headers=my_headers,body=json.dumps({"text": text_to_speak})
-            )   
+            )
         if response.ok:
             audio_file_path = await response.text()            
             print(f"frontend: {audio_file_path}")
