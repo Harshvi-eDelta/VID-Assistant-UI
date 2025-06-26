@@ -1,11 +1,11 @@
 import datetime
 start = datetime.datetime.now()
+import io
+import os
 import tensorflow as tf
 import numpy as np
 import librosa
 import soundfile as sf
-import io
-import os
 from avatar_ui.TTS_pipeline.text_preprocess import TextNormalizer
 from avatar_ui.TTS_pipeline.hybrid_G2P import G2PConverter
 from tensorflow.keras.preprocessing.sequence import pad_sequences
@@ -164,20 +164,15 @@ class CustomTTS:
                 compile=False,
                 custom_objects=custom_objects
             )
-            print("TTS: Keras TTS model loaded.")
 
-            self.g2p = G2PConverter("avatar_ui/TTS_pipeline/models/3model_cnn.keras")            
-            print("TTS: G2P model loaded.")
-
+            self.g2p = G2PConverter("avatar_ui/TTS_pipeline/models/3model_cnn.keras")
             self.normalizer = TextNormalizer()
-            print("TTS: TextNormalizer initialized.")
 
             mean_std_path = os.path.join(
                 os.path.dirname(__file__),
                 "data/acoustic_dataset/mel_mean_std.npy"
             )
             self.mel_mean, self.mel_std = np.load(mean_std_path)
-            print("TTS: Mel mean/std loaded.")
 
             self.is_loaded = True
             print("TTS: All models and data loaded successfully!")
@@ -215,8 +210,6 @@ class CustomTTS:
         if not self.is_loaded:
             raise RuntimeError("TTS models not loaded. Check server logs for errors.")
 
-        print(f"TTS Inference: Processing text: '{text}'")
-
         normalized_text = self.normalizer.normalize_text(text)
         print(f"TTS Inference: Normalized text: '{normalized_text}'")
 
@@ -228,18 +221,20 @@ class CustomTTS:
         input_tensor = tf.convert_to_tensor([padded_phonemes], dtype=tf.int32)
         
         predicted_mel = self.best_model.predict(input_tensor, verbose=0)[0]
-        print(f"TTS Inference: Predicted mel shape: {predicted_mel.shape} {predicted_mel}")
+        print(f"TTS Inference: Predicted mel shape: {predicted_mel.shape}")
 
         audio_data = self.mel_to_audio_griffin_lim(predicted_mel)
-        print(f"TTS Inference: Generated audio data (length: {len(audio_data)} samples)")
 
-        buffer = io.BytesIO()
-        # print("====123",buffer)
-        sf.write(buffer, audio_data, 22050, format='WAV', subtype='PCM_16')
-        sf.write(f"avatar_ui/static/audio/{datetime.datetime.now()}.wav", audio_data, 22050)
-        buffer.seek(0)
+        current_datetime = datetime.datetime.now()
+        current_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+        audio_path=f"static/audio/{current_datetime}.wav"
+        sf.write(f"avatar_ui/{audio_path}", audio_data, 22050)
+        # buffer = io.BytesIO()
+        # sf.write(buffer, audio_data, 22050, format='WAV', subtype='PCM_16')
+        # buffer.seek(0)
         print(f"TTS Inference: predicted all over time: {datetime.datetime.now() - start} seconds")
-        return buffer.getvalue()
+        # return buffer.getvalue()
+        return audio_path
 
 text="The second step we have taken in the restoration of normal business enterprise"
 tts_model_instance = CustomTTS()

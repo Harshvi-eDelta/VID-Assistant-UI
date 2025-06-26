@@ -160,7 +160,6 @@ function init() {
     controls.dampingFactor = 0.05;
     controls.target.set(0, 1, 0); // Target the center of the avatar typically
     controls.update();
-    
 
     // // Audio setup
     // const listener = new THREE.AudioListener();

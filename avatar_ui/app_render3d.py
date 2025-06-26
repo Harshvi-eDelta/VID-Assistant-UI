@@ -2,9 +2,13 @@ from flask import Flask, render_template, send_from_directory,request,url_for,re
 import os
 import sys
 import io
+import datetime
 from werkzeug.utils import secure_filename
 from flask import Flask,request,jsonify
 from avatar_ui.TTS_pipeline import TTS_inference
+# from TTS.api import TTS
+from gtts import gTTS
+
 # For chatbot response
 # from rag import get_chat_response   # Added for chatbot integration
 
@@ -41,59 +45,46 @@ def upload():
     if image:
         filename = secure_filename(image.filename)
         image.save(os.path.join(app.config['MODEL_FOLDER'], filename))
-
         avatar_url = url_for('static', filename=f'models/{filename}')
-        print("---------0",avatar_url)
         avatars.append({'name': avatar_name, 'url': avatar_url})
 
     return redirect(url_for('index'))
 
+
+custom=True
 @app.route('/synthesize-speech', methods=['POST'])
 def synthesize_speech():
-    
-    # print(f"Flask Request: Method: {request.method}")
-    # print(f"Flask Request: Headers: {request.headers}")
-    # print(f"Flask Request: Content-Type: {request.headers.get('Content-Type')}")
-
     try:
-        # Attempt to get JSON data
-        data = request.get_json(silent=True) #  silent=True prevents error if not JSON
-        print("====",data)
+        data = request.get_json(silent=True)
+        print("Flask: Received json for TTS:",data)
         if data is None:
-            # If get_json returned None, it means the body was not valid JSON
             print("Flask Request: Body is not valid JSON or is empty.")
-            # Read raw data for debugging if needed
-            # raw_body = request.data.decode('utf-8')
-            # print(f"Flask Request: Raw Body: {raw_body}")
             return jsonify({"error": "Invalid JSON or empty body provided"}), 400
 
         text = data.get('text')
-        
+            
         if not text:
             print("Flask Request: 'text' field missing from JSON payload.")
             return jsonify({"error": "No text provided in JSON payload"}), 400
-
-        print(f"Flask: Received text for TTS: '{text}'")
-
-        # Call your TTS inference pipeline
-        audio_bytes = TTS_inference.tts_model_instance.synthesize(text) 
         
-        # --- How to check outgoing response values in Flask ---
-        # Before returning, you can print details about what you're sending
-        print(f"Flask Response: Synthesized audio bytes length: {len(audio_bytes)} bytes")
-        # In this case, you're directly streaming bytes, so no complex properties here,
-        # but you confirm the length and that it's bytes.
-
-        print("Flask: Sending synthesized audio back to client.")
-        return Response(audio_bytes, mimetype="audio/wav")
+        if custom:
+            audio_bytes = TTS_inference.tts_model_instance.synthesize(text)
+            # return Response(audio_bytes, mimetype="audio/wav")
+            return Response(audio_bytes)
+        else:
+            tts1 = gTTS(text, lang='en')
+            current_datetime = datetime.datetime.now()
+            current_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+            audio_path=f"static/audio/{current_datetime}.wav"
+            tts1.save(f"avatar_ui/{audio_path}")
+            print(f"backend TTS: saved audio file {audio_path}")
+            return Response(audio_path)
 
     except Exception as e:
         print(f"Flask Error during TTS synthesis: {e}")
         import traceback
         traceback.print_exc() 
         return jsonify({"error": str(e)}), 500
-
-
 
 # @app.route('/get-response', methods=['POST'])
 # def get_response():

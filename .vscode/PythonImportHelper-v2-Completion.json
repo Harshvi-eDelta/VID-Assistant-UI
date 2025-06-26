@@ -9,6 +9,24 @@
         "documentation": {}
     },
     {
+        "label": "io",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "io",
+        "description": "io",
+        "detail": "io",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
         "label": "tensorflow",
         "kind": 6,
         "isExtraImport": true,
@@ -42,24 +60,6 @@
         "importPath": "soundfile",
         "description": "soundfile",
         "detail": "soundfile",
-        "documentation": {}
-    },
-    {
-        "label": "io",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "io",
-        "description": "io",
-        "detail": "io",
-        "documentation": {}
-    },
-    {
-        "label": "os",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
         "documentation": {}
     },
     {
@@ -385,6 +385,14 @@
         "documentation": {}
     },
     {
+        "label": "gTTS",
+        "importPath": "gtts",
+        "description": "gtts",
+        "isExtraImport": true,
+        "detail": "gtts",
+        "documentation": {}
+    },
+    {
         "label": "chromadb",
         "kind": 6,
         "isExtraImport": true,
@@ -502,7 +510,7 @@
         "kind": 5,
         "importPath": "avatar_ui.TTS_pipeline.TTS_inference",
         "description": "avatar_ui.TTS_pipeline.TTS_inference",
-        "peekOfCode": "start = datetime.datetime.now()\nimport tensorflow as tf\nimport numpy as np\nimport librosa\nimport soundfile as sf\nimport io\nimport os\nfrom avatar_ui.TTS_pipeline.text_preprocess import TextNormalizer\nfrom avatar_ui.TTS_pipeline.hybrid_G2P import G2PConverter\nfrom tensorflow.keras.preprocessing.sequence import pad_sequences",
+        "peekOfCode": "start = datetime.datetime.now()\nimport io\nimport os\nimport tensorflow as tf\nimport numpy as np\nimport librosa\nimport soundfile as sf\nfrom avatar_ui.TTS_pipeline.text_preprocess import TextNormalizer\nfrom avatar_ui.TTS_pipeline.hybrid_G2P import G2PConverter\nfrom tensorflow.keras.preprocessing.sequence import pad_sequences",
         "detail": "avatar_ui.TTS_pipeline.TTS_inference",
         "documentation": {}
     },
@@ -520,7 +528,7 @@
         "kind": 6,
         "importPath": "avatar_ui.TTS_pipeline.hybrid_G2P",
         "description": "avatar_ui.TTS_pipeline.hybrid_G2P",
-        "peekOfCode": "class G2PConverter:\n    # def __init__(self, model_path=None, vocab_path=\"dataset/G2P_dataset/cmu_dict_no_stress.csv\", max_len=33, load_model=True):\n    # def __init__(self, model_path=None, vocab_path=\"dataset/G2P_dataset/cmu_dict_pun_stress.csv\", max_len=33, load_model=True):\n    def __init__(self, model_path=None, vocab_path=\"avatar_ui/TTS_pipeline/data/cmu_dict_with_stress.csv\", max_len=33, load_model=True):\n        self.max_len = max_len\n        self.phoneme_dict=cmudict.dict()\n        # print(self.phoneme_dict.keys())\n        if load_model and model_path:\n            self.model = tf.keras.models.load_model(model_path)\n        self._load_vocab(vocab_path)",
+        "peekOfCode": "class G2PConverter:\n    def __init__(self, model_path=None, vocab_path=\"avatar_ui/TTS_pipeline/data/cmu_dict_with_stress.csv\", max_len=33, load_model=True):\n        self.max_len = max_len\n        self.phoneme_dict=cmudict.dict()\n        if load_model and model_path:\n            self.model = tf.keras.models.load_model(model_path)\n        self._load_vocab(vocab_path)\n    def _load_vocab(self, vocab_path):\n        df = pd.read_csv(vocab_path)        \n        self.words = df[\"word\"].tolist()",
         "detail": "avatar_ui.TTS_pipeline.hybrid_G2P",
         "documentation": {}
     },
@@ -572,37 +580,46 @@
     {
         "label": "update_info",
         "kind": 2,
-        "importPath": "avatar_ui.static.py.STT",
-        "description": "avatar_ui.static.py.STT",
+        "importPath": "avatar_ui.static.py.main",
+        "description": "avatar_ui.static.py.main",
         "peekOfCode": "def update_info(message):\n    \"\"\"Helper function to update the info div in HTML.\"\"\"\n    info_div = js.document.getElementById('info')\n    if info_div:\n        info_div.textContent = message\n    else:\n        print(f\"Python Warning: Could not find #info div. Message: {message}\")\nasync def handle_mic_click(event=None):\n    \"\"\"\n    Handles the mic button click event to start/stop speech recognition.",
-        "detail": "avatar_ui.static.py.STT",
+        "detail": "avatar_ui.static.py.main",
         "documentation": {}
     },
     {
-        "label": "smooth_scroll_to_bottom",
+        "label": "play_audio",
         "kind": 2,
-        "importPath": "avatar_ui.static.py.STT",
-        "description": "avatar_ui.static.py.STT",
-        "peekOfCode": "def smooth_scroll_to_bottom(element):\n    \"\"\"Calls the JavaScript smoothScrollToBottom function.\"\"\"\n    js.window.smoothScrollToBottom(element) # Call the JS function\nasync def get_bot_response(user_message):\n    \"\"\"\n    Simulates getting a response from a bot.\n    In a real application, this would involve an HTTP request to a backend API.\n    For now, a simple conditional response.\n    \"\"\"\n    print(f\"Python: Getting bot response for: '{user_message}'\")",
-        "detail": "avatar_ui.static.py.STT",
+        "importPath": "avatar_ui.static.py.main",
+        "description": "avatar_ui.static.py.main",
+        "peekOfCode": "def play_audio(audio_file_path, event=None):\n    global current_audio\n    if current_audio is not None:\n        current_audio.pause()\n        current_audio.currentTime = 0 \n    audio = js.Audio.new(audio_file_path)\n    audio.play()\n    current_audio = audio \nasync def py_sendMessage(event=None):\n    \"\"\"",
+        "detail": "avatar_ui.static.py.main",
         "documentation": {}
     },
     {
         "label": "speech_recognition_active",
         "kind": 5,
-        "importPath": "avatar_ui.static.py.STT",
-        "description": "avatar_ui.static.py.STT",
+        "importPath": "avatar_ui.static.py.main",
+        "description": "avatar_ui.static.py.main",
         "peekOfCode": "speech_recognition_active = False\ncurrent_py_utterance = None\ndef update_info(message):\n    \"\"\"Helper function to update the info div in HTML.\"\"\"\n    info_div = js.document.getElementById('info')\n    if info_div:\n        info_div.textContent = message\n    else:\n        print(f\"Python Warning: Could not find #info div. Message: {message}\")\nasync def handle_mic_click(event=None):",
-        "detail": "avatar_ui.static.py.STT",
+        "detail": "avatar_ui.static.py.main",
         "documentation": {}
     },
     {
         "label": "current_py_utterance",
         "kind": 5,
-        "importPath": "avatar_ui.static.py.STT",
-        "description": "avatar_ui.static.py.STT",
+        "importPath": "avatar_ui.static.py.main",
+        "description": "avatar_ui.static.py.main",
         "peekOfCode": "current_py_utterance = None\ndef update_info(message):\n    \"\"\"Helper function to update the info div in HTML.\"\"\"\n    info_div = js.document.getElementById('info')\n    if info_div:\n        info_div.textContent = message\n    else:\n        print(f\"Python Warning: Could not find #info div. Message: {message}\")\nasync def handle_mic_click(event=None):\n    \"\"\"",
-        "detail": "avatar_ui.static.py.STT",
+        "detail": "avatar_ui.static.py.main",
+        "documentation": {}
+    },
+    {
+        "label": "current_audio",
+        "kind": 5,
+        "importPath": "avatar_ui.static.py.main",
+        "description": "avatar_ui.static.py.main",
+        "peekOfCode": "current_audio = None\ndef play_audio(audio_file_path, event=None):\n    global current_audio\n    if current_audio is not None:\n        current_audio.pause()\n        current_audio.currentTime = 0 \n    audio = js.Audio.new(audio_file_path)\n    audio.play()\n    current_audio = audio \nasync def py_sendMessage(event=None):",
+        "detail": "avatar_ui.static.py.main",
         "documentation": {}
     },
     {
@@ -754,7 +771,7 @@
         "kind": 2,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "def upload():\n    image = request.files['image']\n    avatar_name = request.form['avatar_name']\n    if image:\n        filename = secure_filename(image.filename)\n        image.save(os.path.join(app.config['MODEL_FOLDER'], filename))\n        avatar_url = url_for('static', filename=f'models/{filename}')\n        print(\"---------0\",avatar_url)\n        avatars.append({'name': avatar_name, 'url': avatar_url})\n    return redirect(url_for('index'))",
+        "peekOfCode": "def upload():\n    image = request.files['image']\n    avatar_name = request.form['avatar_name']\n    if image:\n        filename = secure_filename(image.filename)\n        image.save(os.path.join(app.config['MODEL_FOLDER'], filename))\n        avatar_url = url_for('static', filename=f'models/{filename}')\n        avatars.append({'name': avatar_name, 'url': avatar_url})\n    return redirect(url_for('index'))\ncustom=True",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
@@ -763,7 +780,7 @@
         "kind": 2,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "def synthesize_speech():\n    # print(f\"Flask Request: Method: {request.method}\")\n    # print(f\"Flask Request: Headers: {request.headers}\")\n    # print(f\"Flask Request: Content-Type: {request.headers.get('Content-Type')}\")\n    try:\n        # Attempt to get JSON data\n        data = request.get_json(silent=True) #  silent=True prevents error if not JSON\n        print(\"====\",data)\n        if data is None:\n            # If get_json returned None, it means the body was not valid JSON",
+        "peekOfCode": "def synthesize_speech():\n    try:\n        data = request.get_json(silent=True)\n        print(\"Flask: Received json for TTS:\",data)\n        if data is None:\n            print(\"Flask Request: Body is not valid JSON or is empty.\")\n            return jsonify({\"error\": \"Invalid JSON or empty body provided\"}), 400\n        text = data.get('text')\n        if not text:\n            print(\"Flask Request: 'text' field missing from JSON payload.\")",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },
