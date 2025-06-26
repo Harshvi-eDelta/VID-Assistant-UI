@@ -51,7 +51,7 @@ def upload():
     return redirect(url_for('index'))
 
 
-custom=True
+custom=False
 @app.route('/synthesize-speech', methods=['POST'])
 def synthesize_speech():
     try:

@@ -771,7 +771,7 @@
         "kind": 2,
         "importPath": "avatar_ui.app_render3d",
         "description": "avatar_ui.app_render3d",
-        "peekOfCode": "def upload():\n    image = request.files['image']\n    avatar_name = request.form['avatar_name']\n    if image:\n        filename = secure_filename(image.filename)\n        image.save(os.path.join(app.config['MODEL_FOLDER'], filename))\n        avatar_url = url_for('static', filename=f'models/{filename}')\n        avatars.append({'name': avatar_name, 'url': avatar_url})\n    return redirect(url_for('index'))\ncustom=True",
+        "peekOfCode": "def upload():\n    image = request.files['image']\n    avatar_name = request.form['avatar_name']\n    if image:\n        filename = secure_filename(image.filename)\n        image.save(os.path.join(app.config['MODEL_FOLDER'], filename))\n        avatar_url = url_for('static', filename=f'models/{filename}')\n        avatars.append({'name': avatar_name, 'url': avatar_url})\n    return redirect(url_for('index'))\ncustom=False",
         "detail": "avatar_ui.app_render3d",
         "documentation": {}
     },

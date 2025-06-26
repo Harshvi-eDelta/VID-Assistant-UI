@@ -50,6 +50,11 @@ async def handle_mic_click(event=None):
         speech_recognition_active = False
         update_info("Listening stopped.")
 
+# def scroll_to_bottom():
+#     chat_messages_container = js.document.getElementById('chatMessages')
+#     # Scroll to the bottom using scrollTop and scrollHeight
+#     chat_messages_container.scrollTop = chat_messages_container.scrollHeight
+
 async def get_bot_response(user_message):
     """
     Simulates getting a response from a bot.
@@ -123,7 +128,7 @@ async def py_sendMessage(event=None):
     user_message_div.appendChild(user_text_p)
     chat_messages_container.appendChild(user_message_div)
     input_element.value = '' 
-
+    user_message_div.scrollIntoView({'behavior': 'smooth'})
     bot_reply_text = await get_bot_response(message)
 
     # mic_button.onclick = play_audio()
@@ -146,6 +151,8 @@ async def py_sendMessage(event=None):
         bot_message_div.appendChild(mic_button)
         chat_messages_container.appendChild(bot_message_div)
         
+        # scroll_to_bottom()
+        bot_message_div.scrollIntoView({'behavior': 'smooth'})
         audio_path = await play_bot_speech(bot_reply_text)
         if audio_path: 
             mic_button.setAttribute('data-audio-path', audio_path)
