@@ -1,0 +1,416 @@
+[
+  {
+    "text": "<|user|> how do i report a suspicious email \n<|bot|> Forward it to phishing@company.com. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Are you there? \n<|bot|> Yes, I'm here to help. Please let me know your question. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Where are the key project documents stored? \n<|bot|> All project-related documents, such as the Statement of Work (SOW) and project plans, are maintained in a dedicated folder on our shared drive. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> why can't i install an application \n<|bot|> You might not have admin rights. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i unlock my account \n<|bot|> Wait 15 minutes or contact IT to manually unlock it. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i reset my password \n<|bot|> Go to the login page and click 'Forgot Password'. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Hey \n<|bot|> Hello! How can I support you today? <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Goodbye \n<|bot|> Goodbye! Take care. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Is the company culture supportive for new employees? \n<|bot|> Yes, new employees receive onboarding support, mentorship, and access to training resources to help them settle in comfortably. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i unlock my account \n<|bot|> Wait 15 minutes or contact IT to manually unlock it. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Thanks \n<|bot|> Happy to help! Have a great day! <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i set up the vpn \n<|bot|> Install the VPN client from our IT portal and follow the setup guide. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> How often should I change my password? \n<|bot|> We recommend changing your password every 90 days. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i report a suspicious email \n<|bot|> Forward it to phishing@company.com. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> vpn keeps disconnecting. what can i do \n<|bot|> Check your internet connection and restart your VPN client. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Is remote work available for new hires? \n<|bot|> Remote work is available for select roles depending on the project and team requirements. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> what is phishing \n<|bot|> Phishing is a type of cyberattack where attackers trick you into revealing personal information. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> What is the official website of our company? \n<|bot|> Our official website is https://www.edeltaes.com/ <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i request a new user account \n<|bot|> Submit a user access request form through the IT portal. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> vpn keeps disconnecting. what can i do \n<|bot|> Check your internet connection and restart your VPN client. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Where is your company located? \n<|bot|> 711, 712, Millennium Business Hub 1 (MBH-1), opposite Sarthana Nature Park, Sarthana Jakat Naka, Nana Varachha, Surat, Gujarat 395006, India. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Bye \n<|bot|> Goodbye! Feel free to reach out if you need assistance later. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Can anyone participate in Fun Friday events? \n<|bot|> Yes, all employees are encouraged to participate in Fun Friday activities. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> all the employees have to attend the Fun Friday? \n<|bot|> Yes, all employees are encouraged to participate in Fun Friday activities.<|endofbot|>"
+  },
+  {
+    "text": "<|user|> Can I update my time entries later? \n<|bot|> Yes, time entries can be updated manually within 48 hours of the log date. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i reset my password \n<|bot|> Go to the login page and click 'Forgot Password'. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> How can I connect to the employee Wi-Fi network? \n<|bot|> Select the 'eDelta_office_5G' Wi-Fi network. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Good afternoon \n<|bot|> Good afternoon! What can I do for you? <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i request a new user account \n<|bot|> Submit a user access request form through the IT portal. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> why am i not receiving any emails \n<|bot|> Check your spam folder and ensure your inbox is not full. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> What are the working hours of the company? \n<|bot|> Our standard working hours are from 9:30 AM to 7:00 PM, Monday to Friday. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Good evening \n<|bot|> Good evening! How may I assist you? <|endofbot|>"
+  },
+  {
+    "text": "<|user|> What is 2FA? \n<|bot|> 2FA is two-factor authentication. It adds an extra layer of security to your login. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Good morning \n<|bot|> Good morning! Hope you have a productive day. How can I help? <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Where can I see the current job openings? \n<|bot|> All current openings are listed at https://www.edeltaes.com/career <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i set up the vpn \n<|bot|> Install the VPN client from our IT portal and follow the setup guide. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> what is 2fa \n<|bot|> 2FA is two-factor authentication. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Are meals or snacks provided in the office? \n<|bot|> Yes, we provide complimentary tea and coffee. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i configure outlook for work email \n<|bot|> Open Outlook and follow the setup wizard using your work email credentials. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Is personal device usage allowed during work hours? \n<|bot|> No, personal device usage is not allowed during work hours. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Can I work from home? \n<|bot|> Remote work is permitted on a case-by-case basis. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i request a new user account \n<|bot|> Submit a user access request form through the IT portal. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> can i access my email from home \n<|bot|> Yes, use Outlook Web Access via our secure portal. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Is attendance mandatory every day? \n<|bot|> Yes, regular attendance is mandatory. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i report a suspicious email \n<|bot|> Forward it to phishing@company.com. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> When is our daily standup meeting scheduled? \n<|bot|> Our daily standup is scheduled at 05:00 PM every weekday. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how often should i change my password \n<|bot|> We recommend changing your password every 90 days. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> How do I report a suspicious email? \n<|bot|> Forward it to phishing@company.com. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Hi \n<|bot|> Hi! <|endofbot|>"
+  },
+  {
+    "text": "<|user|> can i install my own software \n<|bot|> Please contact IT for approval before installing any software. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> why can't i connect to the vpn \n<|bot|> Ensure your internet is stable and your VPN client is up to date. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> How long should a daily standup last? \n<|bot|> A typical standing up lasts between 5 to 10 minutes, depending on the situation. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> can i install my own software \n<|bot|> Please contact IT for approval before installing any software. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i request a new user account \n|bot|> Submit a user access request form through the IT portal. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> How do I reset my password? \n<|bot|> Go to the login page and click 'Forgot Password'. Follow the instructions. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Does the company offer paid internships? \n<|bot|> No, we do not offer paid internships. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> what is phishing \n<|bot|> Phishing is a type of cyberattack where attackers trick you into revealing personal information. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> That's all for now \n<|bot|> Got it! <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Is there a designated parking area for employees? \n<|bot|> Yes, employee parking is available in the basement levels. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how often should i change my password \n<|bot|> We recommend changing your password every 90 days. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> What types of rewards are offered? \n<|bot|> Rewards include appreciation certificates, gift vouchers, extra leave, or recognition badges. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i configure outlook for work email \n<|bot|> Open Outlook and follow the setup wizard using your work email credentials. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> what is phishing \n<|bot|> Phishing is a type of cyberattack where attackers trick you into revealing personal information. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> can i install my own software \n<|bot|> Please contact IT for approval before installing any software. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Are there health and wellness programs available? \n<|bot|> Yes, we organize regular health check-ups, wellness webinars, and offer employee assistance programs for mental health. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> What is the company's leave policy? \n<|bot|> Employees are entitled to 18 paid leaves annually, along with public holidays and optional festival leave. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i set up the vpn \n<|bot|> Install the VPN client from our IT portal and follow the setup guide. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> How long does the hiring process usually take? \n<|bot|> The hiring process usually takes 1\u20132 weeks depending on the role and number of applicants. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i install company-approved software \n<|bot|> Use the Company Software Center application. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Quit \n<|bot|> Session ended. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i configure outlook for work email \n<|bot|> Open Outlook and follow the setup wizard using your work email credentials. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> can i access my email from home \n<|bot|> Yes, use Outlook Web Access via our secure portal. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> How do I configure Outlook for work email? \n<|bot|> Open Outlook and follow the setup wizard using your work email credentials. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> How do I set up the VPN? \n<|bot|> Install the VPN client from our IT portal and follow the setup guide. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> What is Employee of the Month recognition? \n<|bot|> Employee of the Month is a recognition program that honors outstanding performance, dedication, or innovation each month. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> why can't i install an application \n<|bot|> You might not have admin rights. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i install company-approved software \n<|bot|> Use the Company Software Center application. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> What is the duration of the internship? \n<|bot|> Internships usually last for 6 months, depending on the project and candidate availability. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how often should i change my password \n<|bot|> We recommend changing your password every 90 days. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Can I nominate someone for recognition? \n<|bot|> Yes, employees can nominate their peers by emailing their manager. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Is Fun Friday compulsory to attend? \n<|bot|> Fun Friday is optional but highly encouraged for employee bonding and relaxation. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> VPN keeps disconnecting. What can I do? \n<|bot|> Check your internet connection and restart your VPN client. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> How can I report misconduct or policy violations? \n<|bot|> You can report misconduct confidentially to HR via hr@edeltaes.com or through the anonymous feedback portal. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i request a new user account \n<|bot|> Submit a user access request form through the IT portal. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> why am i not receiving any emails \n<|bot|> Check your spam folder and ensure your inbox is not full. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i report a suspicious email \n<|bot|> Forward it to phishing@company.com. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> why can't i connect to the vpn \n<|bot|> Ensure your internet is stable and your VPN client is up to date. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> what is phishing \n<|bot|> Phishing is a type of cyberattack where attackers trick you into revealing personal information. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> What is the recruitment process at your company? \n<|bot|> Our recruitment process typically includes an initial screening, a technical round, and an HR interview. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i reset my password \n<|bot|> Go to the login page and click 'Forgot Password'. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> why can't i install an application \n<|bot|> You might not have admin rights. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> How are employees selected for rewards and recognition? \n<|bot|> Employees are nominated by peers and managers based on contribution, collaboration, and results achieved. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i unlock my account \n<|bot|> Wait 15 minutes or contact IT to manually unlock it. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i install company-approved software \n<|bot|> Use the Company Software Center application. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Talk to you later \n<|bot|> Sure! <|endofbot|>"
+  },
+  {
+    "text": "<|user|> what is 2fa \n<|bot|> 2FA is two-factor authentication. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Does the company offer internship opportunities? \n<|bot|> Yes, we offer internship programs for final-year students and recent graduates. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Why am I not receiving any emails? \n<|bot|> Check your spam folder and ensure your inbox is not full. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> why can't i install an application \n<|bot|> You might not have admin rights. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i reset my password \n<|bot|> Go to the login page and click 'Forgot Password'. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i set up the vpn \n<|bot|> Install the VPN client from our IT portal and follow the setup guide. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> How do I log my working hours? \n<|bot|> You can log your hours through the TimelyPro dashboard or mobile app using your employee credentials. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i unlock my account \n<|bot|> Wait 15 minutes or contact IT to manually unlock it. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> why can't i connect to the vpn \n<|bot|> Ensure your internet is stable and your VPN client is up to date. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Are all company events mandatory to attend? \n<|bot|> Participation in most social events is optional. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Where is the head office of our company located? \n<|bot|> The head office is located in Ahmedabad, India. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i install company-approved software \n<|bot|> Use the Company Software Center application. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i report a suspicious email \n<|bot|> Forward it to phishing@company.com. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Does the company support hybrid or remote work? \n<|bot|> No, we do not support hybrid or remote work, it depends on the scenario. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Can freshers apply for jobs at your company? \n<|bot|> Yes, we regularly hire freshers through campus placements and direct applications. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Why can't I connect to the VPN? \n<|bot|> Ensure your internet is stable and your VPN client is up to date. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> can i install my own software \n<|bot|> Please contact IT for approval before installing any software. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> why can't i connect to the vpn \n<|bot|> Ensure your internet is stable and your VPN client is up to date. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> What are the eligibility criteria for internships? \n<|bot|> Interns must be in their final year of study or recent graduates in IT, Computer Science, or related fields. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> what is 2fa \n<|bot|> 2FA is two-factor authentication. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how often should i change my password \n<|bot|> We recommend changing your password every 90 days. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Who can I contact for recruitment-related questions? \n<|bot|> You can email our recruitment team at hr@edeltaes.com <|endofbot|>"
+  },
+  {
+    "text": "<|user|> can i access my email from home \n<|bot|> Yes, use Outlook Web Access via our secure portal. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> why am i not receiving any emails \n<|bot|> Check your spam folder and ensure your inbox is not full. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> What is the contact number for our company? \n<|bot|> You can reach us at +91 9316707100. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> why can't i install an application \n<|bot|> You might not have admin rights. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i configure outlook for work email \n<|bot|> Open Outlook and follow the setup wizard using your work email credentials. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Thank you \n<|bot|> You're welcome! If you need anything else, feel free to ask. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> What is the company's policy on internal transfers? \n<|bot|> Employees who have completed at least 18 months in their current role are eligible to apply for internal positions. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> why am i not receiving any emails \n<|bot|> Check your spam folder and ensure your inbox is not full. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Is there an open-door policy for managers? \n<|bot|> Absolutely. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Hello \n<|bot|> Hello! <|endofbot|>"
+  },
+  {
+    "text": "<|user|> what is phishing \n<|bot|> Phishing is a type of cyberattack where attackers trick you into revealing personal information. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> How do I install company-approved software? \n<|bot|> Use the Company Software Center application. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i configure outlook for work email \n<|bot|> Open Outlook and follow the setup wizard using your work email credentials. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> why can't i connect to the vpn \n<|bot|> Ensure your internet is stable and your VPN client is up to date. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> can i install my own software \n<|bot|> Please contact IT for approval before installing any software. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Can employees suggest ideas for new company events or initiatives? \n<|bot|> Absolutely! We encourage suggestions. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Are there team-building activities in the company? \n<|bot|> Yes, we organize regular team-building activities, Fun Fridays, and annual events to foster teamwork and engagement. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Are team awards given? \n<|bot|> Yes, high-performing teams are recognized with team awards for excellence in project delivery or innovation. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Are there opportunities for learning and growth? \n<|bot|> Yes, we offer regular training programs, workshops, and certifications to support employee development and career growth. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> Can I install my own software? \n<|bot|> Please contact IT for approval before installing any software. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> how do i install company-approved software \n<|bot|> Use the Company Software Center application. <|endofbot|>"
+  }
+]

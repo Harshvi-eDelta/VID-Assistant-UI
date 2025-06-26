@@ -12,6 +12,8 @@ models/
 
 avatar_ui/static/audio/# Ignore Python virtual environment
 env/
+.env/
+
 
 # Ignore machine learning model files and outputs
 models/

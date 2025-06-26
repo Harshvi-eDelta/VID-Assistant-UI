@@ -56,40 +56,26 @@ async def handle_mic_click(event=None):
 #     chat_messages_container.scrollTop = chat_messages_container.scrollHeight
 
 async def get_bot_response(user_message):
-    """
-    Simulates getting a response from a bot.
-    In a real application, this would involve an HTTP request to a backend API.
-    For now, a simple conditional response.
-    """
     try:
-        # Assuming you have a Flask backend running at /api/chat
-        # response = await pyfetch("/api/chat", method='POST',
-        #                          headers={'Content-Type': 'application/json'},
-        #                          body=js.JSON.stringify({'message': user_message}))
-        # if response.ok:
-        #     data = await response.json()
-        #     bot_reply = data.get('response', 'Sorry, I could not get a response.')
-        # else:
-        #     bot_reply = f"Error: {response.status} {await response.text()}"
+    # TF-IDF chatbot logic
+    with open("Chatbot/cleaned_dataset.json", "r") as f:
+        data = json.load(f)
 
-        # Simple static response for demonstration
-        if "hello" in user_message.lower() or "hi" in user_message.lower():
-            bot_reply = "Hello there! How can I assist you today?"
-        elif "time" in user_message.lower():
-            bot_reply = "I'm a virtual assistant, I don't have a concept of time, but I can tell you the current time is 3:55 PM IST, June 19, 2025 in Surat, Gujarat, India."
-        elif "name" in user_message.lower():
-            bot_reply = "I am VID-Assistant, your virtual interactive digital assistant."
-        elif "who are you" in user_message.lower():
-            bot_reply = "I am VID-Assistant, your virtual interactive digital assistant. I can help you with your queries."
-        elif "help" in user_message.lower():
-            bot_reply = "I can help you with various tasks, just ask me anything!"
-        else:
-            bot_reply = f"You asked: '{user_message}'. now i don't understand what are u saying. How else can I help?"
-        await asyncio.sleep(0.5)
-        return bot_reply
-    except Exception as e:
-        print(f"Python Error fetching bot response: {e}")
-        return "I'm sorry, I encountered an error while trying to respond."
+    questions = [q["question"] for q in data]
+    answers = [q["answer"] for q in data]
+
+    vectorizer = TfidfVectorizer()
+    X = vectorizer.fit_transform(questions + [user_message])
+    similarity = cosine_similarity(X[-1], X[:-1])
+
+    best_match_idx = similarity.argmax()
+    best_score = similarity[0, best_match_idx]
+
+    if best_score < 0.6:
+        bot_reply = "Sorry, I am unable to answer this question."
+    else:
+        bot_reply = answers[best_match_idx]
+
 
 current_audio = None
 def play_audio(audio_file_path, event=None):
