@@ -175,10 +175,11 @@ canvas {
     display: flex;
     flex-wrap: wrap;
     margin-top: 10px;
+    gap: 15px;
 }
  
 .avatar-card {
-    width: 50%;
+    width: calc(50% - 10px);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -221,7 +222,8 @@ canvas {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px 0;
+    padding: 20px;
+    
 }
 
 .main-container{
@@ -231,7 +233,7 @@ canvas {
     position: relative;
     z-index: 1;
     width: 100%;
-    margin: auto;
+    margin-left: 20px;
     
 }
 

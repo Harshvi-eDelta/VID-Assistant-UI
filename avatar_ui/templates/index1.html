@@ -10,6 +10,7 @@
     
     <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
     <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script> 
+
 </head>
 
 <body>
@@ -24,8 +25,7 @@
                 {% for avatar in avatars %}
                 <div class="avatar-card">
                     <div>
-                        <img src="{{ avatar.url }}" alt="{{ avatar.name }}" class="avatar-thumbnail"
-                            data-url="{{ avatar.url }}">
+                        <img src="{{ avatar.url }}" class="avatar-thumbnail" data-glb="/static/models/{{ avatar.name }}.glb">
                         <p>{{ avatar.name }}</p>
                     </div>
                 </div>
@@ -39,8 +39,9 @@
             <div class="main-container">
                 <!-- Avatar Display -->
                 <div class="main-avatar-container">
-                    <img id="mainAvatarDisplay" src="" alt="Main Avatar"
-                        style="max-height: 200px; border-radius: 12px;">
+                    <!-- <img id="mainAvatarDisplay" src="" alt="Main Avatar"
+                        style="max-height: 200px; border-radius: 12px;"> -->
+                        <!-- <img id="mainAvatarDisplay" src="{{ url_for('static', filename='uploads/' + selected + '.jpg') if selected else '' }}" alt="Main Avatar"> -->
                 </div>
 
                 <!-- Chat Container -->
@@ -69,7 +70,9 @@
             <div class="modal-content">
                 <span class="close" id="closeModalBtn">&times;</span>
                 <h2>Upload your Image</h2>
-                <form action="/upload" method="post" enctype="multipart/form-data">
+                <!-- <form action="/upload" method="post" enctype="multipart/form-data"> -->
+                    <form id="avatarForm">
+
                     <div class="upload-box">
                         <!-- <label for="imageUpload" class="upload-label">
                     Click to upload an image
@@ -85,7 +88,7 @@
                     <img src="{{ url_for('static', filename='images/upload_icon1.png') }}" alt="Upload" class="upload-icon-img">
                 </label> -->
                     </div>
-                    <input type="text" name="avatar_name" class="input-text" placeholder="Enter Avatar Name" required>
+                    <input type="text" id="avatarName" name="avatar_name" class="input-text" placeholder="Enter Avatar Name" required>
                     <div class="modal-buttons">
                         <button type="button" class="cancel-btn" id="cancelBtn">Cancel</button>
                         <button type="submit" class="create-btn">Create</button>
@@ -132,6 +135,10 @@
     </script>
 
     <script>
+        window.selectedAvatarName = "{{ selected_avatar_name }}";
+    </script>
+
+    <!-- <script>
         // Change avatar in main display when clicked
         document.addEventListener('DOMContentLoaded', function () {
             const thumbnails = document.querySelectorAll('.avatar-thumbnail');
@@ -144,7 +151,7 @@
                 });
             });
         });
-    </script>
+    </script> -->
 
 
     <script>
@@ -172,12 +179,50 @@
         });
 
         // When user clicks the Create button
-        createBtn.addEventListener('click', function (event) {
-            event.preventDefault(); // stop form from submitting
-            // No need to assign to uploadedAvatar
-            createBtn.closest('form').submit(); // submit it manually
-        });
-    </script>
+        // createBtn.addEventListener('click', function (event) {
+        //     event.preventDefault(); // stop form from submitting
+        //     console.log(" Create button clicked. Submitting form...");
+        //     // No need to assign to uploadedAvatar
+        //     createBtn.closest('form').submit(); // submit it manually
+        // });
+
+        createBtn.addEventListener('click', async function (event) {
+        event.preventDefault();
+
+        const form = createBtn.closest('form');
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch("/upload", {
+                method: "POST",
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error("Upload failed");
+            }
+
+            const result = await response.json();
+            if (result.status === "success") {
+                console.log("✅ Avatar created:", result);
+
+                // Close modal
+                modal.style.display = "none";
+
+                // Load new avatar
+                loadGLB(result.glb_url);
+
+                // Optional: refresh preview or gallery
+                document.getElementById('info').textContent = "Avatar Loaded!";
+            } else {
+                alert("Failed to create avatar.");
+            }
+
+        } catch (err) {
+            console.error("Upload error:", err);
+            alert("Something went wrong during upload.");
+        }
+    });
 
 </script>
 
@@ -196,7 +241,6 @@
     <script src="{{ url_for('static', filename='js/speech_recognition_helper.js') }}"></script>
 
     <py-script src="{{ url_for('static', filename='py/STT.py') }}"></py-script>
-
 
 </body>
 
