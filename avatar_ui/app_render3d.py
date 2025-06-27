@@ -10,7 +10,8 @@ from avatar_ui.TTS_pipeline import TTS_inference
 from gtts import gTTS
 
 # For chatbot response
-# from rag import get_chat_response   # Added for chatbot integration
+from chatbot.Final_generate import get_bot_response
+import json 
 
 
 app = Flask(__name__)
@@ -86,11 +87,19 @@ def synthesize_speech():
         traceback.print_exc() 
         return jsonify({"error": str(e)}), 500
 
-# @app.route('/get-response', methods=['POST'])
-# def get_response():
-    # user_input = request.json.get("message")
-    # bot_response = get_chat_response(user_input)  
-    # return jsonify({"response": bot_response})
+@app.route('/get-response', methods=['POST'])
+def get_response():
+    data = request.get_json()
+    print(f">> Flask received input: {data}")
+    user_message = data.get("message", "").strip()
+
+    if not user_message:
+        return jsonify({"response": "Please enter something."})
+
+    # Call your chatbot logic
+    response = get_bot_response(user_message)
+    return jsonify({"response": response})
+
 
 if __name__ == '__main__':
     app.run(debug=True) '''
