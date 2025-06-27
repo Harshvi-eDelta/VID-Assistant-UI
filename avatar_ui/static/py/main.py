@@ -1,6 +1,8 @@
 import js
 import asyncio
 import json
+from js import document
+from pyodide.http import pyfetch
 
 speech_recognition_active = False
 current_py_utterance = None
@@ -55,27 +57,60 @@ async def handle_mic_click(event=None):
 #     # Scroll to the bottom using scrollTop and scrollHeight
 #     chat_messages_container.scrollTop = chat_messages_container.scrollHeight
 
+# For chatbot
 async def get_bot_response(user_message):
+    if not user_message.strip():
+        return "Please enter something."
+
     try:
-    # TF-IDF chatbot logic
-    with open("Chatbot/cleaned_dataset.json", "r") as f:
-        data = json.load(f)
+        response = await pyfetch(
+            url="/get-response",
+            method="POST",
+            headers={"Content-Type": "application/json"},
+            body=json.dumps({"message": user_message})
+        )
+        data = await response.json()
+        return data.get("response", "No response from chatbot.")
+    except Exception as e:
+        return f"Error talking to server: {str(e)}"
 
-    questions = [q["question"] for q in data]
-    answers = [q["answer"] for q in data]
+# # When send button is clicked
+# async def get_bot_response(user_message):
+#     try:
+#         with open("chatbot_data.json", "r") as f:
+#             data = json.load(f)
 
-    vectorizer = TfidfVectorizer()
-    X = vectorizer.fit_transform(questions + [user_message])
-    similarity = cosine_similarity(X[-1], X[:-1])
+#         questions = [q["question"] for q in data]
+#         answers = [q["answer"] for q in data]
 
-    best_match_idx = similarity.argmax()
-    best_score = similarity[0, best_match_idx]
+#         vectorizer = TfidfVectorizer()
+#         X = vectorizer.fit_transform(questions + [user_message])
+#         similarity = cosine_similarity(X[-1], X[:-1])
 
-    if best_score < 0.6:
-        bot_reply = "Sorry, I am unable to answer this question."
-    else:
-        bot_reply = answers[best_match_idx]
+#         best_match_idx = similarity.argmax()
+#         best_score = similarity[0, best_match_idx]
 
+#         if best_score >= 0.6:
+#             bot_reply = answers[best_match_idx]
+#         else:
+#             user_lower = user_message.lower()
+#             if "hello" in user_lower or "hi" in user_lower:
+#                 bot_reply = "Hello there! How can I assist you today?"
+#             elif "time" in user_lower:
+#                 bot_reply = "It's currently 3:55 PM IST in Surat, Gujarat."
+#             elif "name" in user_lower or "who are you" in user_lower:
+#                 bot_reply = "I am VID-Assistant, your virtual interactive digital assistant."
+#             elif "help" in user_lower:
+#                 bot_reply = "I can help you with various tasks. Just ask!"
+#             else:
+#                 bot_reply = "Sorry, I am unable to answer this question."
+
+#         await asyncio.sleep(0.3)
+#         return bot_reply
+
+#     except Exception as e:
+#         print(f"Error: {e}")
+#         return "Oops! Something went wrong."
 
 current_audio = None
 def play_audio(audio_file_path, event=None):
