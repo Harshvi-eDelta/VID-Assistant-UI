@@ -10,269 +10,9 @@ from avatar_ui.TTS_pipeline import TTS_inference
 from gtts import gTTS
 
 # For chatbot response
-from chatbot.Final_generate import get_bot_response
+from Chatbot.Final_generate import get_bot_response
 import json 
 
-
-app = Flask(__name__)
-
-UPLOAD_FOLDER = 'avatar_ui/static/uploads'
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-
-# Get all uploaded avatars and their names
-avatars = []    
-@app.route('/')
-def index():
-    return render_template('index1.html',avatars=avatars)
-
-STATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
-app.config['STATIC_FOLDER'] = STATIC_FOLDER
-os.makedirs(os.path.join(STATIC_FOLDER, 'models'), exist_ok=True)
-app.config['MODEL_FOLDER'] = os.path.join(STATIC_FOLDER, 'models')
-
-# This route serves ANY file from the static/models subdirectory, including .glb
-@app.route('/static/models/<path:filename>')
-def serve_model(filename):
-    print(f"Serving model file: {filename}")
-    return send_from_directory(os.path.join(STATIC_FOLDER, 'models'), filename)
-
-@app.route('/upload', methods=['POST'])
-def upload():
-    image = request.files['image']
-    avatar_name = request.form['avatar_name']
-
-    if image:
-        filename = secure_filename(image.filename)
-        image.save(os.path.join(app.config['MODEL_FOLDER'], filename))
-        avatar_url = url_for('static', filename=f'models/{filename}')
-        avatars.append({'name': avatar_name, 'url': avatar_url})
-
-    return redirect(url_for('index'))
-
-
-custom=False
-@app.route('/synthesize-speech', methods=['POST'])
-def synthesize_speech():
-    try:
-        data = request.get_json(silent=True)
-        print("Flask: Received json for TTS:",data)
-        if data is None:
-            print("Flask Request: Body is not valid JSON or is empty.")
-            return jsonify({"error": "Invalid JSON or empty body provided"}), 400
-
-        text = data.get('text')
-            
-        if not text:
-            print("Flask Request: 'text' field missing from JSON payload.")
-            return jsonify({"error": "No text provided in JSON payload"}), 400
-        
-        if custom:
-            audio_bytes = TTS_inference.tts_model_instance.synthesize(text)
-            # return Response(audio_bytes, mimetype="audio/wav")
-            return Response(audio_bytes)
-        else:
-            tts1 = gTTS(text, lang='en')
-            current_datetime = datetime.datetime.now()
-            current_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
-            audio_path=f"static/audio/{current_datetime}.wav"
-            tts1.save(f"avatar_ui/{audio_path}")
-            print(f"backend TTS: saved audio file {audio_path}")
-            return Response(audio_path)
-
-    except Exception as e:
-        print(f"Flask Error during TTS synthesis: {e}")
-        import traceback
-        traceback.print_exc() 
-        return jsonify({"error": str(e)}), 500
-
-@app.route('/get-response', methods=['POST'])
-def get_response():
-    data = request.get_json()
-    print(f">> Flask received input: {data}")
-    user_message = data.get("message", "").strip()
-
-    if not user_message:
-        return jsonify({"response": "Please enter something."})
-
-    # Call your chatbot logic
-    response = get_bot_response(user_message)
-    return jsonify({"response": response})
-
-
-if __name__ == '__main__':
-    app.run(debug=True) '''
-
-# from flask import Flask, render_template, send_from_directory, request, url_for, redirect, jsonify
-# import os
-# import shutil
-# import subprocess
-# from werkzeug.utils import secure_filename
-# import traceback
-# from flask import jsonify
-# import pyrender
-# import trimesh
-# import numpy as np
-# from PIL import Image
-
-# # ---------- App Setup ----------
-# app = Flask(__name__)
-
-# # UPLOAD_FOLDER = os.path.join('static', 'uploads')
-# # MODEL_FOLDER = os.path.join('static', 'models')
-# STATIC_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
-# UPLOAD_FOLDER = os.path.join(STATIC_FOLDER, 'uploads')
-# MODEL_FOLDER = os.path.join(STATIC_FOLDER, 'models')
-
-
-# app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-# app.config['MODEL_FOLDER'] = MODEL_FOLDER
-# app.config['STATIC_FOLDER'] = STATIC_FOLDER
-
-# # Create folders if they don't exist
-# os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-# os.makedirs(MODEL_FOLDER, exist_ok=True)
-
-# # ---------- Homepage ----------
-# @app.route('/')
-# def index():
-#     selected = request.args.get('selected', default=None)
-#     avatar_files = os.listdir(app.config['UPLOAD_FOLDER'])
-#     avatars = []
-
-#     for fname in avatar_files:
-#         if fname.lower().endswith(('.jpg', '.jpeg', '.png')):
-#             base_name = os.path.splitext(fname)[0]
-#             glb_path = os.path.join(app.config['MODEL_FOLDER'], f"{base_name}.glb")
-#             # Only add if BOTH .jpg and .glb exist
-#             if os.path.exists(glb_path):
-#                 avatars.append({
-#                     'name': base_name,
-#                     'url': url_for('static', filename=f"uploads/{fname}")
-#                 })
-
-
-#     return render_template('index1.html', avatars=avatars, selected=selected)
-
-# # ---------- Serve Models ----------
-# @app.route('/static/models/<path:filename>')
-# def serve_model(filename):
-#     file_path = os.path.join(app.config['MODEL_FOLDER'], filename)
-#     if not os.path.exists(file_path):
-#         print(f"[ERROR] Model file not found: {file_path}")
-#     else:
-#         print(f"[INFO] Serving model file: {file_path}")
-#     return send_from_directory(app.config['MODEL_FOLDER'], filename)
-
-# def get_valid_avatars():
-#     uploads_path = app.config['UPLOAD_FOLDER']
-#     models_path = app.config['MODEL_FOLDER']
-
-#     avatars = []
-#     for filename in os.listdir(uploads_path):
-#         if filename.endswith('.jpg'):
-#             base_name = os.path.splitext(filename)[0]
-#             glb_file = f"{base_name}.glb"
-#             if os.path.exists(os.path.join(models_path, glb_file)):
-#                 avatars.append({
-#                     'name': base_name,
-#                     'url': f"/static/uploads/{filename}"
-#                 })
-#     return avatars
-
-# # ---------- Upload & Avatar Generation ----------
-
-# @app.route('/upload', methods=['POST'])
-# def upload():
-#     if 'image' not in request.files:
-#         return jsonify({'status': 'error', 'message': 'No image uploaded'}), 400
-
-#     image = request.files['image']
-#     avatar_name = request.form.get('avatar_name', 'avatar')
-
-#     if image.filename == '':
-#         return jsonify({'status': 'error', 'message': 'No selected file'}), 400
-
-#     base_name = secure_filename(avatar_name)
-#     filename = base_name + ".jpg"
-#     saved_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-#     image.save(saved_path)
-
-#     # External processing paths
-#     FACEVERSE_PATH = "/Users/edelta076/Desktop/Project_VID_Assistant4/FaceVerse_v4"
-#     RUN_SCRIPT = "run.py"
-#     CONFIG_YML = "configs/faceverse.yml"
-#     MESH_SCRIPT = "scripts/3d_mesh.py"
-
-#     try:
-#         # Step 1: run.py
-#         subprocess.run(
-#             f"cd {FACEVERSE_PATH} && ./faceverse_cpu_env/bin/python {RUN_SCRIPT} --cfg {CONFIG_YML} --input {saved_path}",
-#             shell=True,
-#             check=True
-#         )
-
-#         # Step 2: 3d_mesh.py
-#         subprocess.run(
-#             f"cd {FACEVERSE_PATH} && ./faceverse_cpu_env/bin/python {MESH_SCRIPT} --name {base_name}",
-#             shell=True,
-#             check=True
-#         )
-
-#         # Step 3: Copy .glb and .jpg to frontend static folders
-#         source_glb = os.path.join(FACEVERSE_PATH, "results", f"{base_name}.glb")
-#         target_glb = os.path.join(app.config['MODEL_FOLDER'], f"{base_name}.glb")
-#         shutil.copyfile(source_glb, target_glb)
-
-#         source_jpg = os.path.join(FACEVERSE_PATH, "results", f"{base_name}.jpg")
-#         target_jpg = os.path.join(app.config['UPLOAD_FOLDER'], f"{base_name}.jpg")
-#         shutil.copyfile(source_jpg, target_jpg)
-
-#         # Step 4: Generate PNG thumbnail from GLB
-#         def render_glb_to_png(glb_path, output_png_path):
-#             try:
-#                 # Load the GLB file
-#                 scene_or_mesh = trimesh.load(glb_path)
-
-#                 # If it's a Trimesh, wrap it into a Scene
-#                 if isinstance(scene_or_mesh, trimesh.Trimesh):
-#                     scene = trimesh.Scene(scene_or_mesh)
-#                 else:
-#                     scene = scene_or_mesh
-
-#                 # Render scene to PNG image (offscreen)
-#                 png_data = scene.save_image(resolution=(512, 512), visible=True)
-
-#                 # Save to file
-#                 with open(output_png_path, 'wb') as f:
-#                     f.write(png_data)
-
-#                 print(f"[INFO] Rendered PNG saved at: {output_png_path}")
-
-#             except Exception as e:
-#                 print(f"[ERROR] Failed to render GLB to PNG: {e}")
-#                 raise
-
-#         output_png_path = os.path.join(app.config['UPLOAD_FOLDER'], f"{base_name}.png")
-#         render_glb_to_png(target_glb, output_png_path)
-
-#         # Return JSON to frontend
-#         return jsonify({
-#             "status": "success",
-#             "avatar_name": base_name,
-#             "glb_url": url_for('static', filename=f"models/{base_name}.glb"),
-#             "jpg_url": url_for('static', filename=f"uploads/{base_name}.jpg"),
-#             "png_url": url_for('static', filename=f"uploads/{base_name}.png")
-#         })
-
-#     except subprocess.CalledProcessError as e:
-#         return jsonify({'status': 'error', 'message': f'Avatar generation failed: {str(e)}'}), 500
-
-
-# # ---------- Main ----------
-# if __name__ == '__main__':
-#     app.run(debug=True)
 
 from flask import Flask, render_template, send_from_directory, request, url_for, jsonify
 import os
@@ -433,6 +173,55 @@ def upload():
     except Exception as e:
         print("[ERROR] Upload failed:", e)
         return jsonify({'status': 'error', 'message': f'Unexpected error: {e}'}), 500
+
+custom=True
+@app.route('/synthesize-speech', methods=['POST'])
+def synthesize_speech():
+    try:
+        data = request.get_json(silent=True)
+        print("Flask: Received json for TTS:",data)
+        if data is None:
+            print("Flask Request: Body is not valid JSON or is empty.")
+            return jsonify({"error": "Invalid JSON or empty body provided"}), 400
+
+        text = data.get('text')
+            
+        if not text:
+            print("Flask Request: 'text' field missing from JSON payload.")
+            return jsonify({"error": "No text provided in JSON payload"}), 400
+        
+        if custom:
+            audio_bytes = TTS_inference.tts_model_instance.synthesize(text)
+            # return Response(audio_bytes, mimetype="audio/wav")
+            return Response(audio_bytes)
+        else:
+            tts1 = gTTS(text, lang='en')
+            current_datetime = datetime.datetime.now()
+            current_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+            audio_path=f"static/audio/{current_datetime}.wav"
+            tts1.save(f"avatar_ui/{audio_path}")
+            print(f"backend TTS: saved audio file {audio_path}")
+            return Response(audio_path)
+
+    except Exception as e:
+        print(f"Flask Error during TTS synthesis: {e}")
+        import traceback
+        traceback.print_exc() 
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/get-response', methods=['POST'])
+def get_response():
+    data = request.get_json()
+    print(f">> Flask received input: {data}")
+    user_message = data.get("message", "").strip()
+
+    if not user_message:
+        return jsonify({"response": "Please enter something."})
+
+    # Call your chatbot logic
+    response = get_bot_response(user_message)
+    return jsonify({"response": response})
+
 
 # ---------- Main ----------
 if __name__ == '__main__':
