@@ -3,6 +3,15 @@
     "text": "<|user|> how do i report a suspicious email \n<|bot|> Forward it to phishing@company.com. <|endofbot|>"
   },
   {
+    "text": "<|user|> how are you? \n<|bot|> I am fine. What about you? <|endofbot|>"
+  },
+  {
+    "text": "<|user|> What is your name? \n<|bot|> My name is Raj's Chatbot. <|endofbot|>"
+  },
+  {
+    "text": "<|user|> How you feel now? \n<|bot|> I am machine, I don't have feel. <|endofbot|>"
+  },
+  {
     "text": "<|user|> Are you there? \n<|bot|> Yes, I'm here to help. Please let me know your question. <|endofbot|>"
   },
   {
